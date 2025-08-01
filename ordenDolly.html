@@ -298,7 +298,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const appName = "NewApp-1254688";
-            const tableName = "Modificaciones";
+            const tableName = "Modificaciones"; // Esto asume que las modificaciones están en una tabla llamada "Modificaciones"
 
             const getParam = (name) => urlParams.get(name) || '';
 
@@ -373,14 +373,26 @@
                 }
             }
 
-            // Llenar Observaciones
-            const observaciones = getParam('observaciones_de_pintura');
-            if (observaciones) {
+            // Llenar Observaciones de Pintura
+            const observacionesPintura = getParam('observaciones_de_pintura');
+            const observacionesGenerales = getParam('observaciones');
+            const allObservations = [];
+
+            if (observacionesPintura) {
+                observacionesPintura.split(',').forEach(obs => allObservations.push(obs.trim()));
+            }
+
+            if (observacionesGenerales) {
+                observacionesGenerales.split(',').forEach(obs => allObservations.push(obs.trim()));
+            }
+
+            const uniqueObservations = allObservations.filter(obs => obs.length > 0);
+
+            if (uniqueObservations.length > 0) {
                 document.getElementById('observaciones-section').style.display = 'block';
-                const obsArray = observaciones.split(',').map(item => item.trim()).filter(item => item.length > 0);
                 const ul = document.createElement('ul');
                 ul.className = 'observations-list';
-                obsArray.forEach(obs => {
+                uniqueObservations.forEach(obs => {
                     const li = document.createElement('li');
                     li.innerText = obs;
                     ul.appendChild(li);
