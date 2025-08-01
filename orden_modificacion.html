@@ -1,95 +1,68 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
-  <meta charset="UTF-8">
-
-  <style>
-
-    body { font-family: Arial; padding: 20px; }
-
-    .header { text-align: center; margin-bottom: 30px; }
-
-    .title { font-size: 24px; font-weight: bold; }
-
-    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-
-    .signature { margin-top: 50px; }
-
-    @media print {
-
-      .no-print { display: none; }
-
-      body { padding: 0; margin: 0; }
-
-    }
-
-  </style>
-
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .header { text-align: center; margin-bottom: 30px; }
+    .title { font-size: 24px; font-weight: bold; }
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .signature { margin-top: 50px; }
+    @media print {
+      .no-print { display: none; }
+      body { padding: 0; margin: 0; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="header">
+    <div class="title">ORDEN DE MODIFICACIÓN</div>
+    <div>Folio: <span id="folio"></span></div>
+  </div>
 
-  <div class="header">
+  <table>
+    <tr><th>ID</th><td><span id="id"></span></td></tr>
+    <tr><th>IDFAB</th><td><span id="idfab"></span></td></tr>
+    <tr><th>Fecha</th><td><span id="fecha"></span></td></tr>
+  </table>
 
-    <div class="title">ORDEN DE MODIFICACIÓN</div>
+  <h3>Detalles de modificación:</h3>
+  <p><strong>Modificación:</strong> <span id="modificacion"></span></p>
+  <p><strong>Motivo:</strong> <span id="motivo"></span></p>
+  <p><strong>Referencia:</strong> <span id="referencia"></span></p>
 
-    <div>Folio: {{Folio}}</div>
+  <table>
+    <tr><th>Solicitado por</th><td><span id="solicitado_por"></span></td></tr>
+    <tr><th>Status</th><td><span id="status"></span></td></tr>
+    <tr><th>Aprobado</th><td><span id="aprobado"></span></td></tr>
+  </table>
 
-  </div>
+  <div class="signature">
+    <p>Firma de aprobación: _________________________</p>
+    <p><span id="firma_aprobacion"></span></p>
+  </div>
 
+  <button class="no-print" onclick="window.print()">Imprimir Documento</button>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Obtiene los parámetros de la URL
+      const urlParams = new URLSearchParams(window.location.search);
 
-  <table>
-
-    <tr><th>ID</th><td>{{ID}}</td></tr>
-
-    <tr><th>IDFAB</th><td>{{IDFAB}}</td></tr>
-
-    <tr><th>Fecha</th><td>{{Fecha}}</td></tr>
-
-  </table>
-
-
-
-  <h3>Detalles de modificación:</h3>
-
-  <p><strong>Modificación:</strong> {{Modificacion}}</p>
-
-  <p><strong>Motivo:</strong> {{Motivo}}</p>
-
-  <p><strong>Referencia:</strong> {{Referencia}}</p>
-
-
-
-  <table>
-
-    <tr><th>Solicitado por</th><td>{{SolicitadoPor}}</td></tr>
-
-    <tr><th>Status</th><td>{{Status}}</td></tr>
-
-    <tr><th>Aprobado</th><td>{{Aprobado}}</td></tr>
-
-  </table>
-
-
-
-  <div class="signature">
-
-    <p>Firma de aprobación: _________________________</p>
-
-    <p>{{FirmaAprobacion}}</p>
-
-  </div>
-
-
-
-  <button class="no-print" onclick="window.print()">Imprimir Documento</button>
-
+      // Asigna los valores a los elementos de la página
+      document.getElementById('folio').innerText = urlParams.get('folio') || '';
+      document.getElementById('id').innerText = urlParams.get('id') || '';
+      document.getElementById('idfab').innerText = urlParams.get('idfab') || '';
+      document.getElementById('fecha').innerText = urlParams.get('fecha') || '';
+      document.getElementById('modificacion').innerText = urlParams.get('modificacion') || '';
+      document.getElementById('motivo').innerText = urlParams.get('motivo') || '';
+      document.getElementById('referencia').innerText = urlParams.get('referencia') || '';
+      document.getElementById('solicitado_por').innerText = urlParams.get('solicitado_por') || '';
+      document.getElementById('status').innerText = urlParams.get('status') || '';
+      document.getElementById('aprobado').innerText = urlParams.get('aprobado') || '';
+      document.getElementById('firma_aprobacion').innerText = urlParams.get('firma_aprobacion') || '';
+    });
+  </script>
 </body>
-
 </html>
