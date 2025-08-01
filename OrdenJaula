@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orden de Trabajo - Jaula</title>
+    <style>
+        /* Estilos generales para pantalla */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #000;
+        }
+        
+        .logo {
+            max-height: 80px;
+            width: auto;
+        }
+
+        .title-container {
+            text-align: right;
+        }
+        
+        .header-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .header-subtitle {
+            font-size: 14px;
+            margin: 0;
+            color: #555;
+        }
+
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .header-table td, .header-table th {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+        }
+
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .content-table td, .content-table th {
+            border: 1px solid #000;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        .section-header {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .field-label {
+            font-weight: bold;
+        }
+
+        .field-value {
+            min-height: 20px;
+            display: block;
+            width: 100%;
+        }
+
+        .observations-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .observations-table td {
+            border: 1px solid #000;
+            padding: 10px;
+            vertical-align: top;
+        }
+        
+        .observations-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-top: 0;
+        }
+
+        .reference-images {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .reference-images td {
+            border: 1px solid #000;
+            padding: 10px;
+            vertical-align: top;
+            text-align: center;
+        }
+        .reference-images img {
+            max-width: 25%;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .modification-section {
+            background-color: #ffffcc;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #000;
+        }
+        
+        .modification-section div {
+            margin-bottom: 5px;
+        }
+        
+        .firma-container {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+        }
+        .firma-container img {
+            max-width: 200px;
+            height: auto;
+            border: 1px solid #000;
+            padding: 5px;
+        }
+        .firma-container p {
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .save-pdf-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .save-pdf-button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Estilos específicos para impresión */
+        @media print {
+            @page {
+                size: letter;
+                margin: 1cm;
+            }
+            body {
+                margin: 0;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+            .header-table, .content-table, .observations-table, .reference-images, .modification-section {
+                page-break-inside: avoid;
+            }
+            .save-pdf-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo de la empresa" class="logo">
+        <div class="title-container">
+            <h1 class="header-title">ORDEN DE TRABAJO - JAULA</h1>
+            <h2 class="header-subtitle">Documento de Fabricación</h2>
+        </div>
+    </div>
+
+    <table class="header-table">
+        <tr>
+            <td><strong>Mes de Producción:</strong></td>
+            <td><span id="mesProduccion"></span></td>
+            <td><strong>Orden de trabajo:</strong></td>
+            <td><span id="ordenTrabajo"></span></td>
+            <td><strong>NIV:</strong></td>
+            <td><span id="niv"></span></td>
+        </tr>
+        <tr>
+            <td><strong>Cliente:</strong></td>
+            <td colspan="3"><span id="cliente"></span></td>
+            <td><strong>Realizado por:</strong></td>
+            <td><span id="realizadoPor"></span></td>
+        </tr>
+        <tr>
+            <td><strong>Tipo de unidad:</strong></td>
+            <td colspan="3"><span id="tipoUnidad"></span></td>
+            <td colspan="2"></td>
+        </tr>
+    </table>
+
+    <table class="content-table">
+        <tr>
+            <td class="section-header" colspan="2"><strong>Plataforma</strong></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="field-label">MEDIDAS:</div>
+                <div class="field-value"><span id="medidas"></span></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="field-label">COLOR PRIMARIO:</div>
+                <div class="field-value"><span id="colorPrimario"></span></div>
+                <br>
+                <div class="field-label">COLOR SECUNDARIO:</div>
+                <div class="field-value"><span id="colorSecundario"></span></div>
+                <br>
+                <div class="field-label">EJES:</div>
+                <div class="field-value"><span id="ejes"></span></div>
+                <br>
+                <div class="field-label">CANTIDAD DE EJES:</div>
+                <div class="field-value"><span id="cantEjes"></span></div>
+                <br>
+                <div class="field-label">DISTANCIA ENTRE EJES:</div>
+                <div class="field-value"><span id="distanciaEjes"></span></div>
+                <br>
+                <div class="field-label">PERSONALIZACIÓN DE VIGA:</div>
+                <div class="field-value"><span id="personalizacionViga"></span></div>
+                <br>
+                <div class="field-label">TIPO DE REDILA:</div>
+                <div class="field-value"><span id="tipoRedila"></span></div>
+                <br>
+                <div class="field-label">SECCIONES:</div>
+                <div class="field-value"><span id="secciones"></span></div>
+                <br>
+                <div class="field-label">SUSPENSIÓN:</div>
+                <div class="field-value"><span id="suspension"></span></div>
+                <br>
+                <div class="field-label">CANTIDAD DE SUSPENSIONES:</div>
+                <div class="field-value"><span id="cantSuspensiones"></span></div>
+                <br>
+                <div class="field-label">GANCHO TIRÓN:</div>
+                <div class="field-value"><span id="ganchoTiron"></span></div>
+                <br>
+                <div class="field-label">PORTALLANTAS:</div>
+                <div class="field-value"><span id="portallantas"></span></div>
+                <br>
+            </td>
+            <td>
+                <div class="field-label">PERNO REY:</div>
+                <div class="field-value"><span id="pernoRey"></span></div>
+                <br>
+                <div class="field-label">JUEGO DE PATINES:</div>
+                <div class="field-value"><span id="juegoPatines"></span></div>
+                <br>
+                <div class="field-label">CANTIDAD DE PATINES:</div>
+                <div class="field-value"><span id="cantPatines"></span></div>
+                <br>
+                <div class="field-label">CAJA DE HERRAMIENTAS:</div>
+                <div class="field-value"><span id="cajaHerramientas"></span></div>
+                <br>
+                <div class="field-label">LODERAS DELANTERA:</div>
+                <div class="field-value"><span id="loderaDelantera"></span></div>
+                <br>
+                <div class="field-label">LODERAS TRASERA:</div>
+                <div class="field-value"><span id="loderaTrasera"></span></div>
+                <br>
+                <div class="field-label">DIRECCIONALES:</div>
+                <div class="field-value"><span id="direccionales"></span></div>
+                <br>
+                <div class="field-label">MANIVELAS DE PATÍN:</div>
+                <div class="field-value"><span id="manivelasPatin"></span></div>
+                <br>
+                <div class="field-label">RETRÁCTIL EJE:</div>
+                <div class="field-value"><span id="retractilEje"></span></div>
+                <br>
+                <div class="field-label">TIPO DE FALDON:</div>
+                <div class="field-value"><span id="tipoFaldon"></span></div>
+                <br>
+                <div class="field-label">COLOR DE SOLERA DE ARRIMADERO:</div>
+                <div class="field-value"><span id="colorSoleraArrimadero"></span></div>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td class="section-header" colspan="2"><strong>Estructura</strong></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="field-label">PUERTAS LATERALES:</div>
+                <div class="field-value"><span id="puertasLaterales"></span></div>
+                <br>
+                <div class="field-label">COMP. AL PISO:</div>
+                <div class="field-value"><span id="compAlPiso"></span></div>
+                <br>
+                <div class="field-label">COMP. ATRÁS:</div>
+                <div class="field-value"><span id="compAtras"></span></div>
+                <br>
+                <div class="field-label">TIPO DE ARCO:</div>
+                <div class="field-value"><span id="tipoArco"></span></div>
+                <br>
+                <div class="field-label">PISO DE MADERA:</div>
+                <div class="field-value"><span id="pisoMadera"></span></div>
+                <br>
+                <div class="field-label">PISO LAMINADO:</div>
+                <div class="field-value"><span id="pisoLaminado"></span></div>
+                <br>
+            </td>
+            <td>
+                <div class="field-label">CABALLETE:</div>
+                <div class="field-value"><span id="caballete"></span></div>
+                <br>
+                <div class="field-label">TUBOS INTERIORES:</div>
+                <div class="field-value"><span id="tubosInteriores"></span></div>
+                <br>
+                <div class="field-label">BARROTE LATERAL:</div>
+                <div class="field-value"><span id="barroteLateral"></span></div>
+                <br>
+                <div class="field-label">COMPUERTA A LOS LADOS:</div>
+                <div class="field-value"><span id="compuertaALados"></span></div>
+                <br>
+                <div class="field-label">CERROJO DE PUERTAS TRASERAS:</div>
+                <div class="field-value"><span id="cerrojoPuertasTraseras"></span></div>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td class="section-header" colspan="2"><strong>Accesorios</strong></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="field-label">RINES:</div>
+                <div class="field-value"><span id="rines"></span></div>
+                <br>
+                <div class="field-label">CANTIDAD DE RINES:</div>
+                <div class="field-value"><span id="cantRines"></span></div>
+                <br>
+                <div class="field-label">LLANTAS:</div>
+                <div class="field-value"><span id="llantas"></span></div>
+                <br>
+                <div class="field-label">CANTIDAD DE LLANTAS:</div>
+                <div class="field-value"><span id="cantLlantas"></span></div>
+                <br>
+                <div class="field-label">FRENOS:</div>
+                <div class="field-value"><span id="frenos"></span></div>
+                <br>
+            </td>
+            <td>
+                <div class="field-label">SISTEMA DE INFLADO PSI:</div>
+                <div class="field-value"><span id="sistemaInflado"></span></div>
+                <br>
+                <div class="field-label">PLAFONES TRASEROS:</div>
+                <div class="field-value"><span id="plafonesTraseros"></span></div>
+                <br>
+                <div class="field-label">PLAFONES POR LADO:</div>
+                <div class="field-value"><span id="plafonesPorLado"></span></div>
+                <br>
+                <div class="field-label">SISTEMA DE LONA:</div>
+                <div class="field-value"><span id="sistemaLona"></span></div>
+                <br>
+                <div class="field-label">LUZ PLACA:</div>
+                <div class="field-value"><span id="luzPlaca"></span></div>
+                <br>
+            </td>
+        </tr>
+    </table>
+
+    <div id="modifications-container"></div>
+    
+    <div id="observaciones-section" style="display: none;">
+        <table class="observations-table">
+            <tr>
+                <td class="section-header"><strong>Observaciones</strong></td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="observaciones-container"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="reference-section" style="display: none;">
+        <table class="reference-images">
+            <tr>
+                <td class="section-header"><strong>Imágenes de referencia</strong></td>
+            </tr>
+            <tr>
+                <td id="imagenes-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="firma-section" style="display: none;">
+        <div class="firma-container">
+            <div class="field-label">Firma de aprobación:</div>
+            <img id="firmaAprobacionImg" src="" alt="Firma de Aprobación">
+        </div>
+    </div>
+    
+    <button class="save-pdf-button" onclick="window.print()">Guardar como PDF</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const appName = "NewApp-1254688";
+            const tableName = "Modificaciones";
+
+            const getParam = (name) => urlParams.get(name) || '';
+
+            const getAppSheetImageUrl = (fileName) => {
+                if (!fileName) return '';
+                return `https://www.appsheet.com/template/gettablefileurl?appName=${appName}&tableName=${tableName}&fileName=${encodeURIComponent(fileName)}`;
+            };
+
+            // Llenar información general
+            document.getElementById('mesProduccion').innerText = getParam('mes_de_produccion');
+            document.getElementById('ordenTrabajo').innerText = getParam('orden_de_trabajo');
+            document.getElementById('niv').innerText = getParam('niv');
+            document.getElementById('cliente').innerText = getParam('cliente');
+            document.getElementById('tipoUnidad').innerText = getParam('tipo_de_unidad');
+            document.getElementById('realizadoPor').innerText = getParam('realizado_por');
+
+            // Llenar Plataforma
+            document.getElementById('medidas').innerText = getParam('dimensiones');
+            document.getElementById('colorPrimario').innerText = getParam('color');
+            document.getElementById('colorSecundario').innerText = getParam('color_2');
+            document.getElementById('ejes').innerText = getParam('ejes');
+            document.getElementById('cantEjes').innerText = getParam('cantidad_de_ejes');
+            document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
+            document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
+            document.getElementById('tipoRedila').innerText = getParam('tipo_de_redila');
+            document.getElementById('secciones').innerText = getParam('secciones');
+            document.getElementById('suspension').innerText = getParam('suspension');
+            document.getElementById('cantSuspensiones').innerText = getParam('cantidad_de_suspensiones');
+            document.getElementById('ganchoTiron').innerText = getParam('gancho_tiron');
+            document.getElementById('portallantas').innerText = getParam('portallantas');
+            document.getElementById('pernoRey').innerText = getParam('perno_rey');
+            document.getElementById('juegoPatines').innerText = getParam('juego_de_patines');
+            document.getElementById('cantPatines').innerText = getParam('cantidad_de_patines');
+            document.getElementById('cajaHerramientas').innerText = getParam('caja_de_herramientas');
+            document.getElementById('loderaDelantera').innerText = getParam('lodera_delantera');
+            document.getElementById('loderaTrasera').innerText = getParam('lodera_trasera');
+            document.getElementById('direccionales').innerText = getParam('direccionales');
+            document.getElementById('manivelasPatin').innerText = getParam('manivelas_de_patin');
+            document.getElementById('retractilEje').innerText = getParam('retractil_eje');
+            document.getElementById('tipoFaldon').innerText = getParam('faldon');
+            document.getElementById('colorSoleraArrimadero').innerText = getParam('color_de_solera_de_arrimadero');
+
+            // Llenar Estructura
+            document.getElementById('puertasLaterales').innerText = getParam('puertas_laterales');
+            document.getElementById('compAlPiso').innerText = getParam('comp_al_piso');
+            document.getElementById('compAtras').innerText = getParam('comp_atras');
+            document.getElementById('tipoArco').innerText = getParam('tipo_de_arco');
+            document.getElementById('pisoMadera').innerText = getParam('piso_de_madera');
+            document.getElementById('pisoLaminado').innerText = getParam('piso_laminado');
+            document.getElementById('caballete').innerText = getParam('caballete');
+            document.getElementById('tubosInteriores').innerText = getParam('tubos_interiores');
+            document.getElementById('barroteLateral').innerText = getParam('barrote_lateral');
+            document.getElementById('compuertaALados').innerText = getParam('compuerta_a_los_lados');
+            document.getElementById('cerrojoPuertasTraseras').innerText = getParam('cerrojo_de_puertas_traseras');
+
+            // Llenar Accesorios
+            document.getElementById('rines').innerText = getParam('rines');
+            document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
+            document.getElementById('llantas').innerText = getParam('llantas_70');
+            document.getElementById('cantLlantas').innerText = getParam('cantidad_de_llantas');
+            document.getElementById('frenos').innerText = getParam('frenos');
+            document.getElementById('sistemaInflado').innerText = getParam('sistema_de_inflado_psi');
+            document.getElementById('plafonesTraseros').innerText = getParam('plafones');
+            document.getElementById('plafonesPorLado').innerText = getParam('plafones_por_lado');
+            document.getElementById('sistemaLona').innerText = getParam('sistema_de_lona');
+            document.getElementById('luzPlaca').innerText = getParam('luz_placa');
+
+            // Llenar Modificaciones
+            const modificacionesData = getParam('modificaciones_data');
+            const modificationsContainer = document.getElementById('modifications-container');
+            if (modificacionesData) {
+                const parts = modificacionesData.split('|');
+                const modificaciones = parts[0].split(',');
+                const motivos = parts[1].split(',');
+                const solicitados = parts[2].split(',');
+                const status = parts[3].split(',');
+
+                for (let i = 0; i < modificaciones.length; i++) {
+                    if (modificaciones[i].trim() === '' && motivos[i].trim() === '' && solicitados[i].trim() === '' && status[i].trim() === '') {
+                        continue;
+                    }
+
+                    const modificationSection = document.createElement('div');
+                    modificationSection.className = 'modification-section';
+                    
+                    const modificacionText = document.createElement('div');
+                    modificacionText.className = 'field-label';
+                    modificacionText.innerHTML = `<strong>Modificación:</strong> ${modificaciones[i]}`;
+                    modificationSection.appendChild(modificacionText);
+                    
+                    const motivoText = document.createElement('div');
+                    motivoText.innerHTML = `<strong>Motivo de la Modificación:</strong> ${motivos[i]}`;
+                    modificationSection.appendChild(motivoText);
+                    
+                    const solicitadoText = document.createElement('div');
+                    solicitadoText.innerHTML = `<strong>Solicitado por:</strong> ${solicitados[i]} <strong>Status:</strong> ${status[i]}`;
+                    modificationSection.appendChild(solicitadoText);
+                    
+                    modificationsContainer.appendChild(modificationSection);
+                }
+            }
+
+            // Llenar Observaciones
+            const observacionesPintura = getParam('observaciones_de_pintura');
+            const observacionesGenerales = getParam('observaciones');
+            const allObservations = [];
+
+            if (observacionesPintura) {
+                observacionesPintura.split(',').forEach(obs => allObservations.push(obs.trim()));
+            }
+
+            if (observacionesGenerales) {
+                observacionesGenerales.split(',').forEach(obs => allObservations.push(obs.trim()));
+            }
+
+            const uniqueObservations = allObservations.filter(obs => obs.length > 0);
+
+            if (uniqueObservations.length > 0) {
+                document.getElementById('observaciones-section').style.display = 'block';
+                const ul = document.createElement('ul');
+                ul.className = 'observations-list';
+                uniqueObservations.forEach(obs => {
+                    const li = document.createElement('li');
+                    li.innerText = obs;
+                    ul.appendChild(li);
+                });
+                document.getElementById('observaciones-container').appendChild(ul);
+            }
+
+            // Llenar Imágenes de Referencia
+            const imagenesContainer = document.getElementById('imagenes-container');
+            const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
+            let hasImages = false;
+            imagenParams.forEach(paramName => {
+                const fileName = getParam(paramName);
+                if (fileName) {
+                    const img = document.createElement('img');
+                    img.src = getAppSheetImageUrl(fileName);
+                    img.alt = `Imagen de referencia`;
+                    imagenesContainer.appendChild(img);
+                    hasImages = true;
+                }
+            });
+            if (hasImages) {
+                document.getElementById('reference-section').style.display = 'block';
+            }
+            
+            // Llenar Firma de aprobación
+            const firmaFileName = getParam('firma_aprobacion');
+            const firmaImg = document.getElementById('firmaAprobacionImg');
+            if (firmaFileName) {
+                document.getElementById('firma-section').style.display = 'block';
+                firmaImg.src = getAppSheetImageUrl(firmaFileName);
+            }
+        });
+    </script>
+</body>
+</html>
