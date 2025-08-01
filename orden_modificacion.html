@@ -1,186 +1,196 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Orden de Modificación</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.5;
-            font-size: 12pt;
-        }
-        .container {
-            width: 210mm;
-            min-height: 279mm;
-            margin: auto;
-            background: white;
-            padding: 20mm;
-            box-sizing: border-box;
-        }
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        .logo {
-            max-height: 60px;
-        }
-        .title-container {
-            text-align: right;
-        }
-        .title {
-            font-size: 20pt;
-            font-weight: bold;
-            color: #37474F;
-            margin: 0;
-        }
-        .subtitle {
-            font-size: 10pt;
-            color: #78909C;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            margin-bottom: 20px;
-            font-size: 11pt;
-        }
-        th, td {
-            padding: 8px 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        th {
-            background-color: #ECEFF1;
-            font-weight: bold;
-            color: #37474F;
-        }
-        tr:last-child td {
-            border-bottom: none;
-        }
-        .section-title {
-            font-size: 14pt;
-            font-weight: bold;
-            color: #37474F;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #ECEFF1;
-            padding-bottom: 5px;
-        }
-        .details-section p {
-            margin-bottom: 8px;
-            font-size: 11pt;
-        }
-        .signature-section {
-            margin-top: 30px;
-            text-align: center;
-        }
-        .signature-image {
-            max-width: 180px;
-            height: auto;
-            display: block;
-            margin: 10px auto 0 auto;
-            border: 1px solid #ddd;
-            padding: 3px;
-            border-radius: 4px;
-        }
-        .no-print {
-            display: none;
-        }
-        @media print {
-            body {
-                background-color: white;
-                font-size: 10pt;
-            }
-            .container {
-                box-shadow: none;
-                border-radius: 0;
-                width: 210mm;
-                min-height: 279mm;
-                padding: 15mm;
-            }
-            .title { font-size: 18pt; }
-            .subtitle { font-size: 9pt; }
-            table { font-size: 10pt; }
-            .section-title { font-size: 13pt; }
-            .details-section p { font-size: 10pt; }
-            .signature-image { max-width: 150px; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Orden de Modificación</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+      font-size: 12pt;
+    }
+    .container {
+      width: 210mm;
+      min-height: 279mm;
+      margin: auto;
+      background: white;
+      padding: 20mm;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    .logo {
+      max-height: 60px;
+    }
+    .title-container {
+      flex-grow: 1;
+      text-align: right;
+    }
+    .title {
+      font-size: 20pt;
+      font-weight: bold;
+      color: #37474F;
+      margin: 0;
+    }
+    .subtitle {
+      font-size: 10pt;
+      color: #78909C;
+    }
+    table {
+      margin: 0 auto;
+      margin-top: 15px;
+      margin-bottom: 20px;
+      border-collapse: collapse;
+      font-size: 11pt;
+      width: 80%;
+    }
+    th, td {
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background-color: #ECEFF1;
+      font-weight: bold;
+      color: #37474F;
+      width: 40%;
+    }
+    .section-title {
+      font-size: 14pt;
+      font-weight: bold;
+      color: #37474F;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ECEFF1;
+      padding-bottom: 5px;
+    }
+    .details-section {
+      text-align: left;
+      margin: 0 auto;
+      width: 80%;
+    }
+    .details-section p {
+      margin-bottom: 8px;
+      font-size: 11pt;
+    }
+    .signature-section {
+      margin-top: 30px;
+    }
+    .signature-image {
+      max-width: 180px;
+      height: auto;
+      display: block;
+      margin: 10px auto 0 auto;
+      border: 1px solid #ddd;
+      padding: 3px;
+      border-radius: 4px;
+    }
+    .reference-image {
+      max-width: 300px;
+      max-height: 300px;
+      display: block;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 3px;
+    }
+    .no-print {
+      display: none;
+    }
+    @media print {
+      .container {
+        box-shadow: none;
+        border-radius: 0;
+        width: 210mm;
+        min-height: 279mm;
+        padding: 15mm;
+      }
+      .signature-image, .reference-image {
+        max-width: 150px;
+      }
+    }
+  </style>
 </head>
 <body onload="window.print()">
-    <div class="container">
-        <div class="header">
-            <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo" class="logo">
-            <div class="title-container">
-                <h1 class="title">ORDEN DE MODIFICACIÓN</h1>
-                <h6 class="subtitle">Documento de Trabajo</h6>
-            </div>
-        </div>
-
-        <table>
-            <tr><th>Folio del Documento</th><td><span id="folio"></span></td></tr>
-            <tr><th>ID de Fabricación</th><td><span id="idfab"></span></td></tr>
-            <tr><th>Fecha</th><td><span id="fecha"></span></td></tr>
-        </table>
-
-        <div class="section-title">Detalles de modificación:</div>
-        <div class="details-section">
-            <p><strong>Modificación:</strong> <span id="modificacion"></span></p>
-            <p><strong>Motivo:</strong> <span id="motivo"></span></p>
-            <p><strong>Referencia:</strong><br><img id="referencia_imagen" src="" alt="Referencia" class="signature-image"></p>
-        </div>
-
-        <table>
-            <tr><th>Solicitado por:</th><td><span id="solicitado_por"></span></td></tr>
-            <tr><th>Status de la solicitud:</th><td><span id="status"></span></td></tr>
-            <tr><th>Aprobado por:</th><td><span id="aprobado"></span></td></tr>
-        </table>
-
-        <div class="signature-section">
-            <p>Firma de aprobación:</p>
-            <img id="firma_aprobacion_imagen" src="" alt="Firma de Aprobación" class="signature-image">
-        </div>
-
-        <button class="no-print" onclick="window.print()">Imprimir Documento</button>
+  <div class="container">
+    <div class="header">
+      <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo" class="logo" />
+      <div class="title-container">
+        <h1 class="title">ORDEN DE MODIFICACIÓN</h1>
+        <h6 class="subtitle">Documento de Trabajo</h6>
+      </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
+    <table>
+      <tr><th>Folio del Documento</th><td><span id="folio"></span></td></tr>
+      <tr><th>ID de Fabricación</th><td><span id="idfab"></span></td></tr>
+      <tr><th>Fecha</th><td><span id="fecha"></span></td></tr>
+    </table>
 
-            document.getElementById('folio').innerText = urlParams.get('folio') || '';
-            document.getElementById('idfab').innerText = urlParams.get('idfab') || '';
-            document.getElementById('fecha').innerText = urlParams.get('fecha') || '';
-            document.getElementById('modificacion').innerText = urlParams.get('modificacion') || '';
-            document.getElementById('motivo').innerText = urlParams.get('motivo') || '';
-            document.getElementById('solicitado_por').innerText = urlParams.get('solicitado_por') || '';
-            document.getElementById('status').innerText = urlParams.get('status') || '';
-            document.getElementById('aprobado').innerText = urlParams.get('aprobado') || '';
+    <div class="section-title">Detalles de modificación:</div>
+    <div class="details-section">
+      <p><strong>Modificación:</strong> <span id="modificacion"></span></p>
+      <p><strong>Motivo:</strong> <span id="motivo"></span></p>
+    </div>
 
-            const referenciaFile = urlParams.get('referencia') || '';
-            if (referenciaFile) {
-                const refUrl = "https://www.appsheet.com/template/gettablefileurl?appName=NewApp-1254688&tableName=Modificaciones&fileName=" + referenciaFile;
-                document.getElementById('referencia_imagen').src = refUrl;
-            } else {
-                document.getElementById('referencia_imagen').style.display = 'none';
-            }
+    <table>
+      <tr><th>Solicitado por:</th><td><span id="solicitado_por"></span></td></tr>
+      <tr><th>Status de la solicitud:</th><td><span id="status"></span></td></tr>
+      <tr><th>Aprobado por:</th><td><span id="aprobado"></span></td></tr>
+    </table>
 
-            const firmaFile = urlParams.get('firma_aprobacion') || '';
-            if (firmaFile) {
-                const firmaUrl = "https://www.appsheet.com/template/gettablefileurl?appName=NewApp-1254688&tableName=Modificaciones&fileName=" + firmaFile;
-                document.getElementById('firma_aprobacion_imagen').src = firmaUrl;
-            } else {
-                document.getElementById('firma_aprobacion_imagen').style.display = 'none';
-            }
-        });
-    </script>
+    <div class="signature-section">
+      <p>Firma de aprobación:</p>
+      <img id="firma_aprobacion_imagen" src="" alt="Firma de Aprobación" class="signature-image" />
+    </div>
+
+    <div class="signature-section">
+      <p>Referencia visual:</p>
+      <img id="referencia_imagen" src="" alt="Referencia" class="reference-image" />
+    </div>
+
+    <button class="no-print" onclick="window.print()">Imprimir</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+
+      document.getElementById('folio').innerText = urlParams.get('folio') || '';
+      document.getElementById('idfab').innerText = urlParams.get('idfab') || '';
+      document.getElementById('fecha').innerText = urlParams.get('fecha') || '';
+      document.getElementById('modificacion').innerText = urlParams.get('modificacion') || '';
+      document.getElementById('motivo').innerText = urlParams.get('motivo') || '';
+      document.getElementById('solicitado_por').innerText = urlParams.get('solicitado_por') || '';
+      document.getElementById('status').innerText = urlParams.get('status') || '';
+      document.getElementById('aprobado').innerText = urlParams.get('aprobado') || '';
+
+      const firma = urlParams.get('firma_aprobacion') || '';
+      if (firma) {
+        const firmaUrl = "https://www.appsheet.com/template/gettablefileurl?appName=NewApp-1254688&tableName=Modificaciones&fileName=" + firma;
+        document.getElementById('firma_aprobacion_imagen').src = firmaUrl;
+      } else {
+        document.getElementById('firma_aprobacion_imagen').style.display = 'none';
+      }
+
+      const referencia = urlParams.get('referencia') || '';
+      if (referencia) {
+        const refUrl = "https://www.appsheet.com/template/gettablefileurl?appName=NewApp-1254688&tableName=Modificaciones&fileName=" + referencia;
+        document.getElementById('referencia_imagen').src = refUrl;
+      } else {
+        document.getElementById('referencia_imagen').style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
