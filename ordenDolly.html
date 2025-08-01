@@ -381,7 +381,7 @@
                 }
             }
 
-            // Llenar Observaciones de Pintura
+            // Llenar Observaciones
             const observacionesPintura = getParam('observaciones_de_pintura');
             const observacionesGenerales = getParam('observaciones');
             const allObservations = [];
@@ -434,8 +434,10 @@
                 firmaImg.src = getAppSheetImageUrl(firmaFileName);
             }
 
-            // Comando de impresión directa
-            window.print();
+            // Comando de impresión directa con retraso
+            setTimeout(() => {
+                window.print();
+            }, 1500); // 1.5 segundos de retraso
         });
     </script>
 </body>
