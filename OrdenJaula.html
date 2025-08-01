@@ -65,11 +65,17 @@
             border: 1px solid #000;
             padding: 10px;
             vertical-align: top;
-            word-wrap: break-word; /* Evita que el texto largo rompa la tabla */
+            word-wrap: break-word;
         }
         
         .content-table {
-            table-layout: fixed; /* Mantiene el ancho de las columnas fijo */
+            table-layout: fixed;
+        }
+        
+        /* Asegura que el campo de medidas use el 100% del espacio */
+        .full-width-field {
+            width: 100%;
+            display: block;
         }
 
         .section-header {
@@ -228,8 +234,10 @@
         <tr>
             <td colspan="2">
                 <div class="field-label">MEDIDAS:</div>
-                <div class="field-value"><span id="medidas"></span></div>
+                <div class="field-value full-width-field"><span id="medidas"></span></div>
             </td>
+        </tr>
+        <tr>
             <td>
                 <div class="field-label">COLOR PRIMARIO:</div>
                 <div class="field-value"><span id="colorPrimario"></span></div>
@@ -437,4 +445,151 @@
 
             // Llenar información general
             document.getElementById('mesProduccion').innerText = getParam('mes_de_produccion');
-            document.getElementById('ordenTrabajo').innerText =
+            document.getElementById('ordenTrabajo').innerText = getParam('orden_de_trabajo');
+            document.getElementById('niv').innerText = getParam('niv');
+            document.getElementById('cliente').innerText = getParam('cliente');
+            document.getElementById('tipoUnidad').innerText = getParam('tipo_de_unidad');
+            document.getElementById('realizadoPor').innerText = getParam('realizado_por');
+
+            // Llenar Plataforma
+            document.getElementById('medidas').innerText = getParam('dimensiones');
+            document.getElementById('colorPrimario').innerText = getParam('color');
+            document.getElementById('colorSecundario').innerText = getParam('color_2');
+            document.getElementById('ejes').innerText = getParam('ejes');
+            document.getElementById('cantEjes').innerText = getParam('cantidad_de_ejes');
+            document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
+            document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
+            document.getElementById('tipoRedila').innerText = getParam('tipo_de_redila');
+            document.getElementById('secciones').innerText = getParam('secciones');
+            document.getElementById('suspension').innerText = getParam('suspension');
+            document.getElementById('cantSuspensiones').innerText = getParam('cantidad_de_suspensiones');
+            document.getElementById('ganchoTiron').innerText = getParam('gancho_tiron');
+            document.getElementById('portallantas').innerText = getParam('portallantas');
+            document.getElementById('pernoRey').innerText = getParam('perno_rey');
+            document.getElementById('juegoPatines').innerText = getParam('juego_de_patines');
+            document.getElementById('cantPatines').innerText = getParam('cantidad_de_patines');
+            document.getElementById('cajaHerramientas').innerText = getParam('caja_de_herramientas');
+            document.getElementById('loderaDelantera').innerText = getParam('lodera_delantera');
+            document.getElementById('loderaTrasera').innerText = getParam('lodera_trasera');
+            document.getElementById('direccionales').innerText = getParam('direccionales');
+            document.getElementById('manivelasPatin').innerText = getParam('manivelas_de_patin');
+            document.getElementById('retractilEje').innerText = getParam('retractil_eje');
+            document.getElementById('tipoFaldon').innerText = getParam('faldon');
+            document.getElementById('colorSoleraArrimadero').innerText = getParam('color_de_solera_de_arrimadero');
+
+            // Llenar Estructura
+            document.getElementById('puertasLaterales').innerText = getParam('puertas_laterales');
+            document.getElementById('compAlPiso').innerText = getParam('comp_al_piso');
+            document.getElementById('compAtras').innerText = getParam('comp_atras');
+            document.getElementById('tipoArco').innerText = getParam('tipo_de_arco');
+            document.getElementById('pisoMadera').innerText = getParam('piso_de_madera');
+            document.getElementById('pisoLaminado').innerText = getParam('piso_laminado');
+            document.getElementById('caballete').innerText = getParam('caballete');
+            document.getElementById('tubosInteriores').innerText = getParam('tubos_interiores');
+            document.getElementById('barroteLateral').innerText = getParam('barrote_lateral');
+            document.getElementById('compuertaALados').innerText = getParam('compuerta_a_los_lados');
+            document.getElementById('cerrojoPuertasTraseras').innerText = getParam('cerrojo_de_puertas_traseras');
+
+            // Llenar Accesorios
+            document.getElementById('rines').innerText = getParam('rines');
+            document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
+            document.getElementById('llantas').innerText = getParam('llantas_70');
+            document.getElementById('cantLlantas').innerText = getParam('cantidad_de_llantas');
+            document.getElementById('frenos').innerText = getParam('frenos');
+            document.getElementById('sistemaInflado').innerText = getParam('sistema_de_inflado_psi');
+            document.getElementById('plafonesTraseros').innerText = getParam('plafones');
+            document.getElementById('plafonesPorLado').innerText = getParam('plafones_por_lado');
+            document.getElementById('sistemaLona').innerText = getParam('sistema_de_lona');
+            document.getElementById('luzPlaca').innerText = getParam('luz_placa');
+
+            // Llenar Modificaciones
+            const modificacionesData = getParam('modificaciones_data');
+            const modificationsContainer = document.getElementById('modifications-container');
+            if (modificacionesData) {
+                const parts = modificacionesData.split('|');
+                const modificaciones = parts[0].split(',');
+                const motivos = parts[1].split(',');
+                const solicitados = parts[2].split(',');
+                const status = parts[3].split(',');
+
+                for (let i = 0; i < modificaciones.length; i++) {
+                    if (modificaciones[i].trim() === '' && motivos[i].trim() === '' && solicitados[i].trim() === '' && status[i].trim() === '') {
+                        continue;
+                    }
+
+                    const modificationSection = document.createElement('div');
+                    modificationSection.className = 'modification-section';
+                    
+                    const modificacionText = document.createElement('div');
+                    modificacionText.className = 'field-label';
+                    modificacionText.innerHTML = `<strong>Modificación:</strong> ${modificaciones[i]}`;
+                    modificationSection.appendChild(modificacionText);
+                    
+                    const motivoText = document.createElement('div');
+                    motivoText.innerHTML = `<strong>Motivo de la Modificación:</strong> ${motivos[i]}`;
+                    modificationSection.appendChild(motivoText);
+                    
+                    const solicitadoText = document.createElement('div');
+                    solicitadoText.innerHTML = `<strong>Solicitado por:</strong> ${solicitados[i]} <strong>Status:</strong> ${status[i]}`;
+                    modificationSection.appendChild(solicitadoText);
+                    
+                    modificationsContainer.appendChild(modificationSection);
+                }
+            }
+
+            // Llenar Observaciones
+            const observacionesPintura = getParam('observaciones_de_pintura');
+            const observacionesGenerales = getParam('observaciones');
+            const allObservations = [];
+
+            if (observacionesPintura) {
+                observacionesPintura.split(',').forEach(obs => allObservations.push(obs.trim()));
+            }
+
+            if (observacionesGenerales) {
+                observacionesGenerales.split(',').forEach(obs => allObservations.push(obs.trim()));
+            }
+
+            const uniqueObservations = allObservations.filter(obs => obs.length > 0);
+
+            if (uniqueObservations.length > 0) {
+                document.getElementById('observaciones-section').style.display = 'block';
+                const ul = document.createElement('ul');
+                ul.className = 'observations-list';
+                uniqueObservations.forEach(obs => {
+                    const li = document.createElement('li');
+                    li.innerText = obs;
+                    ul.appendChild(li);
+                });
+                document.getElementById('observaciones-container').appendChild(ul);
+            }
+
+            // Llenar Imágenes de Referencia
+            const imagenesContainer = document.getElementById('imagenes-container');
+            const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
+            let hasImages = false;
+            imagenParams.forEach(paramName => {
+                const fileName = getParam(paramName);
+                if (fileName) {
+                    const img = document.createElement('img');
+                    img.src = getAppSheetImageUrl(fileName);
+                    img.alt = `Imagen de referencia`;
+                    imagenesContainer.appendChild(img);
+                    hasImages = true;
+                }
+            });
+            if (hasImages) {
+                document.getElementById('reference-section').style.display = 'block';
+            }
+            
+            // Llenar Firma de aprobación
+            const firmaFileName = getParam('firma_aprobacion');
+            const firmaImg = document.getElementById('firmaAprobacionImg');
+            if (firmaFileName) {
+                document.getElementById('firma-section').style.display = 'block';
+                firmaImg.src = getAppSheetImageUrl(firmaFileName);
+            }
+        });
+    </script>
+</body>
+</html>
