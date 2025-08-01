@@ -6,19 +6,19 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            padding: 15mm; /* Margen para tamaño carta */
+            padding: 15mm;
             background-color: #f4f4f4;
             color: #333;
-            line-height: 1.5; /* Espaciado entre líneas más compacto */
-            font-size: 12pt; /* Tamaño de fuente base más pequeño */
+            line-height: 1.5;
+            font-size: 12pt;
         }
         .container {
-            max-width: 190mm; /* Ancho de la zona de impresión */
+            max-width: 190mm;
             margin: 0 auto;
             background: white;
             padding: 20mm;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra más sutil */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .header {
             display: flex;
@@ -26,22 +26,22 @@
             justify-content: space-between;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid #eee; /* Borde más fino */
+            border-bottom: 1px solid #eee;
         }
         .logo {
-            max-height: 60px; /* Tamaño del logo ajustado */
+            max-height: 60px;
         }
         .title-container {
-            text-align: right; /* Alinear el título a la derecha */
+            text-align: right;
         }
         .title {
-            font-size: 20pt; /* Tamaño de fuente del título más pequeño */
+            font-size: 20pt;
             font-weight: bold;
             color: #37474F;
             margin: 0;
         }
         .subtitle {
-            font-size: 10pt; /* Tamaño de fuente del subtítulo más pequeño */
+            font-size: 10pt;
             color: #78909C;
         }
         table {
@@ -52,7 +52,7 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             overflow: hidden;
-            font-size: 11pt; /* Tamaño de fuente para tablas */
+            font-size: 11pt;
         }
         th, td {
             padding: 8px 12px;
@@ -68,7 +68,7 @@
             border-bottom: none;
         }
         .section-title {
-            font-size: 14pt; /* Tamaño de fuente para títulos de sección */
+            font-size: 14pt;
             font-weight: bold;
             color: #37474F;
             margin-top: 20px;
@@ -107,10 +107,10 @@
         }
         @media print {
             body { 
-                padding: 10mm; /* Menos padding en la impresión */
+                padding: 10mm;
                 background-color: white; 
                 color: black; 
-                font-size: 10pt; /* Tamaño de fuente para la impresión */
+                font-size: 10pt;
             }
             .container { 
                 box-shadow: none; 
@@ -185,9 +185,10 @@
                 document.getElementById('referencia_imagen').style.display = 'none';
             }
 
-            const firmaAprobacionUrl = urlParams.get('firma_aprobacion') || '';
-            if (firmaAprobacionUrl) {
-                document.getElementById('firma_aprobacion_imagen').src = firmaAprobacionUrl;
+            const firmaAprobacion = urlParams.get('firma_aprobacion') || '';
+            if (firmaAprobacion) {
+                const firmaUrl = "https://www.appsheet.com/template/gettablefileurl?appName=NewApp-1254688&tableName=Modificaciones&fileName=" + firmaAprobacion;
+                document.getElementById('firma_aprobacion_imagen').src = firmaUrl;
             } else {
                 document.getElementById('firma_aprobacion_imagen').style.display = 'none';
             }
