@@ -11,6 +11,36 @@
             font-size: 12px;
             line-height: 1.4;
         }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #000;
+        }
+        
+        .logo {
+            max-height: 80px;
+            width: auto;
+        }
+
+        .title-container {
+            text-align: right;
+        }
+        
+        .header-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .header-subtitle {
+            font-size: 14px;
+            margin: 0;
+            color: #555;
+        }
 
         .header-table {
             width: 100%;
@@ -127,6 +157,14 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo de la empresa" class="logo">
+        <div class="title-container">
+            <h1 class="header-title">ORDEN DE TRABAJO - DOLLY</h1>
+            <h2 class="header-subtitle">Documento de Fabricación</h2>
+        </div>
+    </div>
+
     <table class="header-table">
         <tr>
             <td><strong>Mes de Producción:</strong></td>
