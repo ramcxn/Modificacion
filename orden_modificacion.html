@@ -102,7 +102,6 @@
         </div>
 
         <table>
-            <tr><th>ID</th><td><span id="id"></span></td></tr>
             <tr><th>IDFAB</th><td><span id="idfab"></span></td></tr>
             <tr><th>Fecha</th><td><span id="fecha"></span></td></tr>
         </table>
@@ -133,7 +132,6 @@
             const urlParams = new URLSearchParams(window.location.search);
 
             document.getElementById('folio').innerText = urlParams.get('folio') || '';
-            document.getElementById('id').innerText = urlParams.get('id') || '';
             document.getElementById('idfab').innerText = urlParams.get('idfab') || '';
             document.getElementById('fecha').innerText = urlParams.get('fecha') || '';
             document.getElementById('modificacion').innerText = urlParams.get('modificacion') || '';
