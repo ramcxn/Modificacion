@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orden de Trabajo - Dolly</title>
     <style>
+        /* Estilos generales para pantalla */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -146,11 +147,18 @@
             font-style: italic;
         }
         
+        /* Estilos específicos para impresión */
         @media print {
+            @page {
+                size: letter;
+                margin: 1cm;
+            }
             body {
                 margin: 0;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
             }
-            .header-table, .main-content, .observations-table, .reference-images {
+            .header-table, .main-content, .observations-table, .reference-images, .modification-section {
                 page-break-inside: avoid;
             }
         }
@@ -298,7 +306,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const appName = "NewApp-1254688";
-            const tableName = "Modificaciones"; // Esto asume que las modificaciones están en una tabla llamada "Modificaciones"
+            const tableName = "Modificaciones";
 
             const getParam = (name) => urlParams.get(name) || '';
 
