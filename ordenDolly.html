@@ -113,7 +113,7 @@
             text-align: center;
         }
         .reference-images img {
-            max-width: 15%; /* Modificación aquí */
+            max-width: 25%;
             height: auto;
             border: 1px solid #ccc;
             padding: 5px;
@@ -261,14 +261,7 @@
         </tr>
     </table>
 
-    <div id="modification-section" style="display: none;">
-        <div class="modification-section">
-            <div class="field-label"><strong>Modificaciones:</strong></div>
-            <div id="modificacionText"></div>
-            <div><strong>Motivo de la Modificación:</strong> <span id="motivoModificacion"></span></div>
-            <div><strong>Solicitado por:</strong> <span id="solicitadoPor"></span> <strong>Status:</strong> <span id="status"></span></div>
-        </div>
-    </div>
+    <div id="modifications-container"></div>
     
     <div id="observaciones-section" style="display: none;">
         <table class="observations-table">
@@ -346,16 +339,38 @@
             document.getElementById('argolla').innerText = getParam('argolla');
 
             // Llenar Modificaciones
-            const modificacion = getParam('modificacion');
-            const motivo = getParam('motivo_de_la_modificacion');
-            const solicitadoPor = getParam('solicitado_por');
-            const status = getParam('status');
-            if (modificacion || motivo || solicitadoPor || status) {
-                document.getElementById('modification-section').style.display = 'block';
-                document.getElementById('modificacionText').innerText = modificacion;
-                document.getElementById('motivoModificacion').innerText = motivo;
-                document.getElementById('solicitadoPor').innerText = solicitadoPor;
-                document.getElementById('status').innerText = status;
+            const modificacionesData = getParam('modificaciones_data');
+            const modificationsContainer = document.getElementById('modifications-container');
+            if (modificacionesData) {
+                const parts = modificacionesData.split('|');
+                const modificaciones = parts[0].split(',');
+                const motivos = parts[1].split(',');
+                const solicitados = parts[2].split(',');
+                const status = parts[3].split(',');
+
+                for (let i = 0; i < modificaciones.length; i++) {
+                    if (modificaciones[i].trim() === '' && motivos[i].trim() === '' && solicitados[i].trim() === '' && status[i].trim() === '') {
+                        continue;
+                    }
+
+                    const modificationSection = document.createElement('div');
+                    modificationSection.className = 'modification-section';
+                    
+                    const modificacionText = document.createElement('div');
+                    modificacionText.className = 'field-label';
+                    modificacionText.innerHTML = `<strong>Modificación:</strong> ${modificaciones[i]}`;
+                    modificationSection.appendChild(modificacionText);
+                    
+                    const motivoText = document.createElement('div');
+                    motivoText.innerHTML = `<strong>Motivo de la Modificación:</strong> ${motivos[i]}`;
+                    modificationSection.appendChild(motivoText);
+                    
+                    const solicitadoText = document.createElement('div');
+                    solicitadoText.innerHTML = `<strong>Solicitado por:</strong> ${solicitados[i]} <strong>Status:</strong> ${status[i]}`;
+                    modificationSection.appendChild(solicitadoText);
+                    
+                    modificationsContainer.appendChild(modificationSection);
+                }
             }
 
             // Llenar Observaciones
