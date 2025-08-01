@@ -1,181 +1,180 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Orden de Modificación</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            padding: 30px;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #eee;
-        }
-        .logo {
-            max-height: 70px;
-        }
-        .title-container {
-            text-align: left;
-        }
-        .title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #37474F;
-            margin-bottom: 5px;
-        }
-        .subtitle {
-            font-size: 16px;
-            color: #78909C;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            margin-bottom: 30px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        th {
-            background-color: #ECEFF1;
-            font-weight: bold;
-            color: #37474F;
-        }
-        tr:last-child td {
-            border-bottom: none;
-        }
-        .section-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #37474F;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #ECEFF1;
-            padding-bottom: 8px;
-        }
-        .details-section p {
-            margin-bottom: 12px;
-        }
-        .signature-section {
-            margin-top: 40px;
-            text-align: center;
-        }
-        .signature-section p {
-            margin-bottom: 8px;
-        }
-        .signature-line {
-            display: inline-block;
-            border-bottom: 1px solid #333;
-            width: 250px;
-            margin-bottom: 5px;
-        }
-        .signature-image {
-            max-width: 200px;
-            height: auto;
-            display: block;
-            margin: 10px auto;
-            border: 1px solid #ddd;
-            padding: 5px;
-            border-radius: 4px;
-        }
-        .no-print {
-            display: none;
-        }
-        @media print {
-            body { padding: 20px; background-color: white; color: black; }
-            .container { box-shadow: none; border-radius: 0; }
-            .header { border-bottom: 1px solid #ccc; margin-bottom: 20px; padding-bottom: 10px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Orden de Modificación</title>
+<style>
+body {
+font-family: 'Arial', sans-serif;
+padding: 30px;
+background-color: #f4f4f4;
+color: #333;
+line-height: 1.6;
+}
+.container {
+max-width: 900px;
+margin: 30px auto;
+background: white;
+padding: 40px;
+border-radius: 10px;
+box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+.header {
+display: flex;
+align-items: center;
+margin-bottom: 30px;
+padding-bottom: 20px;
+border-bottom: 2px solid #eee;
+}
+.logo {
+max-height: 70px; /* Ajusta este valor según el tamaño deseado /
+margin-right: 20px; / Espacio entre el logo y el título */
+}
+.title-container {
+text-align: left;
+}
+.title {
+font-size: 28px;
+font-weight: bold;
+color: #37474F;
+margin-bottom: 5px;
+}
+.subtitle {
+font-size: 16px;
+color: #78909C;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 20px;
+margin-bottom: 30px;
+border: 1px solid #ddd;
+border-radius: 6px;
+overflow: hidden;
+}
+th, td {
+padding: 12px 15px;
+text-align: left;
+border-bottom: 1px solid #eee;
+}
+th {
+background-color: #ECEFF1;
+font-weight: bold;
+color: #37474F;
+}
+tr:last-child td {
+border-bottom: none;
+}
+.section-title {
+font-size: 20px;
+font-weight: bold;
+color: #37474F;
+margin-top: 30px;
+margin-bottom: 15px;
+border-bottom: 2px solid #ECEFF1;
+padding-bottom: 8px;
+}
+.details-section p {
+margin-bottom: 12px;
+}
+.signature-section {
+margin-top: 40px;
+text-align: center;
+}
+.signature-section p {
+margin-bottom: 8px;
+}
+.signature-line {
+display: inline-block;
+border-bottom: 1px solid #333;
+width: 250px;
+margin-bottom: 5px;
+}
+.signature-image {
+max-width: 200px;
+height: auto;
+display: block;
+margin: 10px auto;
+border: 1px solid #ddd;
+padding: 5px;
+border-radius: 4px;
+}
+.no-print {
+display: none;
+}
+@media print {
+body { padding: 20px; background-color: white; color: black; }
+.container { box-shadow: none; border-radius: 0; }
+.header { border-bottom: 1px solid #ccc; margin-bottom: 20px; padding-bottom: 10px; }
+}
+</style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo" class="logo">
-            <div class="title-container">
-                <h1 class="title">ORDEN DE MODIFICACIÓN</h1>
-                <h6 class="subtitle">Documento de Trabajo</h6>
-            </div>
-        </div>
+<body onload="window.print()">
+<div class="container">
+<div class="header">
+<img src="TU_URL_DEL_LOGO_AQUI" alt="Logo" class="logo">
+<div class="title-container">
+<h1 class="title">ORDEN DE MODIFICACIÓN</h1>
+<h6 class="subtitle">Documento de Trabajo</h6>
+</div>
+</div>
 
-        <table>
-            <tr><th>Folio del Documento</th><td><span id="folio"></span></td></tr>
-            <tr><th>ID de Fabricación</th><td><span id="idfab"></span></td></tr>
-            <tr><th>Fecha</th><td><span id="fecha"></span></td></tr>
-        </table>
+<table>
+    <tr><th>Folio del Documento</th><td><span id="folio"></span></td></tr>
+    <tr><th>ID de Fabricación</th><td><span id="idfab"></span></td></tr>
+    <tr><th>Fecha</th><td><span id="fecha"></span></td></tr>
+</table>
 
-        <div class="section-title">Detalles de modificación:</div>
-        <div class="details-section">
-            <p><strong>Modificación:</strong> <span id="modificacion"></span></p>
-            <p><strong>Motivo:</strong> <span id="motivo"></span></p>
-            <p><strong>Referencia:</strong> <br><img id="referencia_imagen" src="" alt="Referencia" class="signature-image"></p>
-        </div>
+<div class="section-title">Detalles de modificación:</div>
+<div class="details-section">
+    <p><strong>Modificación:</strong> <span id="modificacion"></span></p>
+    <p><strong>Motivo:</strong> <span id="motivo"></span></p>
+    <p><strong>Referencia:</strong> <br><img id="referencia_imagen" src="" alt="Referencia" class="signature-image"></p>
+</div>
 
-        <table>
-            <tr><th>Solicitado por:</th><td><span id="solicitado_por"></span></td></tr>
-            <tr><th>Status de la solicitud:</th><td><span id="status"></span></td></tr>
-            <tr><th>Aprobado por:</th><td><span id="aprobado"></span></td></tr>
-        </table>
+<table>
+    <tr><th>Solicitado por:</th><td><span id="solicitado_por"></span></td></tr>
+    <tr><th>Status de la solicitud:</th><td><span id="status"></span></td></tr>
+    <tr><th>Aprobado por:</th><td><span id="aprobado"></span></td></tr>
+</table>
 
-        <div class="signature-section">
-            <p>Firma de aprobación: <div class="signature-line"></div></p>
-            <p><img id="firma_aprobacion_imagen" src="" alt="Firma de Aprobación" class="signature-image"></p>
-        </div>
+<div class="signature-section">
+    <p>Firma de aprobación: <div class="signature-line"></div></p>
+    <p><img id="firma_aprobacion_imagen" src="" alt="Firma de Aprobación" class="signature-image"></p>
+</div>
 
-        <button class="no-print" onclick="window.print()">Imprimir Documento</button>
-    </div>
+<button class="no-print" onclick="window.print()">Imprimir Documento</button>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+const urlParams = new URLSearchParams(window.location.search);
 
-            document.getElementById('folio').innerText = urlParams.get('folio') || '';
-            document.getElementById('idfab').innerText = urlParams.get('idfab') || '';
-            document.getElementById('fecha').innerText = urlParams.get('fecha') || '';
-            document.getElementById('modificacion').innerText = urlParams.get('modificacion') || '';
-            document.getElementById('motivo').innerText = urlParams.get('motivo') || '';
-            document.getElementById('solicitado_por').innerText = urlParams.get('solicitado_por') || '';
-            document.getElementById('status').innerText = urlParams.get('status') || '';
-            document.getElementById('aprobado').innerText = urlParams.get('aprobado') || '';
+    document.getElementById(&#39;folio&#39;).innerText = urlParams.get(&#39;folio&#39;) || &#39;&#39;;
+    document.getElementById(&#39;idfab&#39;).innerText = urlParams.get(&#39;idfab&#39;) || &#39;&#39;;
+    document.getElementById(&#39;fecha&#39;).innerText = urlParams.get(&#39;fecha&#39;) || &#39;&#39;;
+    document.getElementById(&#39;modificacion&#39;).innerText = urlParams.get(&#39;modificacion&#39;) || &#39;&#39;;
+    document.getElementById(&#39;motivo&#39;).innerText = urlParams.get(&#39;motivo&#39;) || &#39;&#39;;
+    document.getElementById(&#39;solicitado_por&#39;).innerText = urlParams.get(&#39;solicitado_por&#39;) || &#39;&#39;;
+    document.getElementById(&#39;status&#39;).innerText = urlParams.get(&#39;status&#39;) || &#39;&#39;;
+    document.getElementById(&#39;aprobado&#39;).innerText = urlParams.get(&#39;aprobado&#39;) || &#39;&#39;;
 
-            const referenciaUrl = urlParams.get('referencia') || '';
-            if (referenciaUrl) {
-                document.getElementById('referencia_imagen').src = referenciaUrl;
-            } else {
-                document.getElementById('referencia_imagen').style.display = 'none';
-            }
+    const referenciaUrl = urlParams.get(&#39;referencia&#39;) || &#39;&#39;;
+    if (referenciaUrl) {
+        document.getElementById(&#39;referencia_imagen&#39;).src = referenciaUrl;
+    } else {
+        document.getElementById(&#39;referencia_imagen&#39;).style.display = &#39;none&#39;;
+    }
 
-            const firmaAprobacionUrl = urlParams.get('firma_aprobacion') || '';
-            if (firmaAprobacionUrl) {
-                document.getElementById('firma_aprobacion_imagen').src = firmaAprobacionUrl;
-            } else {
-                document.getElementById('firma_aprobacion_imagen').style.display = 'none';
-            }
-            
-            // Llama a la ventana de impresión
-            window.print();
-        });
-    </script>
+    const firmaAprobacionUrl = urlParams.get(&#39;firma_aprobacion&#39;) || &#39;&#39;;
+    if (firmaAprobacionUrl) {
+        document.getElementById(&#39;firma_aprobacion_imagen&#39;).src = firmaAprobacionUrl;
+    } else {
+        document.getElementById(&#39;firma_aprobacion_imagen&#39;).style.display = &#39;none&#39;;
+    }
+});
+</script>
+
 </body>
 </html>
