@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <style>
+
+    body { font-family: Arial; padding: 20px; }
+
+    .header { text-align: center; margin-bottom: 30px; }
+
+    .title { font-size: 24px; font-weight: bold; }
+
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+
+    .signature { margin-top: 50px; }
+
+    @media print {
+
+      .no-print { display: none; }
+
+      body { padding: 0; margin: 0; }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="header">
+
+    <div class="title">ORDEN DE MODIFICACIÓN</div>
+
+    <div>Folio: {{Folio}}</div>
+
+  </div>
+
+
+
+  <table>
+
+    <tr><th>ID</th><td>{{ID}}</td></tr>
+
+    <tr><th>IDFAB</th><td>{{IDFAB}}</td></tr>
+
+    <tr><th>Fecha</th><td>{{Fecha}}</td></tr>
+
+  </table>
+
+
+
+  <h3>Detalles de modificación:</h3>
+
+  <p><strong>Modificación:</strong> {{Modificacion}}</p>
+
+  <p><strong>Motivo:</strong> {{Motivo}}</p>
+
+  <p><strong>Referencia:</strong> {{Referencia}}</p>
+
+
+
+  <table>
+
+    <tr><th>Solicitado por</th><td>{{SolicitadoPor}}</td></tr>
+
+    <tr><th>Status</th><td>{{Status}}</td></tr>
+
+    <tr><th>Aprobado</th><td>{{Aprobado}}</td></tr>
+
+  </table>
+
+
+
+  <div class="signature">
+
+    <p>Firma de aprobación: _________________________</p>
+
+    <p>{{FirmaAprobacion}}</p>
+
+  </div>
+
+
+
+  <button class="no-print" onclick="window.print()">Imprimir Documento</button>
+
+</body>
+
+</html>
