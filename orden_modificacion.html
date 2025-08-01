@@ -6,19 +6,20 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            padding: 15mm;
+            margin: 0;
+            padding: 0;
             background-color: #f4f4f4;
             color: #333;
             line-height: 1.5;
             font-size: 12pt;
         }
         .container {
-            max-width: 190mm;
-            margin: 0 auto;
+            width: 210mm;
+            min-height: 279mm;
+            margin: auto;
             background: white;
             padding: 20mm;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
         }
         .header {
             display: flex;
@@ -49,9 +50,6 @@
             border-collapse: collapse;
             margin-top: 15px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            overflow: hidden;
             font-size: 11pt;
         }
         th, td {
@@ -84,20 +82,11 @@
             margin-top: 30px;
             text-align: center;
         }
-        .signature-section p {
-            margin-bottom: 5px;
-        }
-        .signature-line {
-            display: inline-block;
-            border-bottom: 1px solid #333;
-            width: 200px;
-            margin-bottom: 5px;
-        }
         .signature-image {
             max-width: 180px;
             height: auto;
             display: block;
-            margin: 10px auto;
+            margin: 10px auto 0 auto;
             border: 1px solid #ddd;
             padding: 3px;
             border-radius: 4px;
@@ -106,19 +95,17 @@
             display: none;
         }
         @media print {
-            body { 
-                padding: 10mm;
-                background-color: white; 
-                color: black; 
+            body {
+                background-color: white;
                 font-size: 10pt;
             }
-            .container { 
-                box-shadow: none; 
-                border-radius: 0; 
-                padding: 0; 
-                width: 100%; 
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+                width: 210mm;
+                min-height: 279mm;
+                padding: 15mm;
             }
-            .header { border-bottom: 1px solid #ccc; margin-bottom: 15px; padding-bottom: 10px; }
             .title { font-size: 18pt; }
             .subtitle { font-size: 9pt; }
             table { font-size: 10pt; }
@@ -148,7 +135,7 @@
         <div class="details-section">
             <p><strong>Modificación:</strong> <span id="modificacion"></span></p>
             <p><strong>Motivo:</strong> <span id="motivo"></span></p>
-            <p><strong>Referencia:</strong> <br><img id="referencia_imagen" src="" alt="Referencia" class="signature-image"></p>
+            <p><strong>Referencia:</strong><br><img id="referencia_imagen" src="" alt="Referencia" class="signature-image"></p>
         </div>
 
         <table>
@@ -158,8 +145,8 @@
         </table>
 
         <div class="signature-section">
-            <p>Firma de aprobación: <div class="signature-line"></div></p>
-            <p><img id="firma_aprobacion_imagen" src="" alt="Firma de Aprobación" class="signature-image"></p>
+            <p>Firma de aprobación:</p>
+            <img id="firma_aprobacion_imagen" src="" alt="Firma de Aprobación" class="signature-image">
         </div>
 
         <button class="no-print" onclick="window.print()">Imprimir Documento</button>
@@ -178,16 +165,17 @@
             document.getElementById('status').innerText = urlParams.get('status') || '';
             document.getElementById('aprobado').innerText = urlParams.get('aprobado') || '';
 
-            const referenciaUrl = urlParams.get('referencia') || '';
-            if (referenciaUrl) {
-                document.getElementById('referencia_imagen').src = referenciaUrl;
+            const referenciaFile = urlParams.get('referencia') || '';
+            if (referenciaFile) {
+                const refUrl = "https://www.appsheet.com/template/gettablefileurl?appName=NewApp-1254688&tableName=Modificaciones&fileName=" + referenciaFile;
+                document.getElementById('referencia_imagen').src = refUrl;
             } else {
                 document.getElementById('referencia_imagen').style.display = 'none';
             }
 
-            const firmaAprobacion = urlParams.get('firma_aprobacion') || '';
-            if (firmaAprobacion) {
-                const firmaUrl = "https://www.appsheet.com/template/gettablefileurl?appName=NewApp-1254688&tableName=Modificaciones&fileName=" + firmaAprobacion;
+            const firmaFile = urlParams.get('firma_aprobacion') || '';
+            if (firmaFile) {
+                const firmaUrl = "https://www.appsheet.com/template/gettablefileurl?appName=NewApp-1254688&tableName=Modificaciones&fileName=" + firmaFile;
                 document.getElementById('firma_aprobacion_imagen').src = firmaUrl;
             } else {
                 document.getElementById('firma_aprobacion_imagen').style.display = 'none';
