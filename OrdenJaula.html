@@ -59,6 +59,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            break-inside: avoid;
         }
 
         .content-table td, .content-table th {
@@ -180,18 +181,99 @@
         @media print {
             @page {
                 size: letter;
-                margin: 1cm;
+                margin: 0.5in;
             }
+            
             body {
                 margin: 0;
                 -webkit-print-color-adjust: exact;
                 color-adjust: exact;
+                font-size: 11px;
             }
-            .header-table, .content-table, .observations-table, .reference-images, .modification-section {
+            
+            /* Prevenir cortes de página en elementos importantes */
+            .header {
+                break-inside: avoid;
                 page-break-inside: avoid;
             }
+            
+            .header-table {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            .content-table {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 15px;
+            }
+            
+            .content-table tr {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            .section-header {
+                break-after: avoid;
+                page-break-after: avoid;
+            }
+            
+            .observations-table {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            .reference-images {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            .modification-section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 10px;
+            }
+            
+            .firma-container {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            /* Forzar salto de página antes de secciones importantes si es necesario */
+            .plataforma-section {
+                break-before: auto;
+                page-break-before: auto;
+            }
+            
+            .estructura-section {
+                break-before: auto;
+                page-break-before: auto;
+            }
+            
+            .accesorios-section {
+                break-before: auto;
+                page-break-before: auto;
+            }
+            
+            /* Ocultar botón en impresión */
             .save-pdf-button {
                 display: none;
+            }
+            
+            /* Ajustar espaciado para impresión */
+            .content-table td {
+                padding: 8px;
+            }
+            
+            .header-table td {
+                padding: 6px;
+            }
+            
+            /* Asegurar que las imágenes no se corten */
+            .reference-images img {
+                max-width: 20%;
+                break-inside: avoid;
+                page-break-inside: avoid;
             }
         }
     </style>
@@ -227,7 +309,7 @@
         </tr>
     </table>
 
-    <table class="content-table">
+    <table class="content-table plataforma-section">
         <tr>
             <td class="section-header" colspan="2"><strong>Plataforma</strong></td>
         </tr>
@@ -308,6 +390,9 @@
                 <br>
             </td>
         </tr>
+    </table>
+
+    <table class="content-table estructura-section">
         <tr>
             <td class="section-header" colspan="2"><strong>Estructura</strong></td>
         </tr>
@@ -350,6 +435,9 @@
                 <br>
             </td>
         </tr>
+    </table>
+
+    <table class="content-table accesorios-section">
         <tr>
             <td class="section-header" colspan="2"><strong>Accesorios</strong></td>
         </tr>
