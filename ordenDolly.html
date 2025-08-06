@@ -18,6 +18,30 @@
 
     <table class="main-content">
         <tr>
+            <td class="section-header" colspan="2"><strong>Información General</strong></td>
+        </tr>
+        <tr>
+            <td style="width: 50%;">
+                <div class="field-label">MES DE PRODUCCIÓN:</div>
+                <div class="field-value"><span id="mesProduccion"></span></div>
+                <div class="field-label">ORDEN DE TRABAJO:</div>
+                <div class="field-value"><span id="ordenTrabajo"></span></div>
+                <div class="field-label">NIV:</div>
+                <div class="field-value"><span id="niv"></span></div>
+            </td>
+            <td style="width: 50%;">
+                <div class="field-label">CLIENTE:</div>
+                <div class="field-value"><span id="cliente"></span></div>
+                <div class="field-label">TIPO DE UNIDAD:</div>
+                <div class="field-value"><span id="tipoUnidad"></span></div>
+                <div class="field-label">REALIZADO POR:</div>
+                <div class="field-value"><span id="realizadoPor"></span></div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="main-content">
+        <tr>
             <td class="section-header" colspan="2"><strong>Estructura</strong></td>
         </tr>
         <tr>
@@ -54,6 +78,9 @@
                 <div class="field-value"><span id="personalizacionViga"></span></div>
             </td>
         </tr>
+    </table>
+
+    <table class="main-content">
         <tr>
             <td class="section-header" colspan="2"><strong>Accesorios</strong></td>
         </tr>
@@ -131,7 +158,10 @@
             const appName = "NewApp-1254688";
             const tableName = "Modificaciones";
 
-            const getParam = (name) => urlParams.get(name) || '';
+            const getParam = (name) => {
+                const value = urlParams.get(name);
+                return value ? decodeURIComponent(value) : '';
+            };
 
             const getAppSheetImageUrl = (fileName) => {
                 if (!fileName) return '';
