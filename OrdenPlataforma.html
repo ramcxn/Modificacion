@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orden de Trabajo - Plataforma</title>
+    <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/Style.CSS">
+    <style>
+      /* Estilo para ocultar la imagen al imprimir si no tiene un id_fab */
+      @media print {
+        #qrCodeImage[src=""] {
+            display: none;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo de la empresa" class="logo">
+        <div class="title-container">
+            <h1 class="header-title">ORDEN DE TRABAJO - PLATAFORMA</h1>
+            <h2 class="header-subtitle">Documento de Fabricación</h2>
+        </div>
+        <img id="qrCodeImage" src="" alt="Código QR" class="logo" style="display: none;">
+    </div>
+    
+    <table class="header-table">
+        <tr>
+            <td><strong>Mes de Producción:</strong></td>
+            <td><span id="mesProduccion"></span></td>
+            <td><strong>Orden de trabajo:</strong></td>
+            <td><span id="ordenTrabajo"></span></td>
+            <td><strong>NIV:</strong></td>
+            <td><span id="niv"></span></td>
+        </tr>
+        <tr>
+            <td><strong>Cliente:</strong></td>
+            <td colspan="3"><span id="cliente"></span></td>
+            <td><strong>Realizado por:</strong></td>
+            <td><span id="realizadoPor"></span></td>
+        </tr>
+        <tr>
+            <td><strong>Tipo de unidad:</strong></td>
+            <td colspan="3"><span id="tipoUnidad"></span></td>
+            <td colspan="2"></td>
+        </tr>
+    </table>
+
+    <table class="main-content plataforma-section">
+        <tr>
+            <td class="section-header" colspan="2"><strong>Plataforma</strong></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="field-label">MEDIDAS:</div>
+                <div class="field-value"><span id="medidas"></span></div>
+                <div class="field-label">COLOR PRIMARIO:</div>
+                <div class="field-value"><span id="colorPrimario"></span></div>
+                <br>
+                <div class="field-label">COLOR SECUNDARIO:</div>
+                <div class="field-value"><span id="colorSecundario"></span></div>
+                <br>
+                <div class="field-label">FRONTAL:</div>
+                <div class="field-value"><span id="frontal"></span></div>
+                <br>
+                <div class="field-label">SUSPENSIÓN:</div>
+                <div class="field-value"><span id="suspension"></span></div>
+                <br>
+                <div class="field-label">CANTIDAD DE SUSPENSIONES:</div>
+                <div class="field-value"><span id="cantSuspensiones"></span></div>
+                <br>
+                <div class="field-label">RETRÁCTIL EJE:</div>
+                <div class="field-value"><span id="retractilEje"></span></div>
+                <br>
+                <div class="field-label">EJES:</div>
+                <div class="field-value"><span id="ejes"></span></div>
+                <br>
+                <div class="field-label">CANTIDAD DE EJES:</div>
+                <div class="field-value"><span id="cantEjes"></span></div>
+                <br>
+                <div class="field-label">PERNO REY:</div>
+                <div class="field-value"><span id="pernoRey"></span></div>
+                <br>
+            </td>
+            <td>
+                <div class="field-label">GANCHO TIRÓN:</div>
+                <div class="field-value"><span id="ganchoTiron"></span></div>
+                <br>
+                <div class="field-label">JUEGO DE PATINES:</div>
+                <div class="field-value"><span id="juegoPatines"></span></div>
+                <br>
+                <div class="field-label">CANTIDAD DE PATINES:</div>
+                <div class="field-value"><span id="cantPatines"></span></div>
+                <br>
+                <div class="field-label">CAJA DE HERRAMIENTAS:</div>
+                <div class="field-value"><span id="cajaHerramientas"></span></div>
+                <br>
+                <div class="field-label">DIRECCIONALES:</div>
+                <div class="field-value"><span id="direccionales"></span></div>
+                <br>
+                <div class="field-label">CAJÓN PARA BARROTES:</div>
+                <div class="field-value"><span id="cajonBarrotes"></span></div>
+                <br>
+                <div class="field-label">MANIVELAS DE PATÍN:</div>
+                <div class="field-value"><span id="manivelasPatin"></span></div>
+                <br>
+                <div class="field-label">WINCHERS:</div>
+                <div class="field-value"><span id="winchers"></span></div>
+                <br>
+                <div class="field-label">DISTANCIA ENTRE EJES:</div>
+                <div class="field-value"><span id="distanciaEjes"></span></div>
+                <br>
+                <div class="field-label">PERSONALIZACIÓN DE VIGA:</div>
+                <div class="field-value"><span id="personalizacionViga"></span></div>
+                <br>
+            </td>
+        </tr>
+    </table>
+
+    <table class="main-content estructura-section">
+        <tr>
+            <td class="section-header" colspan="2"><strong>Estructura</strong></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="field-label">PISO DE MADERA:</div>
+                <div class="field-value"><span id="pisoMadera"></span></div>
+                <br>
+                <div class="field-label">PISO LAMINADO:</div>
+                <div class="field-value"><span id="pisoLaminado"></span></div>
+                <br>
+            </td>
+            <td>
+                <div class="field-label">COLOR DE SOLERA DE ARRIMADERO:</div>
+                <div class="field-value"><span id="colorSoleraArrimadero"></span></div>
+                <br>
+            </td>
+        </tr>
+    </table>
+
+    <table class="main-content accesorios-section">
+        <tr>
+            <td class="section-header" colspan="2"><strong>Accesorios</strong></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="field-label">SISTEMA DE INFLADO PSI:</div>
+                <div class="field-value"><span id="sistemaInflado"></span></div>
+                <br>
+                <div class="field-label">LODERAS DELANTERA:</div>
+                <div class="field-value"><span id="loderaDelantera"></span></div>
+                <br>
+                <div class="field-label">LODERAS TRASERA:</div>
+                <div class="field-value"><span id="loderaTrasera"></span></div>
+                <br>
+                <div class="field-label">LUZ PLACA:</div>
+                <div class="field-value"><span id="luzPlaca"></span></div>
+                <br>
+                <div class="field-label">RINES:</div>
+                <div class="field-value"><span id="rines"></span></div>
+                <br>
+            </td>
+            <td>
+                <div class="field-label">CANTIDAD DE RINES:</div>
+                <div class="field-value"><span id="cantRines"></span></div>
+                <br>
+                <div class="field-label">LLANTAS:</div>
+                <div class="field-value"><span id="llantas"></span></div>
+                <br>
+                <div class="field-label">CANTIDAD DE LLANTAS:</div>
+                <div class="field-value"><span id="cantLlantas"></span></div>
+                <br>
+                <div class="field-label">FRENOS:</div>
+                <div class="field-value"><span id="frenos"></span></div>
+                <br>
+            </td>
+        </tr>
+    </table>
+
+    <div id="modifications-container"></div>
+    
+    <div id="observaciones-section" style="display: none;">
+        <table class="observations-table">
+            <tr>
+                <td class="section-header"><strong>Observaciones</strong></td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="observaciones-container"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="reference-section" style="display: none;">
+        <table class="reference-images">
+            <tr>
+                <td class="section-header"><strong>Imágenes de referencia</strong></td>
+            </tr>
+            <tr>
+                <td id="imagenes-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="fecha-section" style="display: none;">
+        <table class="fecha-table">
+            <tr>
+                <td><strong>Mes de Producción:</strong> <span id="fechaMesProduccion"></span></td>
+                <td><strong>Fecha de Finalización:</strong> <span id="fechaFinalizacion"></span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="firma-section" style="display: none;">
+        <div class="firma-container">
+            <div class="field-label">Firma de aprobación:</div>
+            <img id="firmaAprobacionImg" src="" alt="Firma de Aprobación">
+        </div>
+    </div>
+    
+    <button class="save-pdf-button" onclick="window.print()">Guardar como PDF</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const appName = "NewApp-1254688";
+            const tableName = "Modificaciones";
+
+            const getParam = (name) => urlParams.get(name) || '';
+
+            // Generar código QR
+            const idFab = getParam('id_fab');
+            const qrCodeImage = document.getElementById('qrCodeImage');
+            if (idFab) {
+                const qrCodeURL = `https://quickchart.io/qr?text=${encodeURIComponent(idFab)}&size=800`;
+                qrCodeImage.src = qrCodeURL;
+                qrCodeImage.style.display = 'block'; 
+            } else {
+                qrCodeImage.style.display = 'none'; 
+            }
+            
+            const getAppSheetImageUrl = (fileName) => {
+                if (!fileName) return '';
+                return `https://www.appsheet.com/template/gettablefileurl?appName=${appName}&tableName=${tableName}&fileName=${encodeURIComponent(fileName)}`;
+            };
+
+            // Llenar información general
+            document.getElementById('mesProduccion').innerText = getParam('mes_de_produccion');
+            document.getElementById('ordenTrabajo').innerText = getParam('imprimir');
+            document.getElementById('niv').innerText = getParam('niv');
+            document.getElementById('cliente').innerText = getParam('cliente');
+            document.getElementById('tipoUnidad').innerText = getParam('tipo_de_unidad');
+            document.getElementById('realizadoPor').innerText = getParam('realizado_por');
+
+            // Llenar Plataforma
+            document.getElementById('medidas').innerText = getParam('dimensiones');
+            document.getElementById('colorPrimario').innerText = getParam('color');
+            document.getElementById('colorSecundario').innerText = getParam('color_2');
+            document.getElementById('frontal').innerText = getParam('frente');
+            document.getElementById('suspension').innerText = getParam('suspension');
+            document.getElementById('cantSuspensiones').innerText = getParam('cantidad_de_suspensiones');
+            document.getElementById('retractilEje').innerText = getParam('retractil_eje');
+            document.getElementById('ejes').innerText = getParam('ejes');
+            document.getElementById('cantEjes').innerText = getParam('cantidad_de_ejes');
+            document.getElementById('pernoRey').innerText = getParam('perno_rey');
+            document.getElementById('ganchoTiron').innerText = getParam('gancho_tiron');
+            document.getElementById('juegoPatines').innerText = getParam('juego_de_patines');
+            document.getElementById('cantPatines').innerText = getParam('cantidad_de_patines');
+            document.getElementById('cajaHerramientas').innerText = getParam('caja_de_herramientas');
+            document.getElementById('direccionales').innerText = getParam('direccionales');
+            document.getElementById('cajonBarrotes').innerText = getParam('cajon_para_barrotes');
+            document.getElementById('manivelasPatin').innerText = getParam('manivelas_de_patin');
+            document.getElementById('winchers').innerText = getParam('eje_unimont');
+            document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
+            document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
+
+            // Llenar Estructura
+            document.getElementById('pisoMadera').innerText = getParam('piso_de_madera');
+            document.getElementById('pisoLaminado').innerText = getParam('piso_laminado');
+            document.getElementById('colorSoleraArrimadero').innerText = getParam('color_de_solera_de_arrimadero');
+
+            // Llenar Accesorios
+            document.getElementById('sistemaInflado').innerText = getParam('sistema_de_inflado_psi');
+            document.getElementById('loderaDelantera').innerText = getParam('loderas_delantera');
+            document.getElementById('loderaTrasera').innerText = getParam('loderas_trasera');
+            
+            // Procesar LUZ PLACA como booleano
+            const luzPlacaValue = getParam('luz_placa');
+            document.getElementById('luzPlaca').innerText = luzPlacaValue ? 'SI' : 'NO';
+            
+            document.getElementById('rines').innerText = getParam('rines');
+            document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
+            document.getElementById('llantas').innerText = getParam('llantas_70');
+            document.getElementById('cantLlantas').innerText = getParam('cantidad_de_llantas');
+            document.getElementById('frenos').innerText = getParam('frenos');
+
+            // Llenar Modificaciones
+            const modificacionesData = getParam('modificaciones_data');
+            const modificationsContainer = document.getElementById('modifications-container');
+            if (modificacionesData) {
+                const parts = modificacionesData.split('|');
+                const modificaciones = parts[0].split(',');
+                const motivos = parts[1].split(',');
+                const solicitados = parts[2].split(',');
+                const status = parts[3].split(',');
+
+                for (let i = 0; i < modificaciones.length; i++) {
+                    if (modificaciones[i].trim() === '' && motivos[i].trim() === '' && solicitados[i].trim() === '' && status[i].trim() === '') {
+                        continue;
+                    }
+
+                    const modificationSection = document.createElement('div');
+                    modificationSection.className = 'modification-section';
+                    
+                    const modificacionText = document.createElement('div');
+                    modificacionText.className = 'field-label';
+                    modificacionText.innerHTML = `<strong>Modificación:</strong> ${modificaciones[i]}`;
+                    modificationSection.appendChild(modificacionText);
+                    
+                    const motivoText = document.createElement('div');
+                    motivoText.innerHTML = `<strong>Motivo de la Modificación:</strong> ${motivos[i]}`;
+                    modificationSection.appendChild(motivoText);
+                    
+                    const solicitadoText = document.createElement('div');
+                    solicitadoText.innerHTML = `<strong>Solicitado por:</strong> ${solicitados[i]} <strong>Status:</strong> ${status[i]}`;
+                    modificationSection.appendChild(solicitadoText);
+                    
+                    modificationsContainer.appendChild(modificationSection);
+                }
+            }
+
+            // Llenar Observaciones
+            const observacionesPintura = getParam('observaciones_de_pintura');
+            const observacionesGenerales = getParam('observaciones');
+            const allObservations = [];
+
+            if (observacionesPintura) {
+                observacionesPintura.split(',').forEach(obs => allObservations.push(obs.trim()));
+            }
+
+            if (observacionesGenerales) {
+                observacionesGenerales.split(',').forEach(obs => allObservations.push(obs.trim()));
+            }
+
+            const uniqueObservations = allObservations.filter(obs => obs.length > 0);
+
+            if (uniqueObservations.length > 0) {
+                document.getElementById('observaciones-section').style.display = 'block';
+                const ul = document.createElement('ul');
+                ul.className = 'observations-list';
+                uniqueObservations.forEach(obs => {
+                    const li = document.createElement('li');
+                    li.innerText = obs;
+                    ul.appendChild(li);
+                });
+                document.getElementById('observaciones-container').appendChild(ul);
+            }
+
+            // Llenar Imágenes de Referencia
+            const imagenesContainer = document.getElementById('imagenes-container');
+            const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
+            let hasImages = false;
+            imagenParams.forEach(paramName => {
+                const fileName = getParam(paramName);
+                if (fileName) {
+                    const img = document.createElement('img');
+                    img.src = getAppSheetImageUrl(fileName);
+                    img.alt = `Imagen de referencia`;
+                    imagenesContainer.appendChild(img);
+                    hasImages = true;
+                }
+            });
+            if (hasImages) {
+                document.getElementById('reference-section').style.display = 'block';
+            }
+
+            // Llenar fechas adicionales
+            const fechaMesProduccion = getParam('mes_de_produccion_fecha');
+            const fechaFinalizacion = getParam('fecha_de_finalizacion');
+            
+            if (fechaMesProduccion || fechaFinalizacion) {
+                document.getElementById('fecha-section').style.display = 'block';
+                document.getElementById('fechaMesProduccion').innerText = fechaMesProduccion;
+                document.getElementById('fechaFinalizacion').innerText = fechaFinalizacion;
+            }
+            
+            // Llenar Firma de aprobación
+            const firmaFileName = getParam('firma_aprobacion');
+            const firmaImg = document.getElementById('firmaAprobacionImg');
+            if (firmaFileName) {
+                document.getElementById('firma-section').style.display = 'block';
+                firmaImg.src = getAppSheetImageUrl(firmaFileName);
+            }
+        });
+    </script>
+</body>
+</html>
