@@ -153,20 +153,20 @@
             document.getElementById('cantSuspensiones').innerText = getParam('cantidad_de_suspensiones');
             document.getElementById('retractilEje').innerText = getParam('retractil_eje');
             document.getElementById('ejes').innerText = getParam('ejes');
-            const tipoFaldon = getParam('faldon');
-            document.getElementById('faldon').innerText = tipoFaldon;
+            document.getElementById('faldon').innerText = getParam('faldon');
             document.getElementById('lanza').innerText = getParam('lanzas');
             document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
             document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
-
+            
             // Generar código QR
+            const idFab = getParam('id_fab');
             const qrCodeImage = document.getElementById('qrCodeImage');
-            if (tipoFaldon) {
-                const qrCodeURL = `https://chart.googleapis.com/chart?chs=80x80&cht=qr&chl=${encodeURIComponent(tipoFaldon)}`;
+            if (idFab) {
+                const qrCodeURL = `https://quickchart.io/qr?text=${encodeURIComponent(idFab)}&size=800`;
                 qrCodeImage.src = qrCodeURL;
-                qrCodeImage.style.display = 'block'; // Asegura que la imagen sea visible
+                qrCodeImage.style.display = 'block'; 
             } else {
-                qrCodeImage.style.display = 'none'; // Oculta si no hay valor
+                qrCodeImage.style.display = 'none'; 
             }
 
             // Llenar Accesorios
@@ -181,39 +181,36 @@
             document.getElementById('argolla').innerText = getParam('argolla');
 
             // Llenar Modificaciones
-            const modificacionesData = getParam('modificaciones_data');
             const modificationsContainer = document.getElementById('modifications-container');
+            const modificacionesData = getParam('modificaciones_data');
             if (modificacionesData) {
                 const parts = modificacionesData.split('|');
-                const modificaciones = parts && parts.length > 0 ? parts [0].split(',') : [];
-                const motivos = parts && parts.length > 1 ? parts [1].split(',') : [];
-                const solicitados = parts && parts.length > 2 ? parts [2].split(',') : [];
-                const status = parts && parts.length > 3 ? parts [3].split(',') : [];
+                const modificaciones = parts[0].split(',');
+                const motivos = parts[1].split(',');
+                const solicitados = parts[2].split(',');
+                const status = parts[3].split(',');
 
                 for (let i = 0; i < modificaciones.length; i++) {
-                    if (modificaciones [i] && modificaciones [i].trim() === '' &&
-                        motivos [i] && motivos [i].trim() === '' &&
-                        solicitados [i] && solicitados [i].trim() === '' &&
-                        status [i] && status [i].trim() === '') {
+                    if (modificaciones[i].trim() === '' && motivos[i].trim() === '' && solicitados[i].trim() === '' && status[i].trim() === '') {
                         continue;
                     }
 
                     const modificationSection = document.createElement('div');
                     modificationSection.className = 'modification-section';
-
+                    
                     const modificacionText = document.createElement('div');
                     modificacionText.className = 'field-label';
-                    modificacionText.innerHTML = `<strong>Modificación:</strong> ${modificaciones [i] || ''}`;
+                    modificacionText.innerHTML = `<strong>Modificación:</strong> ${modificaciones[i]}`;
                     modificationSection.appendChild(modificacionText);
-
+                    
                     const motivoText = document.createElement('div');
-                    motivoText.innerHTML = `<strong>Motivo de la Modificación:</strong> ${motivos [i] || ''}`;
+                    motivoText.innerHTML = `<strong>Motivo de la Modificación:</strong> ${motivos[i]}`;
                     modificationSection.appendChild(motivoText);
-
+                    
                     const solicitadoText = document.createElement('div');
-                    solicitadoText.innerHTML = `<strong>Solicitado por:</strong> ${solicitados [i] || ''} <strong>Status:</strong> ${status [i] || ''}`;
+                    solicitadoText.innerHTML = `<strong>Solicitado por:</strong> ${solicitados[i]} <strong>Status:</strong> ${status[i]}`;
                     modificationSection.appendChild(solicitadoText);
-
+                    
                     modificationsContainer.appendChild(modificationSection);
                 }
             }
