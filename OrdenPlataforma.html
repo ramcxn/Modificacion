@@ -249,51 +249,51 @@
             document.getElementById('mesProduccion').innerText = getParam('mes_de_produccion');
             document.getElementById('ordenTrabajo').innerText = getParam('imprimir');
             document.getElementById('niv').innerText = getParam('niv');
-            document.getElementById('cliente').innerText = getParam('cliente');
+            document.getElementById('cliente').innerText = decodeURIComponent(getParam('cliente'));
             document.getElementById('tipoUnidad').innerText = getParam('tipo_de_unidad');
             document.getElementById('realizadoPor').innerText = getParam('realizado_por');
 
             // Llenar Plataforma
-            document.getElementById('medidas').innerText = getParam('dimensiones');
-            document.getElementById('colorPrimario').innerText = getParam('color');
-            document.getElementById('colorSecundario').innerText = getParam('color_2');
-            document.getElementById('frontal').innerText = getParam('frente');
-            document.getElementById('suspension').innerText = getParam('suspension');
+            document.getElementById('medidas').innerText = decodeURIComponent(getParam('dimensiones'));
+            document.getElementById('colorPrimario').innerText = decodeURIComponent(getParam('color'));
+            document.getElementById('colorSecundario').innerText = decodeURIComponent(getParam('color_2'));
+            document.getElementById('frontal').innerText = decodeURIComponent(getParam('frente'));
+            document.getElementById('suspension').innerText = decodeURIComponent(getParam('suspension'));
             document.getElementById('cantSuspensiones').innerText = getParam('cantidad_de_suspensiones');
-            document.getElementById('retractilEje').innerText = getParam('retractil_eje');
-            document.getElementById('ejes').innerText = getParam('ejes');
+            document.getElementById('retractilEje').innerText = decodeURIComponent(getParam('retractil_eje'));
+            document.getElementById('ejes').innerText = decodeURIComponent(getParam('ejes'));
             document.getElementById('cantEjes').innerText = getParam('cantidad_de_ejes');
             document.getElementById('pernoRey').innerText = getParam('perno_rey');
             document.getElementById('ganchoTiron').innerText = getParam('gancho_tiron');
-            document.getElementById('juegoPatines').innerText = getParam('juego_de_patines');
+            document.getElementById('juegoPatines').innerText = decodeURIComponent(getParam('juego_de_patines'));
             document.getElementById('cantPatines').innerText = getParam('cantidad_de_patines');
-            document.getElementById('cajaHerramientas').innerText = getParam('caja_de_herramientas');
-            document.getElementById('direccionales').innerText = getParam('direccionales');
-            document.getElementById('cajonBarrotes').innerText = getParam('cajon_para_barrotes');
-            document.getElementById('manivelasPatin').innerText = getParam('manivelas_de_patin');
-            document.getElementById('winchers').innerText = getParam('eje_unimont');
-            document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
-            document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
+            document.getElementById('cajaHerramientas').innerText = decodeURIComponent(getParam('caja_de_herramientas'));
+            document.getElementById('direccionales').innerText = decodeURIComponent(getParam('direccionales'));
+            document.getElementById('cajonBarrotes').innerText = decodeURIComponent(getParam('cajon_para_barrotes'));
+            document.getElementById('manivelasPatin').innerText = decodeURIComponent(getParam('manivelas_de_patin'));
+            document.getElementById('winchers').innerText = decodeURIComponent(getParam('eje_unimont'));
+            document.getElementById('distanciaEjes').innerText = decodeURIComponent(getParam('distancia_de_ejes'));
+            document.getElementById('personalizacionViga').innerText = decodeURIComponent(getParam('personalizacion_de_viga'));
 
             // Llenar Estructura
             document.getElementById('pisoMadera').innerText = getParam('piso_de_madera');
-            document.getElementById('pisoLaminado').innerText = getParam('piso_laminado');
-            document.getElementById('colorSoleraArrimadero').innerText = getParam('color_de_solera_de_arrimadero');
+            document.getElementById('pisoLaminado').innerText = decodeURIComponent(getParam('piso_laminado'));
+            document.getElementById('colorSoleraArrimadero').innerText = decodeURIComponent(getParam('color_de_solera_de_arrimadero'));
 
             // Llenar Accesorios
-            document.getElementById('sistemaInflado').innerText = getParam('sistema_de_inflado_psi');
+            document.getElementById('sistemaInflado').innerText = decodeURIComponent(getParam('sistema_de_inflado_psi'));
             document.getElementById('loderaDelantera').innerText = getParam('loderas_delantera');
             document.getElementById('loderaTrasera').innerText = getParam('loderas_trasera');
             
             // Procesar LUZ PLACA como booleano
             const luzPlacaValue = getParam('luz_placa');
-            document.getElementById('luzPlaca').innerText = luzPlacaValue ? 'SI' : 'NO';
+            document.getElementById('luzPlaca').innerText = (luzPlacaValue === 'true' || luzPlacaValue === '1') ? 'SI' : 'NO';
             
-            document.getElementById('rines').innerText = getParam('rines');
+            document.getElementById('rines').innerText = decodeURIComponent(getParam('rines'));
             document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
-            document.getElementById('llantas').innerText = getParam('llantas_70');
+            document.getElementById('llantas').innerText = decodeURIComponent(getParam('llantas_70'));
             document.getElementById('cantLlantas').innerText = getParam('cantidad_de_llantas');
-            document.getElementById('frenos').innerText = getParam('frenos');
+            document.getElementById('frenos').innerText = decodeURIComponent(getParam('frenos'));
 
             // Llenar Modificaciones
             const modificacionesData = getParam('modificaciones_data');
@@ -331,19 +331,23 @@
             }
 
             // Llenar Observaciones
-            const observacionesPintura = getParam('observaciones_de_pintura');
-            const observacionesGenerales = getParam('observaciones');
+            const observacionesPintura = decodeURIComponent(getParam('observaciones_de_pintura'));
+            const observacionesGenerales = decodeURIComponent(getParam('observaciones'));
             const allObservations = [];
 
-            if (observacionesPintura) {
-                observacionesPintura.split(',').forEach(obs => allObservations.push(obs.trim()));
+            if (observacionesPintura && observacionesPintura.length > 0) {
+                observacionesPintura.split(',').forEach(obs => {
+                    if (obs.trim().length > 0) allObservations.push(obs.trim());
+                });
             }
 
-            if (observacionesGenerales) {
-                observacionesGenerales.split(',').forEach(obs => allObservations.push(obs.trim()));
+            if (observacionesGenerales && observacionesGenerales.length > 0) {
+                observacionesGenerales.split(',').forEach(obs => {
+                    if (obs.trim().length > 0) allObservations.push(obs.trim());
+                });
             }
 
-            const uniqueObservations = allObservations.filter(obs => obs.length > 0);
+            const uniqueObservations = [...new Set(allObservations)].filter(obs => obs.length > 0);
 
             if (uniqueObservations.length > 0) {
                 document.getElementById('observaciones-section').style.display = 'block';
