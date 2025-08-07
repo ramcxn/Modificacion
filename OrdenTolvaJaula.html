@@ -217,16 +217,16 @@
         </table>
     </div>
 
- <div id="reference-section" style="display: none;">
-    <table class="reference-images">
-      <tr>
-        <td class="section-header"><strong>Imágenes de referencia</strong></td>
-      </tr>
-      <tr>
-        <td id="imagenes-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></td>
-      </tr>
-    </table>
-  </div>
+    <div id="reference-section" style="display: none;">
+        <table class="reference-images">
+            <tr>
+                <td class="section-header"><strong>Imágenes de referencia</strong></td>
+            </tr>
+            <tr>
+                <td id="imagenes-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></td>
+            </tr>
+        </table>
+    </div>
 
     <div id="fecha-section" style="display: none;">
         <table class="fecha-table">
@@ -395,24 +395,24 @@
                 document.getElementById('observaciones-container').appendChild(ul);
             }
 
-            // Llenar Imágenes de Referencia
-            const imagenesContainer = document.getElementById('imagenes-container');
-            const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
-            let hasImages = false;
-            imagenParams.forEach(paramName => {
-                const fileName = getParam(paramName);
-                if (fileName) {
-                    const img = document.createElement('img');
-                    img.src = getAppSheetImageUrl(fileName);
-                    img.alt = `Imagen de referencia`;
-                    imagenesContainer.appendChild(img);
-                    hasImages = true;
-                }
-            });
-            if (hasImages) {
-                document.getElementById('reference-section').style.display = 'block';
-            }
-
+            // Llenar Imágenes de Referencia
+            const imagenesContainer = document.getElementById('imagenes-container');
+            const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
+            let hasImages = false;
+            imagenParams.forEach(paramName => {
+                const fileName = getParam(paramName);
+                if (fileName) {
+                    const img = document.createElement('img');
+                    img.src = getAppSheetImageUrl(fileName);
+                    img.alt = `Imagen de referencia`;
+                    imagenesContainer.appendChild(img);
+                    hasImages = true;
+                }
+            });
+            if (hasImages) {
+                document.getElementById('reference-section').style.display = 'block';
+            }
+            
             // Llenar fechas adicionales
             const fechaMesProduccion = getParam('mes_de_produccion_fecha');
             const fechaFinalizacion = getParam('fecha_de_finalizacion');
