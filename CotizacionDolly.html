@@ -207,91 +207,98 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const getParam = (name) => {
-                const value = urlParams.get(name);
-                return value ? decodeURIComponent(value) : '';
-            };
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const appName = "NewApp-1254688";
+        const tableName = "Modificaciones";
 
-            const formatCurrency = (value) => {
-                if (isNaN(value)) return '$0.00 MXN';
-                return `$${parseFloat(value).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
-            };
-            
-            // Llenar información del cliente
-            document.getElementById('cliente').innerText = getParam('cliente');
-            document.getElementById('direccionCliente').innerText = getParam('direccion');
-            document.getElementById('rfcCliente').innerText = getParam('rfc');
-            document.getElementById('tipoUnidad').innerText = getParam('tipo_de_unidad');
-            document.getElementById('realizadoPor').innerText = getParam('realizado_por');
-            
-            // Llenar Estructura
-            document.getElementById('colorPrimario').innerText = getParam('color');
-            document.getElementById('colorSecundario').innerText = getParam('color_2');
-            document.getElementById('suspension').innerText = getParam('suspension');
-            document.getElementById('cantSuspensiones').innerText = getParam('cantidad_de_suspensiones');
-            document.getElementById('retractilEje').innerText = getParam('retractil_eje');
-            document.getElementById('ejes').innerText = getParam('ejes');
-            document.getElementById('faldon').innerText = getParam('faldon');
-            document.getElementById('lanza').innerText = getParam('lanzas');
-            document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
-            document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
-            
-            // Llenar Accesorios
-            document.getElementById('rines').innerText = getParam('rines');
-            document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
-            document.getElementById('llantas').innerText = getParam('llantas_70');
-            document.getElementById('cantLlantas').innerText = getParam('cantidad_de_llantas');
-            document.getElementById('frenos').innerText = getParam('frenos');
-            document.getElementById('sistemaInflado').innerText = getParam('sistema_de_inflado_psi');
-            document.getElementById('quintaRueda').innerText = getParam('quinta_rueda');
-            document.getElementById('plafones').innerText = getParam('plafones');
-            document.getElementById('argolla').innerText = getParam('argolla');
+        const getParam = (name) => {
+            const value = urlParams.get(name);
+            return value ? decodeURIComponent(value) : '';
+        };
 
-            // Llenar Observaciones y Modificaciones
-            document.getElementById('observacionesPintura').innerText = getParam('OBSERVACIONES_DE_PINTURA');
-            document.getElementById('observacionesGenerales').innerText = getParam('OBSERVACIONES');
+        const getAppSheetImageUrl = (fileName) => {
+            if (!fileName) return '';
+            return `https://www.appsheet.com/template/gettablefileurl?appName=${appName}&tableName=${tableName}&fileName=${encodeURIComponent(fileName)}`;
+        };
 
-            // Calcular y llenar costos
-            const costoTotal = parseFloat(getParam('Costo_de_la_Unidad'));
-            const deposito = costoTotal * 0.50;
-            const saldo = costoTotal - deposito;
+        const formatCurrency = (value) => {
+            if (isNaN(value)) return '$0.00 MXN';
+            return `$${parseFloat(value).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
+        };
+        
+        // Llenar información del cliente
+        document.getElementById('cliente').innerText = getParam('cliente');
+        document.getElementById('direccionCliente').innerText = getParam('direccion');
+        document.getElementById('rfcCliente').innerText = getParam('rfc');
+        document.getElementById('tipoUnidad').innerText = getParam('tipo_de_unidad');
+        document.getElementById('realizadoPor').innerText = getParam('realizado_por');
+        
+        // Llenar Estructura
+        document.getElementById('colorPrimario').innerText = getParam('color');
+        document.getElementById('colorSecundario').innerText = getParam('color_2');
+        document.getElementById('suspension').innerText = getParam('suspension');
+        document.getElementById('cantSuspensiones').innerText = getParam('cantidad_de_suspensiones');
+        document.getElementById('retractilEje').innerText = getParam('retractil_eje');
+        document.getElementById('ejes').innerText = getParam('ejes');
+        document.getElementById('faldon').innerText = getParam('faldon');
+        document.getElementById('lanza').innerText = getParam('lanzas');
+        document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
+        document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
+        
+        // Llenar Accesorios
+        document.getElementById('rines').innerText = getParam('rines');
+        document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
+        document.getElementById('llantas').innerText = getParam('llantas_70');
+        document.getElementById('cantLlantas').innerText = getParam('cantidad_de_llantas');
+        document.getElementById('frenos').innerText = getParam('frenos');
+        document.getElementById('sistemaInflado').innerText = getParam('sistema_de_inflado_psi');
+        document.getElementById('quintaRueda').innerText = getParam('quinta_rueda');
+        document.getElementById('plafones').innerText = getParam('plafones');
+        document.getElementById('argolla').innerText = getParam('argolla');
 
-            document.getElementById('costoTotal').innerText = formatCurrency(costoTotal);
-            document.getElementById('deposito').innerText = formatCurrency(deposito);
-            document.getElementById('saldo').innerText = formatCurrency(saldo);
-            document.getElementById('totalFinal').innerText = formatCurrency(costoTotal);
+        // Llenar Observaciones y Modificaciones
+        document.getElementById('observacionesPintura').innerText = getParam('OBSERVACIONES_DE_PINTURA');
+        document.getElementById('observacionesGenerales').innerText = getParam('OBSERVACIONES');
 
-            // Llenar Imágenes de Referencia
-            const imagenesContainer = document.getElementById('imagenes-container');
-            const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
-            let hasImages = false;
+        // Calcular y llenar costos
+        const costoTotal = parseFloat(getParam('Costo_de_la_Unidad'));
+        const deposito = costoTotal * 0.50;
+        const saldo = costoTotal - deposito;
 
-            imagenParams.forEach(paramName => {
-                const fileName = getParam(paramName);
-                if (fileName) {
-                    const img = document.createElement('img');
-                    // URL de ejemplo para AppSheet, se debe ajustar
-                    img.src = `https://www.appsheet.com/template/gettablefileurl?appName=tu_app_id&tableName=tu_tabla_de_referencia&fileName=${encodeURIComponent(fileName)}`;
-                    img.alt = `Imagen de referencia`;
-                    img.className = 'reference-image';
-                    imagenesContainer.appendChild(img);
-                    hasImages = true;
-                }
-            });
+        document.getElementById('costoTotal').innerText = formatCurrency(costoTotal);
+        document.getElementById('deposito').innerText = formatCurrency(deposito);
+        document.getElementById('saldo').innerText = formatCurrency(saldo);
+        document.getElementById('totalFinal').innerText = formatCurrency(costoTotal);
 
-            if (!hasImages) {
-                imagenesContainer.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
+        // Llenar Imágenes de Referencia
+        const imagenesContainer = document.getElementById('imagenes-container');
+        const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
+        let hasImages = false;
+
+        imagenParams.forEach(paramName => {
+            const fileName = getParam(paramName);
+            if (fileName) {
+                const img = document.createElement('img');
+                img.src = getAppSheetImageUrl(fileName);
+                img.alt = `Imagen de referencia`;
+                img.className = 'reference-image';
+                imagenesContainer.appendChild(img);
+                hasImages = true;
             }
         });
 
-        function sendEmail() {
-            const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
-            const body = encodeURIComponent(`Estimado cliente,\n\nAdjunto encontrará la cotización detallada para la fabricación de su remolque con Talleres Barrera S.A. de C.V.\n\nGracias por su preferencia.\n\nSaludos cordiales,\nEquipo de Ventas de Talleres Barrera S.A. de C.V.`);
-            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        if (!hasImages) {
+            imagenesContainer.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
         }
-    </script>
+    });
+
+    function sendEmail() {
+        const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
+        const body = encodeURIComponent(`Estimado cliente,\n\nAdjunto encontrará la cotización detallada para la fabricación de su remolque con Talleres Barrera S.A. de C.V.\n\nGracias por su preferencia.\n\nSaludos cordiales,\nEquipo de Ventas de Talleres Barrera S.A. de C.V.`);
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    }
+</script>
 </body>
 </html>
