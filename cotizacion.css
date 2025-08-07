@@ -1,0 +1,134 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+.container {
+    max-width: 850px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #722F37; /* Color vino */
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+.header-info {
+    text-align: left;
+}
+.header-info h1 {
+    color: #722F37; /* Color vino */
+    margin: 0;
+    font-size: 28px;
+}
+.header-info h2 {
+    color: #555;
+    margin: 5px 0 0;
+    font-size: 18px;
+}
+.header-info p {
+    margin: 2px 0;
+    font-size: 14px;
+}
+.logo {
+    max-width: 200px;
+    height: auto;
+}
+.section {
+    margin-bottom: 25px;
+}
+.section-title {
+    font-size: 20px;
+    color: #722F37; /* Color vino */
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+.info-table td {
+    padding: 8px;
+    vertical-align: top;
+    font-size: 14px;
+}
+.info-table td:first-child {
+    font-weight: bold;
+    width: 30%;
+}
+.cost-table th, .cost-table td {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+}
+.cost-table th {
+    background-color: #f2f2f2;
+}
+.total-row td {
+    font-weight: bold;
+    background-color: #e9ecef;
+}
+.notes-list {
+    padding-left: 20px;
+    font-size: 14px;
+}
+.firma-section {
+    margin-top: 50px;
+    text-align: center;
+}
+.firma-line {
+    display: inline-block;
+    width: 250px;
+    border-bottom: 1px solid #000;
+    margin-top: 40px;
+}
+.bank-info {
+    margin-top: 30px;
+    font-size: 14px;
+}
+.actions-bar {
+    text-align: right;
+    margin-bottom: 20px;
+}
+.action-button {
+    background-color: #722F37; /* Color vino */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+.action-button:hover {
+    background-color: #5d262d; /* Tono más oscuro al pasar el cursor */
+}
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.reference-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+@media print {
+    .actions-bar {
+        display: none;
+    }
+}
