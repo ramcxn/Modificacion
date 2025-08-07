@@ -217,16 +217,16 @@
         </table>
     </div>
 
-    <div id="reference-section" style="display: none;">
-        <table class="reference-images">
-            <tr>
-                <td class="section-header"><strong>Imágenes de referencia</strong></td>
-            </tr>
-            <tr>
-                <td id="imagenes-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></td>
-            </tr>
-        </table>
-    </div>
+ <div id="reference-section" style="display: none;">
+    <table class="reference-images">
+      <tr>
+        <td class="section-header"><strong>Imágenes de referencia</strong></td>
+      </tr>
+      <tr>
+        <td id="imagenes-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></td>
+      </tr>
+    </table>
+  </div>
 
     <div id="fecha-section" style="display: none;">
         <table class="fecha-table">
@@ -273,7 +273,6 @@
             // Llenar información general
             document.getElementById('mesProduccion').innerText = getParam('mes_de_produccion');
             document.getElementById('ordenTrabajo').innerText = getParam('imprimir');
-            document.getElementById('tipoFaldon').innerText = decodeURIComponent(getParam('tipo_de_faldon'));
             document.getElementById('cliente').innerText = decodeURIComponent(getParam('cliente'));
             document.getElementById('niv').innerText = getParam('niv');
             document.getElementById('tipoUnidad').innerText = getParam('tipo_de_unidad');
