@@ -23,8 +23,8 @@
                 <h1>COTIZACIÓN</h1>
                 <h2>TALLERES BARRERA S.A. DE C.V.</h2>
                 <p><strong>Dirección:</strong> Industria Automotriz #126, Col. Parque Industrial, CP 67735, Linares N.L. México</p>
-                <p><strong>Teléfono:</strong> (55) 1234 5678</p>
-                <p><strong>Correo:</strong> contacto@talleresbarrera.com</p>
+                <p><strong>Teléfono:</strong> <span id="telefonoContacto"></span></p>
+                <p><strong>Correo:</strong> <span id="correoContacto"></span></p>
                 <p><strong>RFC:</strong> TBA7504018B4</p>
             </div>
             <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo de Talleres Barrera" class="logo">
@@ -227,6 +227,10 @@
             if (isNaN(value)) return '$0.00 MXN';
             return `$${parseFloat(value).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
         };
+        
+        // Llenar información de contacto de la empresa
+        document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
+        document.getElementById('correoContacto').innerText = getParam('correo_contacto');
         
         // Llenar información del cliente
         document.getElementById('cliente').innerText = getParam('cliente');
