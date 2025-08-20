@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF--8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cotización - Talleres Barrera</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -182,11 +182,30 @@
             </table>
             <div class="bank-info">
                 <p><strong>Datos Bancarios para Depósito:</strong></p>
-                <p><strong>Banco:</strong> BANCOMER</p>
                 <p><strong>Titular:</strong> TALLERES BARRERA S.A. DE C.V.</p>
-                <p><strong>Cuenta:</strong> 0123456789</p>
-                <p><strong>Clabe Interbancaria:</strong> 012180001234567890</p>
-                <p>Favor de enviar el comprobante de pago al correo electrónico o por WhatsApp para confirmar su orden.</p>
+                <br>
+
+                <p><strong>SANTANDER</strong></p>
+                <p>Sucursal: 3945 | Cuenta: 65500883468</p>
+                <p>CLABE: 014 595 65500883468 7</p>
+                <br>
+
+                <p><strong>BBVA</strong></p>
+                <p>Sucursal: 1729 | Cuenta: 00450461113</p>
+                <p>CLABE: 012 580 00450461113 7</p>
+                <br>
+
+                <p><strong>CITIBANAMEX</strong></p>
+                <p>Sucursal: 0796 | Cuenta: 07966989054</p>
+                <p>CLABE: 002 595 07966989054 8</p>
+                <br>
+                
+                <p><strong>BANORTE</strong></p>
+                <p>Sucursal: 060 | Cuenta: 00060251843</p>
+                <p>CLABE: 072 595 00060251843 3</p>
+                <br>
+
+                <p>Favor de enviar su notificación de depósito a los siguientes correos: <strong>contabilidad@talleresbarrera.com</strong> y <strong>barrera@talleresbarrera.com</strong>.</p>
             </div>
             <p><strong>Consideraciones:</strong></p>
             <ul class="notes-list">
@@ -213,11 +232,8 @@
         const appName = "NewApp-1254688";
         const tableName = "Modificaciones";
 
-        // --- FUNCIÓN MODIFICADA ---
-        // Ahora, si un valor no existe o está vacío, devuelve el texto por defecto.
         const getParam = (name) => {
             const value = urlParams.get(name);
-            // Comprueba si el valor es nulo, indefinido o una cadena de texto vacía.
             if (value === null || value === undefined || value.trim() === '') {
                 return 'Especificación no proporcionada';
             }
@@ -235,23 +251,19 @@
             return `$${numberValue.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
         };
         
-        // --- Asignación de fecha actual ---
         const today = new Date();
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('fechaCotizacion').innerText = today.toLocaleDateString('es-MX', options);
 
-        // Llenar información de contacto de la empresa
         document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
         document.getElementById('correoContacto').innerText = getParam('correo_contacto');
         
-        // Llenar información del cliente
         document.getElementById('cliente').innerText = getParam('cliente');
         document.getElementById('direccionCliente').innerText = getParam('direccion');
         document.getElementById('rfcCliente').innerText = getParam('rfc');
         document.getElementById('tipoUnidad').innerText = getParam('tipo_de_unidad');
         document.getElementById('realizadoPor').innerText = getParam('realizado_por');
         
-        // Llenar Estructura
         document.getElementById('colorPrimario').innerText = getParam('color');
         document.getElementById('colorSecundario').innerText = getParam('color_2');
         document.getElementById('suspension').innerText = getParam('suspension');
@@ -259,11 +271,10 @@
         document.getElementById('retractilEje').innerText = getParam('retractil_eje');
         document.getElementById('ejes').innerText = getParam('ejes');
         document.getElementById('faldon').innerText = getParam('faldon');
-        document.getElementById('lanza').innerText = getParam('lanza'); // Corregido a singular
+        document.getElementById('lanza').innerText = getParam('lanza');
         document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
         document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
         
-        // Llenar Accesorios
         document.getElementById('rines').innerText = getParam('rines');
         document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
         document.getElementById('llantas').innerText = getParam('llantas_70');
@@ -274,11 +285,9 @@
         document.getElementById('plafones').innerText = getParam('plafones');
         document.getElementById('argolla').innerText = getParam('argolla');
 
-        // Llenar Observaciones y Modificaciones
         document.getElementById('observacionesPintura').innerText = getParam('OBSERVACIONES_DE_PINTURA');
         document.getElementById('observacionesGenerales').innerText = getParam('OBSERVACIONES');
 
-        // Calcular y llenar costos
         const costoTotal = getParam('Costo_de_la_Unidad');
         const deposito = parseFloat(costoTotal) * 0.50;
         const saldo = parseFloat(costoTotal) - deposito;
@@ -288,15 +297,12 @@
         document.getElementById('saldo').innerText = formatCurrency(saldo);
         document.getElementById('totalFinal').innerText = formatCurrency(costoTotal);
 
-        // Llenar Imágenes de Referencia
         const imagenesContainer = document.getElementById('imagenes-container');
         const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
         let hasImages = false;
 
         imagenParams.forEach(paramName => {
             const fileName = getParam(paramName);
-            // --- LÓGICA MODIFICADA ---
-            // Solo crea la imagen si el valor no es el texto por defecto.
             if (fileName && fileName !== 'Especificación no proporcionada') {
                 const img = document.createElement('img');
                 img.src = getAppSheetImageUrl(fileName);
