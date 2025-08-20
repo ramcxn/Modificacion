@@ -132,3 +132,16 @@ table {
         display: none;
     }
 }
+
+/* --- Estilos para el Logo de Certificación --- */
+.footer-logo-container {
+    text-align: right;   /* Alinea el logo a la derecha */
+    margin-top: 30px;    /* Crea un espacio arriba del logo */
+    padding-top: 20px;   /* Añade espacio interno */
+    border-top: 1px solid #eee; /* Una línea sutil de separación */
+}
+
+.iso-logo {
+    max-width: 120px;  /* Más pequeño que el logo principal (200px) */
+    height: auto;
+}
