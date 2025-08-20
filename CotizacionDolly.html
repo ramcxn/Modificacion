@@ -37,7 +37,7 @@
             <table class="info-table">
                 <tr>
                     <td>Fecha de Cotización:</td>
-                    <td>07 de Agosto de 2025</td>
+                    <td id="fechaCotizacion"></td>
                 </tr>
                 <tr>
                     <td>Cliente:</td>
@@ -141,7 +141,7 @@
         <div class="section">
             <h3 class="section-title">Imágenes de Referencia</h3>
             <div class="image-container" id="imagenes-container">
-                </div>
+            </div>
         </div>
 
         <div class="section">
@@ -213,9 +213,15 @@
         const appName = "NewApp-1254688";
         const tableName = "Modificaciones";
 
+        // --- FUNCIÓN MODIFICADA ---
+        // Ahora, si un valor no existe o está vacío, devuelve el texto por defecto.
         const getParam = (name) => {
             const value = urlParams.get(name);
-            return value ? decodeURIComponent(value) : '';
+            // Comprueba si el valor es nulo, indefinido o una cadena de texto vacía.
+            if (value === null || value === undefined || value.trim() === '') {
+                return 'Especificación no proporcionada';
+            }
+            return decodeURIComponent(value);
         };
 
         const getAppSheetImageUrl = (fileName) => {
@@ -224,10 +230,16 @@
         };
 
         const formatCurrency = (value) => {
-            if (isNaN(value)) return '$0.00 MXN';
-            return `$${parseFloat(value).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
+            const numberValue = parseFloat(value);
+            if (isNaN(numberValue)) return '$0.00 MXN';
+            return `$${numberValue.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
         };
         
+        // --- Asignación de fecha actual ---
+        const today = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('fechaCotizacion').innerText = today.toLocaleDateString('es-MX', options);
+
         // Llenar información de contacto de la empresa
         document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
         document.getElementById('correoContacto').innerText = getParam('correo_contacto');
@@ -247,7 +259,7 @@
         document.getElementById('retractilEje').innerText = getParam('retractil_eje');
         document.getElementById('ejes').innerText = getParam('ejes');
         document.getElementById('faldon').innerText = getParam('faldon');
-        document.getElementById('lanza').innerText = getParam('lanzas');
+        document.getElementById('lanza').innerText = getParam('lanza'); // Corregido a singular
         document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
         document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
         
@@ -267,9 +279,9 @@
         document.getElementById('observacionesGenerales').innerText = getParam('OBSERVACIONES');
 
         // Calcular y llenar costos
-        const costoTotal = parseFloat(getParam('Costo_de_la_Unidad'));
-        const deposito = costoTotal * 0.50;
-        const saldo = costoTotal - deposito;
+        const costoTotal = getParam('Costo_de_la_Unidad');
+        const deposito = parseFloat(costoTotal) * 0.50;
+        const saldo = parseFloat(costoTotal) - deposito;
 
         document.getElementById('costoTotal').innerText = formatCurrency(costoTotal);
         document.getElementById('deposito').innerText = formatCurrency(deposito);
@@ -283,7 +295,9 @@
 
         imagenParams.forEach(paramName => {
             const fileName = getParam(paramName);
-            if (fileName) {
+            // --- LÓGICA MODIFICADA ---
+            // Solo crea la imagen si el valor no es el texto por defecto.
+            if (fileName && fileName !== 'Especificación no proporcionada') {
                 const img = document.createElement('img');
                 img.src = getAppSheetImageUrl(fileName);
                 img.alt = `Imagen de referencia`;
