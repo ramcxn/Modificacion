@@ -134,15 +134,31 @@ table {
     }
 }
 
-/* --- Estilos para el Logo de Certificación AÑADIDOS --- */
 .footer-logo-container {
-    text-align: right;   /* Alinea el logo a la derecha */
-    margin-top: 30px;    /* Crea un espacio arriba del logo */
-    padding-top: 20px;   /* Añade espacio interno */
-    border-top: 1px solid #eee; /* Una línea sutil de separación */
+    text-align: right;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
 }
 
 .iso-logo {
-    max-width: 120px;  /* Más pequeño que el logo principal (200px) */
+    max-width: 120px;
     height: auto;
+}
+
+/* --- ESTILOS AÑADIDOS PARA LA TABLA DE BANCOS --- */
+.bank-table {
+    font-size: 12px; /* Letra más pequeña para ahorrar espacio */
+    text-align: left;
+    margin-top: 15px;
+}
+
+.bank-table th, .bank-table td {
+    border: 1px solid #ddd;
+    padding: 6px;
+}
+
+.bank-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
 }
