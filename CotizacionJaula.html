@@ -8,21 +8,18 @@
   <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
 
   <style>
-    /* 1. Contenedor principal de especificaciones */
+    /* Estilos para el contenedor de 2 columnas */
     #especificaciones-container {
-      display: flex;              /* Activa el modo Flexbox */
-      flex-wrap: wrap;            /* Permite que los elementos se muevan a la siguiente línea */
-      justify-content: space-between; /* Crea espacio entre las columnas */
-      page-break-inside: avoid;   /* Intenta mantener todo el bloque en una página */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      page-break-inside: avoid;
     }
-
-    /* 2. Cada sección dentro del contenedor */
     #especificaciones-container > .section {
-      width: 48%;                 /* Cada sección ocupa un poco menos de la mitad del espacio */
-      break-inside: avoid;        /* Evita que una sección se parta en un salto de página */
+      width: 48%;
+      break-inside: avoid;
     }
-
-    /* 3. Estilos de las imágenes de referencia (se mantienen igual) */
+    /* Estilos para las imágenes de referencia */
     .image-container {
       display: flex;
       flex-wrap: wrap;
@@ -67,6 +64,7 @@
            referrerpolicy="no-referrer">
     </div>
     <p>Por medio de la presente, <strong>TALLERES BARRERA S.A. DE C.V.</strong> agradece su interés en nuestros productos. A continuación, se presenta la cotización detallada para la fabricación de su remolque, incluyendo especificaciones, costos y términos de pago.</p>
+    
     <div class="section">
       <h3 class="section-title">Información del Cliente y General</h3>
       <table class="info-table">
@@ -116,21 +114,21 @@
           <tr><td>Luz de Placa:</td><td><span id="luzPlaca"></span></td></tr>
         </table>
       </div>
-      <div class="section">
-        <h3 class="section-title">Accesorios</h3>
-        <table class="info-table">
-          <tr><td>Rines:</td><td><span id="rines"></span> (<span id="cantRines"></span> piezas)</td></tr>
-          <tr><td>Llantas:</td><td><span id="llantas"></span> (<span id="cantLlantas"></span> piezas)</td></tr>
-          <tr><td>Frenos:</td><td><span id="frenos"></span></td></tr>
-          <tr><td>Juego de Patines:</td><td><span id="juegoPatines"></span> (<span id="cantPatines"></span> piezas)</td></tr>
-          <tr><td>Caja de Herramientas:</td><td><span id="cajaHerramientas"></span></td></tr>
-          <tr><td>Lodera Delantera:</td><td><span id="loderaDelantera"></span></td></tr>
-          <tr><td>Lodera Trasera:</td><td><span id="loderaTrasera"></span></td></tr>
-          <tr><td>Manivelas de Patín:</td><td><span id="manivelasPatin"></span></td></tr>
-          <tr><td>Direccionales:</td><td><span id="direccionales"></span></td></tr>
-          <tr><td>Plafones:</td><td><span id="plafones"></span></td></tr>
-        </table>
-      </div>
+    </div>
+    <div class="section">
+      <h3 class="section-title">Accesorios</h3>
+      <table class="info-table">
+        <tr><td>Rines:</td><td><span id="rines"></span> (<span id="cantRines"></span> piezas)</td></tr>
+        <tr><td>Llantas:</td><td><span id="llantas"></span> (<span id="cantLlantas"></span> piezas)</td></tr>
+        <tr><td>Frenos:</td><td><span id="frenos"></span></td></tr>
+        <tr><td>Juego de Patines:</td><td><span id="juegoPatines"></span> (<span id="cantPatines"></span> piezas)</td></tr>
+        <tr><td>Caja de Herramientas:</td><td><span id="cajaHerramientas"></span></td></tr>
+        <tr><td>Lodera Delantera:</td><td><span id="loderaDelantera"></span></td></tr>
+        <tr><td>Lodera Trasera:</td><td><span id="loderaTrasera"></span></td></tr>
+        <tr><td>Manivelas de Patín:</td><td><span id="manivelasPatin"></span></td></tr>
+        <tr><td>Direccionales:</td><td><span id="direccionales"></span></td></tr>
+        <tr><td>Plafones:</td><td><span id="plafones"></span></td></tr>
+      </table>
     </div>
 
     <div class="section">
@@ -236,7 +234,7 @@
         'frenos': 'frenos', 'juegoPatines': 'juego_de_patines', 'cantPatines': 'cantidad_de_patines',
         'cajaHerramientas': 'caja_de_herramientas', 'loderaDelantera': 'lodera_delantera', 'loderaTrasera': 'lodera_trasera',
         'manivelasPatin': 'manivelas_de_patin', 'direccionales': 'direccionales', 'plafones': 'plafones',
-        'observacionesPintura': ['observaciones_de_pintura', 'OBSERVACIONES_DE_PINTURA'],
+        'observacionesPintura': ['observaciones_de_pintura', 'OBSERVaciones_DE_PINTURA'],
         'observacionesGenerales': ['observaciones', 'OBSERVACIONES']
       };
       for (const id in fields) {
