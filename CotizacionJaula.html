@@ -4,10 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cotización - Talleres Barrera</title>
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
-
   <style>
     @media print{
       body{font-size:10px}
@@ -16,21 +14,18 @@
       .info-table td,.cost-table th,.cost-table td{padding:3px}
       #logoPrincipal{display:block!important}
     }
-
+    img{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .actions-bar{display:flex;gap:.5rem;justify-content:flex-end;margin-bottom:12px}
     .action-button{background:#1f2937;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
     .action-button i{margin-right:6px}
     .action-button:disabled{opacity:.6;cursor:not-allowed}
-
     .vendor-only .hint{color:#6b7280;font-size:12px}
     .vendor-only input{max-width:160px;padding:6px 8px;border:1px solid #d1d5db;border-radius:6px}
-
     .image-container{display:flex;flex-wrap:wrap;gap:10px}
     .reference-image{max-width:220px;max-height:180px;object-fit:contain;border:1px solid #e5e7eb;padding:4px;border-radius:6px;background:#fff}
     .img-error{font-size:12px;color:#6b7280;word-break:break-all}
   </style>
 </head>
-
 <body>
   <div class="container">
     <div class="actions-bar">
@@ -38,7 +33,6 @@
       <button id="btnPdf" class="action-button" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> Descargar PDF</button>
       <button id="btnMail" class="action-button" onclick="emailWithPdf()"><i class="fas fa-envelope"></i> Enviar por correo</button>
     </div>
-
     <div class="header">
       <div class="header-info">
         <h1>COTIZACIÓN</h1>
@@ -48,16 +42,14 @@
         <p><strong>Correo:</strong> <span id="correoContacto"></span></p>
         <p><strong>RFC:</strong> TBA7504018B4</p>
       </div>
-
-      <!-- Logo sin atributos extra que puedan bloquearlo -->
       <img id="logoPrincipal"
            src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688"
            alt="Logo de Talleres Barrera"
-           class="logo">
+           class="logo"
+           crossorigin="anonymous"
+           referrerpolicy="no-referrer">
     </div>
-
     <p>Por medio de la presente, <strong>TALLERES BARRERA S.A. DE C.V.</strong> agradece su interés en nuestros productos. A continuación, se presenta la cotización detallada para la fabricación de su remolque, incluyendo especificaciones, costos y términos de pago.</p>
-
     <div class="section">
       <h3 class="section-title">Información del Cliente y General</h3>
       <table class="info-table">
@@ -69,7 +61,6 @@
         <tr><td>Realizado por (Vendedor):</td><td><span id="realizadoPor"></span></td></tr>
       </table>
     </div>
-
     <div class="section">
       <h3 class="section-title">Especificaciones Generales</h3>
       <table class="info-table">
@@ -85,7 +76,6 @@
         <tr><td>Portallantas:</td><td><span id="portallantas"></span></td></tr>
       </table>
     </div>
-
     <div class="section">
       <h3 class="section-title">Carrocería y Estructura</h3>
       <table class="info-table">
@@ -107,7 +97,6 @@
         <tr><td>Luz de Placa:</td><td><span id="luzPlaca"></span></td></tr>
       </table>
     </div>
-
     <div class="section">
       <h3 class="section-title">Accesorios</h3>
       <table class="info-table">
@@ -123,12 +112,10 @@
         <tr><td>Plafones:</td><td><span id="plafones"></span></td></tr>
       </table>
     </div>
-
     <div class="section">
       <h3 class="section-title">Imágenes de Referencia</h3>
       <div class="image-container" id="imagenes-container"></div>
     </div>
-
     <div class="section">
       <h3 class="section-title">Observaciones y modificaciones a la unidad</h3>
       <ul class="notes-list">
@@ -136,17 +123,13 @@
         <li><strong>Observaciones Generales:</strong> <span id="observacionesGenerales"></span></li>
       </ul>
     </div>
-
     <div class="section">
       <h3 class="section-title">Resumen de Costos y Términos de Pago</h3>
-
-      <!-- Visible solo en pantalla -->
       <div class="vendor-only" style="margin-bottom:8px;">
         <label><strong>Ajuste de precio manual:</strong></label>
         <input type="number" id="ajusteManual" step="0.01" placeholder="0.00" />
-        <span class="hint">Use valores positivos (+) o negativos (−). Afecta costo, depósito y saldo.</span>
+        <span class="hint">Use valores positivos (+) o negativos (−).</span>
       </div>
-
       <table class="cost-table">
         <thead><tr><th>Concepto</th><th>Monto</th></tr></thead>
         <tbody>
@@ -156,7 +139,6 @@
           <tr class="total-row"><td>TOTAL:</td><td><strong><span id="totalFinal"></span></strong></td></tr>
         </tbody>
       </table>
-
       <div class="bank-info">
         <p><strong>Datos Bancarios para Depósito:</strong></p>
         <p><strong>Titular:</strong> TALLERES BARRERA S.A. DE C.V.</p>
@@ -171,7 +153,6 @@
         </table>
         <p>Favor de enviar su notificación de depósito a <strong>contabilidad@talleresbarrera.com</strong> y <strong>barrera@talleresbarrera.com</strong>.</p>
       </div>
-
       <p><strong>Consideraciones:</strong></p>
       <ul class="notes-list">
         <li>El depósito inicial no es reembolsable.</li>
@@ -180,7 +161,6 @@
         <li>A partir de la fecha de entrega emitida, se tendrá un tiempo de almacén de 15 días naturales. Después, $1,000 MXN por semana.</li>
       </ul>
     </div>
-
     <div class="section">
       <h3 class="section-title">Aprobación del Cliente</h3>
       <p>Con la firma de este documento, usted confirma que ha revisado y aprobado las especificaciones y los costos detallados en esta cotización. Esta firma autoriza a TALLERES BARRERA S.A. DE C.V. a iniciar el proceso de fabricación de la unidad.</p>
@@ -189,234 +169,202 @@
         <p>Firma de Aprobación</p>
       </div>
     </div>
-
     <div class="footer-logo-container">
       <img src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/CER%20COMPANY%20-%20ISO%209001.png" alt="Empresa Certificada ISO 9001:2015" class="iso-logo">
     </div>
   </div>
-
   <script>
-    // ====== utilidades ======
+    // ====== UTILIDADES ======
     const urlParams = new URLSearchParams(window.location.search);
-
-    const getParam = (name)=>{
+    const getParam = (name) => {
       const raw = urlParams.get(name);
-      if (raw===null || raw===undefined) return '';
-      try { return decodeURIComponent(String(raw).replace(/\+/g,' ')); }
+      if (raw === null || raw === undefined) return '';
+      try { return decodeURIComponent(String(raw).replace(/\+/g, ' ')); }
       catch { return raw; }
     };
-    const getParamRaw = (name)=> urlParams.get(name) || '';
+    const getParamRaw = (name) => urlParams.get(name) || '';
 
     const appName = "NewApp-1254688";
-    const tableForImages = "ORDENES";   // <-- aquí está el cambio importante
-    function getAppSheetImageUrl(fileNameRaw){
+    const tableName = "Modificaciones"; // Tabla donde están las imágenes
+
+    // ✅ CAMBIO 1: Función corregida para no hacer doble codificación.
+    function getAppSheetImageUrl(fileNameRaw) {
       if (!fileNameRaw) return '';
-      const fileDouble = encodeURIComponent(fileNameRaw);  // re-encoda (como en tu HTML que sí funciona)
-      const bust = Date.now();
-      return `https://www.appsheet.com/template/gettablefileurl?appName=${encodeURIComponent(appName)}&tableName=${encodeURIComponent(tableForImages)}&fileName=${fileDouble}&_=${bust}`;
+      // El valor 'fileNameRaw' ya viene codificado desde la URL, no necesitamos volver a codificarlo.
+      // Simplemente lo usamos directamente.
+      return `https://www.appsheet.com/template/gettablefileurl?appName=${encodeURIComponent(appName)}&tableName=${encodeURIComponent(tableName)}&fileName=${fileNameRaw}&_=${Date.now()}`;
     }
 
-    const money = (v)=>{
+    const money = (v) => {
       const n = Number(v);
       if (!isFinite(n)) return '$0.00';
-      return n.toLocaleString('es-MX',{style:'currency',currency:'MXN'});
+      return n.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
     };
 
-    const safe = (s)=>(s||'').toString().replace(/[^a-z0-9-_]+/gi,'_').slice(0,60);
+    const safe = (s) => (s || '').toString().replace(/[^a-z0-9-_]+/gi, '_').slice(0, 60);
     const today = new Date();
-    window.__pdfFilename = `Cotizacion_${safe(getParam('cliente'))}_${today.toISOString().slice(0,10)}.pdf`;
+    window.__pdfFilename = `Cotizacion_${safe(getParam('cliente'))}_${today.toISOString().slice(0, 10)}.pdf`;
 
-    // ====== carga de datos ======
-    function fillData(){
-      // Fecha
-      document.getElementById('fechaCotizacion').innerText =
-        today.toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+    // ====== CARGA DE DATOS ======
+    function fillData() {
+      document.getElementById('fechaCotizacion').innerText = today.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+      
+      const fields = {
+        'telefonoContacto': 'telefono_contacto', 'correoContacto': 'correo_contacto', 'cliente': 'cliente',
+        'direccionCliente': 'direccion', 'rfcCliente': 'rfc', 'tipoUnidad': 'tipo_de_unidad',
+        'realizadoPor': 'realizado_por', 'colorPrimario': 'color', 'colorSecundario': 'color_2',
+        'suspension': 'suspension', 'cantSuspensiones': 'cantidad_de_suspensiones', 'retractilEje': 'retractil_eje',
+        'ejes': 'ejes', 'distanciaEjes': 'distancia_de_ejes', 'personalizacionViga': 'personalizacion_de_viga',
+        'faldon': 'faldon', 'pernoRey': 'perno_rey', 'portallantas': 'portallantas', 'dimensiones': 'dimensiones',
+        'tipoRedila': 'tipo_de_redila', 'secciones': 'secciones', 'puertasLaterales': 'puertas_laterales',
+        'compAlPiso': 'comp_al_piso', 'compAtras': 'comp_atras', 'tipoArco': 'tipo_de_arco',
+        'pisoMadera': 'piso_de_madera', 'pisoLaminado': 'piso_laminado', 'caballete': 'caballete',
+        'tubosInteriores': 'tubos_interiores', 'barroteLateral': 'barrote_lateral', 'compuertaLados': 'compuerta_a_los_lados',
+        'cerrojoPuertas': 'cerrojo_de_puertas_traseras', 'sistemaLona': 'sistema_de_lona', 'luzPlaca': 'luz_placa',
+        'rines': 'rines', 'cantRines': 'cantidad_de_rines', 'llantas': 'llantas_70', 'cantLlantas': 'cantidad_de_llantas',
+        'frenos': 'frenos', 'juegoPatines': 'juego_de_patines', 'cantPatines': 'cantidad_de_patines',
+        'cajaHerramientas': 'caja_de_herramientas', 'loderaDelantera': 'lodera_delantera', 'loderaTrasera': 'lodera_trasera',
+        'manivelasPatin': 'manivelas_de_patin', 'direccionales': 'direccionales', 'plafones': 'plafones',
+        'observacionesPintura': ['observaciones_de_pintura', 'OBSERVACIONES_DE_PINTURA'],
+        'observacionesGenerales': ['observaciones', 'OBSERVACIONES']
+      };
 
-      // Datos contacto (si vienen)
-      document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
-      document.getElementById('correoContacto').innerText   = getParam('correo_contacto');
+      for (const id in fields) {
+        const paramNames = Array.isArray(fields[id]) ? fields[id] : [fields[id]];
+        for (const name of paramNames) {
+          const value = getParam(name);
+          if (value) {
+            document.getElementById(id).innerText = value;
+            break;
+          }
+        }
+      }
 
-      // Cliente / general
-      document.getElementById('cliente').innerText          = getParam('cliente');
-      document.getElementById('direccionCliente').innerText = getParam('direccion');
-      document.getElementById('rfcCliente').innerText       = getParam('rfc');
-      document.getElementById('tipoUnidad').innerText       = getParam('tipo_de_unidad');
-      document.getElementById('realizadoPor').innerText     = getParam('realizado_por');
-
-      // Generales
-      document.getElementById('colorPrimario').innerText       = getParam('color');
-      document.getElementById('colorSecundario').innerText     = getParam('color_2');
-      document.getElementById('suspension').innerText          = getParam('suspension');
-      document.getElementById('cantSuspensiones').innerText    = getParam('cantidad_de_suspensiones');
-      document.getElementById('retractilEje').innerText        = getParam('retractil_eje');
-      document.getElementById('ejes').innerText                = getParam('ejes');
-      document.getElementById('distanciaEjes').innerText       = getParam('distancia_de_ejes');
-      document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
-      document.getElementById('faldon').innerText              = getParam('faldon');
-      document.getElementById('pernoRey').innerText            = getParam('perno_rey');
-      document.getElementById('portallantas').innerText        = getParam('portallantas');
-
-      // Carrocería
-      document.getElementById('dimensiones').innerText      = getParam('dimensiones');
-      document.getElementById('tipoRedila').innerText       = getParam('tipo_de_redila');
-      document.getElementById('secciones').innerText        = getParam('secciones');
-      document.getElementById('puertasLaterales').innerText = getParam('puertas_laterales');
-      document.getElementById('compAlPiso').innerText       = getParam('comp_al_piso');
-      document.getElementById('compAtras').innerText        = getParam('comp_atras');
-      document.getElementById('tipoArco').innerText         = getParam('tipo_de_arco');
-      document.getElementById('pisoMadera').innerText       = getParam('piso_de_madera');
-      document.getElementById('pisoLaminado').innerText     = getParam('piso_laminado');
-      document.getElementById('caballete').innerText        = getParam('caballete');
-      document.getElementById('tubosInteriores').innerText  = getParam('tubos_interiores');
-      document.getElementById('barroteLateral').innerText   = getParam('barrote_lateral');
-      document.getElementById('compuertaLados').innerText   = getParam('compuerta_a_los_lados');
-      document.getElementById('cerrojoPuertas').innerText   = getParam('cerrojo_de_puertas_traseras');
-      document.getElementById('sistemaLona').innerText      = getParam('sistema_de_lona');
-      document.getElementById('luzPlaca').innerText         = getParam('luz_placa');
-
-      // Accesorios
-      document.getElementById('rines').innerText            = getParam('rines');
-      document.getElementById('cantRines').innerText        = getParam('cantidad_de_rines');
-      document.getElementById('llantas').innerText          = getParam('llantas_70');
-      document.getElementById('cantLlantas').innerText      = getParam('cantidad_de_llantas');
-      document.getElementById('frenos').innerText           = getParam('frenos');
-      document.getElementById('juegoPatines').innerText     = getParam('juego_de_patines');
-      document.getElementById('cantPatines').innerText      = getParam('cantidad_de_patines');
-      document.getElementById('cajaHerramientas').innerText = getParam('caja_de_herramientas');
-      document.getElementById('loderaDelantera').innerText  = getParam('lodera_delantera');
-      document.getElementById('loderaTrasera').innerText    = getParam('lodera_trasera');
-      document.getElementById('manivelasPatin').innerText   = getParam('manivelas_de_patin');
-      document.getElementById('direccionales').innerText    = getParam('direccionales');
-      document.getElementById('plafones').innerText         = getParam('plafones');
-
-      // Observaciones
-      document.getElementById('observacionesPintura').innerText   = getParam('observaciones_de_pintura') || getParam('OBSERVACIONES_DE_PINTURA');
-      document.getElementById('observacionesGenerales').innerText = getParam('observaciones') || getParam('OBSERVACIONES');
-
-      // Costos AppSheet + ajuste manual
       const costoBase = parseFloat(urlParams.get('Costo_de_la_Unidad') || '0') || 0;
       setCosts(costoBase);
-      document.getElementById('ajusteManual').addEventListener('input', ()=>{
-        const aj = parseFloat(document.getElementById('ajusteManual').value || '0') || 0;
-        setCosts(costoBase + aj);
+      document.getElementById('ajusteManual').addEventListener('input', (e) => {
+        const ajuste = parseFloat(e.target.value || '0') || 0;
+        setCosts(costoBase + ajuste);
       });
 
-      // Imágenes (usando tabla ORDENES)
       loadImages();
     }
 
-    function setCosts(total){
+    function setCosts(total) {
       const deposito = total * 0.5;
       const saldo = total - deposito;
       document.getElementById('costoTotal').innerText = money(total);
-      document.getElementById('deposito').innerText   = money(deposito);
-      document.getElementById('saldo').innerText      = money(saldo);
+      document.getElementById('deposito').innerText = money(deposito);
+      document.getElementById('saldo').innerText = money(saldo);
       document.getElementById('totalFinal').innerText = money(total);
     }
 
-    function loadImages(){
-      const cont = document.getElementById('imagenes-container');
-      const keys = ['imagen_de_referencia','imagen_de_referencia_81','imagen_de_referencia_82','imagen_de_referencia_83','imagen_de_referencia_84','imagen_de_referencia_85'];
-      let any=false;
-      keys.forEach(k=>{
-        const raw = getParamRaw(k);     // ya codificado en la URL
-        if(!raw) return;
-        const src = getAppSheetImageUrl(raw);
-        const img = new Image();
-        img.className='reference-image';
-        img.alt='Imagen de referencia';
-        img.onload=()=>{ any=true; };
-        img.onerror=()=>{
-          const p=document.createElement('div');
-          p.className='img-error';
-          p.innerHTML='No se pudo cargar: <a href="'+src+'" target="_blank" rel="noopener">'+src+'</a>';
-          cont.appendChild(p);
-        };
-        img.src=src;
-        cont.appendChild(img);
+    function loadImages() {
+      const container = document.getElementById('imagenes-container');
+      const keys = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
+      let hasImages = false;
+      keys.forEach(key => {
+        const fileRaw = getParamRaw(key);
+        if (fileRaw) {
+          hasImages = true;
+          const img = new Image();
+          img.className = 'reference-image';
+          img.alt = 'Imagen de referencia';
+          // Atributos necesarios para que html2pdf pueda usar la imagen
+          img.crossOrigin = 'anonymous';
+          img.referrerPolicy = 'no-referrer';
+          img.src = getAppSheetImageUrl(fileRaw);
+          img.onerror = () => {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'img-error';
+            errorDiv.innerHTML = `No se pudo cargar la imagen: <a href="${img.src}" target="_blank">ver enlace</a>`;
+            container.appendChild(errorDiv);
+          };
+          container.appendChild(img);
+        }
       });
-      if(!any){
-        cont.innerHTML='<p>No se han proporcionado imágenes de referencia.</p>';
+      if (!hasImages) {
+        container.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
       }
     }
 
-    // ====== PDF / correo ======
-    function loadHtml2Pdf(cb){
-      if(window.html2pdf){cb&&cb();return;}
-      const s=document.createElement('script');
-      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-      s.onload=()=>cb&&cb();
-      s.onerror=()=>alert('No fue posible cargar el generador de PDF.');
-      document.head.appendChild(s);
+    // ====== PDF / CORREO ======
+    function loadHtml2Pdf(callback) {
+      if (window.html2pdf) { callback && callback(); return; }
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+      script.onload = () => callback && callback();
+      script.onerror = () => alert('No fue posible cargar el generador de PDF.');
+      document.head.appendChild(script);
     }
 
-    function toggleUiForPdf(hide){
-      document.querySelectorAll('.actions-bar,.vendor-only').forEach(el=>{
-        if(hide){ el.dataset.prev = el.style.display||''; el.style.display='none'; }
-        else{ el.style.display = el.dataset.prev||''; delete el.dataset.prev; }
-      });
-    }
-
-    function downloadPDF(){
-      loadHtml2Pdf(()=>{
-        toggleUiForPdf(true);
-        const el=document.querySelector('.container');
-        const opt={
-          margin:[10,10,10,10],
-          filename: window.__pdfFilename || 'Cotizacion.pdf',
-          image:{type:'jpeg',quality:0.98},
-          html2canvas:{scale:2,useCORS:true,allowTaint:true,letterRendering:true},
-          jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
-        };
-        window.html2pdf().set(opt).from(el).save().then(()=>toggleUiForPdf(false)).catch(()=>toggleUiForPdf(false));
-      });
-    }
-
-    function makePdfBlob(cb){
-      loadHtml2Pdf(()=>{
-        toggleUiForPdf(true);
-        const el=document.querySelector('.container');
-        const opt={
-          margin:[10,10,10,10],
-          filename: window.__pdfFilename || 'Cotizacion.pdf',
-          image:{type:'jpeg',quality:0.98},
-          html2canvas:{scale:2,useCORS:true,allowTaint:true,letterRendering:true},
-          jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
-        };
-        window.html2pdf().set(opt).from(el).outputPdf('blob')
-          .then(b=>{toggleUiForPdf(false); cb&&cb(b);})
-          .catch(()=>toggleUiForPdf(false));
-      });
-    }
-
-    async function emailWithPdf(){
-      makePdfBlob(async (blob)=>{
-        const filename = window.__pdfFilename || 'Cotizacion.pdf';
-        const file = new File([blob], filename, {type:'application/pdf'});
-        if(navigator.canShare && navigator.canShare({files:[file]})){
-          try{
-            await navigator.share({files:[file],title:'Cotización',text:'Adjunto PDF de la cotización.'});
-            return;
-          }catch(e){}
+    function toggleUiForPdf(hide) {
+      document.querySelectorAll('.actions-bar, .vendor-only').forEach(el => {
+        if (hide) {
+          el.dataset.prevDisplay = el.style.display || '';
+          el.style.display = 'none';
+        } else {
+          el.style.display = el.dataset.prevDisplay || '';
         }
-        // fallback: descarga + mailto
-        const a=document.createElement('a');
-        a.href=URL.createObjectURL(blob);
-        a.download=filename;
-        a.click();
-        setTimeout(()=>URL.revokeObjectURL(a.href),2000);
-        const subject=encodeURIComponent('Cotización de Remolque - Talleres Barrera');
-        const body=encodeURIComponent('Estimado cliente,\n\nAdjunto encontrará la cotización en PDF (si no se adjuntó automáticamente, utilice el archivo descargado).\n\nSaludos,\nEquipo de Ventas');
-        window.location.href=`mailto:?subject=${subject}&body=${body}`;
       });
     }
 
-    // Permitir override de logo vía ?logo=URL
-    (function(){
-      const custom = getParam('logo');
-      if(custom){ document.getElementById('logoPrincipal').src = custom; }
-    })();
+    function downloadPDF() {
+      loadHtml2Pdf(() => {
+        toggleUiForPdf(true);
+        const element = document.querySelector('.container');
+        const opt = {
+          margin: [10, 10, 10, 10],
+          filename: window.__pdfFilename || 'Cotizacion.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, allowTaint: true, letterRendering: true },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        window.html2pdf().set(opt).from(element).save().finally(() => toggleUiForPdf(false));
+      });
+    }
 
+    function makePdfBlob(callback) {
+        loadHtml2Pdf(() => {
+            toggleUiForPdf(true);
+            const element = document.querySelector('.container');
+            const opt = {
+                margin: [10, 10, 10, 10],
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, allowTaint: true, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            window.html2pdf().set(opt).from(element).outputPdf('blob')
+              .then(blob => {
+                  toggleUiForPdf(false);
+                  callback && callback(blob);
+              }).catch(() => toggleUiForPdf(false));
+        });
+    }
+
+    async function emailWithPdf() {
+        makePdfBlob(async (blob) => {
+            const filename = window.__pdfFilename || 'Cotizacion.pdf';
+            const file = new File([blob], filename, { type: 'application/pdf' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({ files: [file], title: 'Cotización', text: 'Adjunto PDF de la cotización.' });
+                    return;
+                } catch (e) { console.warn("Share API cancelado."); }
+            }
+            // Fallback para escritorio
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+            const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
+            const body = encodeURIComponent('Estimado cliente,\n\nAdjunto encontrará la cotización en PDF (si no se adjuntó automáticamente, utilice el archivo descargado).\n\nSaludos,\nEquipo de Ventas');
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        });
+    }
+    
+    // Iniciar carga de datos cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', fillData);
   </script>
 </body>
