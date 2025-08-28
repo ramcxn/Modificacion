@@ -162,3 +162,16 @@ table {
     background-color: #f2f2f2;
     font-weight: bold;
 }
+
+/* Estilo para el contenedor de especificaciones */
+#especificaciones-container {
+  column-count: 2; /* Divide el contenido en 2 columnas */
+  column-gap: 25px; /* Espacio entre las columnas */
+  page-break-inside: avoid; /* Intenta no romper este bloque en un salto de página */
+}
+
+/* Evita que las secciones dentro de las columnas se rompan */
+.section {
+  break-inside: avoid-page;
+  page-break-inside: avoid;
+}
