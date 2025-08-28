@@ -8,22 +8,11 @@
     <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css">
     <style>
         @media print {
-            body {
-                font-size: 10px;
-            }
-            .section, .header {
-                padding: 10px;
-                margin-bottom: 5px;
-            }
-            .actions-bar {
-                display: none;
-            }
-            .info-table td, .cost-table th, .cost-table td {
-                padding: 3px;
-            }
-            .logo {
-                width: 100px;
-            }
+            body { font-size: 10px; }
+            .section, .header { padding: 10px; margin-bottom: 5px; }
+            .actions-bar { display: none; }
+            .info-table td, .cost-table th, .cost-table td { padding: 3px; }
+            .logo { width: 100px; }
         }
     </style>
 </head>
@@ -42,10 +31,10 @@
             <div class="header-info">
                 <h1>COTIZACIÓN</h1>
                 <h2>TALLERES BARRERA S.A. DE C.V.</h2>
-                <p><strong>Dirección:</strong> Av. de la Industria #123, Col. Industrial, C.P. 54000, Tlalnepantla de Baz, Estado de México</p>
-                <p><strong>Teléfono:</strong> (55) 1234 5678</p>
-                <p><strong>Correo:</strong> contacto@talleresbarrera.com</p>
-                <p><strong>RFC:</strong> TBA123456ABC</p>
+                <p><strong>Dirección:</strong> Industria Automotriz #126, Col. Parque Industrial, CP 67735, Linares N.L. México</p>
+                <p><strong>Teléfono:</strong> <span id="telefonoContacto"></span></p>
+                <p><strong>Correo:</strong> <span id="correoContacto"></span></p>
+                <p><strong>RFC:</strong> TBA7504018B4</p>
             </div>
             <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo de Talleres Barrera" class="logo">
         </div>
@@ -76,7 +65,7 @@
                     <td><span id="tipoUnidad"></span></td>
                 </tr>
                 <tr>
-                    <td>Realizado por:</td>
+                    <td>Realizado por (Vendedor):</td>
                     <td><span id="realizadoPor"></span></td>
                 </tr>
             </table>
@@ -85,169 +74,60 @@
         <div class="section">
             <h3 class="section-title">Especificaciones Generales</h3>
             <table class="info-table">
-                <tr>
-                    <td>Color Primario:</td>
-                    <td><span id="colorPrimario"></span></td>
-                </tr>
-                <tr>
-                    <td>Color Secundario:</td>
-                    <td><span id="colorSecundario"></span></td>
-                </tr>
-                <tr>
-                    <td>Suspensión:</td>
-                    <td><span id="suspension"></span> (<span id="cantSuspensiones"></span> piezas)</td>
-                </tr>
-                <tr>
-                    <td>Retráctil de Eje:</td>
-                    <td><span id="retractilEje"></span></td>
-                </tr>
-                <tr>
-                    <td>Ejes:</td>
-                    <td><span id="ejes"></span></td>
-                </tr>
-                <tr>
-                    <td>Distancia entre Ejes:</td>
-                    <td><span id="distanciaEjes"></span></td>
-                </tr>
-                <tr>
-                    <td>Personalización de Viga:</td>
-                    <td><span id="personalizacionViga"></span></td>
-                </tr>
-                <tr>
-                    <td>Faldón:</td>
-                    <td><span id="faldon"></span></td>
-                </tr>
-                <tr>
-                    <td>Perno Rey:</td>
-                    <td><span id="pernoRey"></span></td>
-                </tr>
-                <tr>
-                    <td>Portallantas:</td>
-                    <td><span id="portallantas"></span></td>
-                </tr>
+                <tr><td>Color Primario:</td><td><span id="colorPrimario"></span></td></tr>
+                <tr><td>Color Secundario:</td><td><span id="colorSecundario"></span></td></tr>
+                <tr><td>Suspensión:</td><td><span id="suspension"></span> (<span id="cantSuspensiones"></span> piezas)</td></tr>
+                <tr><td>Retráctil de Eje:</td><td><span id="retractilEje"></span></td></tr>
+                <tr><td>Ejes:</td><td><span id="ejes"></span></td></tr>
+                <tr><td>Distancia entre Ejes:</td><td><span id="distanciaEjes"></span></td></tr>
+                <tr><td>Personalización de Viga:</td><td><span id="personalizacionViga"></span></td></tr>
+                <tr><td>Faldón:</td><td><span id="faldon"></span></td></tr>
+                <tr><td>Perno Rey:</td><td><span id="pernoRey"></span></td></tr>
+                <tr><td>Portallantas:</td><td><span id="portallantas"></span></td></tr>
             </table>
         </div>
 
         <div class="section">
             <h3 class="section-title">Carrocería y Estructura</h3>
             <table class="info-table">
-                <tr>
-                    <td>Dimensiones:</td>
-                    <td><span id="dimensiones"></span></td>
-                </tr>
-                <tr>
-                    <td>Tipo de Redila:</td>
-                    <td><span id="tipoRedila"></span></td>
-                </tr>
-                <tr>
-                    <td>Secciones:</td>
-                    <td><span id="secciones"></span></td>
-                </tr>
-                <tr>
-                    <td>Puertas Laterales:</td>
-                    <td><span id="puertasLaterales"></span></td>
-                </tr>
-                <tr>
-                    <td>Compuerta al Piso:</td>
-                    <td><span id="compAlPiso"></span></td>
-                </tr>
-                <tr>
-                    <td>Compuerta Trasera:</td>
-                    <td><span id="compAtras"></span></td>
-                </tr>
-                <tr>
-                    <td>Tipo de Arco:</td>
-                    <td><span id="tipoArco"></span></td>
-                </tr>
-                <tr>
-                    <td>Piso de Madera:</td>
-                    <td><span id="pisoMadera"></span></td>
-                </tr>
-                <tr>
-                    <td>Piso Laminado:</td>
-                    <td><span id="pisoLaminado"></span></td>
-                </tr>
-                <tr>
-                    <td>Caballete:</td>
-                    <td><span id="caballete"></span></td>
-                </tr>
-                <tr>
-                    <td>Tubos Interiores:</td>
-                    <td><span id="tubosInteriores"></span></td>
-                </tr>
-                <tr>
-                    <td>Barrote Lateral:</td>
-                    <td><span id="barroteLateral"></span></td>
-                </tr>
-                <tr>
-                    <td>Compuerta a los Lados:</td>
-                    <td><span id="compuertaLados"></span></td>
-                </tr>
-                <tr>
-                    <td>Cerrojo de Puertas Traseras:</td>
-                    <td><span id="cerrojoPuertas"></span></td>
-                </tr>
-                <tr>
-                    <td>Sistema de Lona:</td>
-                    <td><span id="sistemaLona"></span></td>
-                </tr>
-                <tr>
-                    <td>Luz de Placa:</td>
-                    <td><span id="luzPlaca"></span></td>
-                </tr>
+                <tr><td>Dimensiones:</td><td><span id="dimensiones"></span></td></tr>
+                <tr><td>Tipo de Redila:</td><td><span id="tipoRedila"></span></td></tr>
+                <tr><td>Secciones:</td><td><span id="secciones"></span></td></tr>
+                <tr><td>Puertas Laterales:</td><td><span id="puertasLaterales"></span></td></tr>
+                <tr><td>Compuerta al Piso:</td><td><span id="compAlPiso"></span></td></tr>
+                <tr><td>Compuerta Trasera:</td><td><span id="compAtras"></span></td></tr>
+                <tr><td>Tipo de Arco:</td><td><span id="tipoArco"></span></td></tr>
+                <tr><td>Piso de Madera:</td><td><span id="pisoMadera"></span></td></tr>
+                <tr><td>Piso Laminado:</td><td><span id="pisoLaminado"></span></td></tr>
+                <tr><td>Caballete:</td><td><span id="caballete"></span></td></tr>
+                <tr><td>Tubos Interiores:</td><td><span id="tubosInteriores"></span></td></tr>
+                <tr><td>Barrote Lateral:</td><td><span id="barroteLateral"></span></td></tr>
+                <tr><td>Compuerta a los Lados:</td><td><span id="compuertaLados"></span></td></tr>
+                <tr><td>Cerrojo de Puertas Traseras:</td><td><span id="cerrojoPuertas"></span></td></tr>
+                <tr><td>Sistema de Lona:</td><td><span id="sistemaLona"></span></td></tr>
+                <tr><td>Luz de Placa:</td><td><span id="luzPlaca"></span></td></tr>
             </table>
         </div>
 
         <div class="section">
             <h3 class="section-title">Accesorios</h3>
             <table class="info-table">
-                <tr>
-                    <td>Rines:</td>
-                    <td><span id="rines"></span> (<span id="cantRines"></span> piezas)</td>
-                </tr>
-                <tr>
-                    <td>Llantas:</td>
-                    <td><span id="llantas"></span> (<span id="cantLlantas"></span> piezas)</td>
-                </tr>
-                <tr>
-                    <td>Frenos:</td>
-                    <td><span id="frenos"></span></td>
-                </tr>
-                <tr>
-                    <td>Juego de Patines:</td>
-                    <td><span id="juegoPatines"></span> (<span id="cantPatines"></span> piezas)</td>
-                </tr>
-                <tr>
-                    <td>Caja de Herramientas:</td>
-                    <td><span id="cajaHerramientas"></span></td>
-                </tr>
-                <tr>
-                    <td>Lodera Delantera:</td>
-                    <td><span id="loderaDelantera"></span></td>
-                </tr>
-                <tr>
-                    <td>Lodera Trasera:</td>
-                    <td><span id="loderaTrasera"></span></td>
-                </tr>
-                <tr>
-                    <td>Manivelas de Patín:</td>
-                    <td><span id="manivelasPatin"></span></td>
-                </tr>
-                <tr>
-                    <td>Direccionales:</td>
-                    <td><span id="direccionales"></span></td>
-                </tr>
-                <tr>
-                    <td>Plafones:</td>
-                    <td><span id="plafones"></span></td>
-                </tr>
+                <tr><td>Rines:</td><td><span id="rines"></span> (<span id="cantRines"></span> piezas)</td></tr>
+                <tr><td>Llantas:</td><td><span id="llantas"></span> (<span id="cantLlantas"></span> piezas)</td></tr>
+                <tr><td>Frenos:</td><td><span id="frenos"></span></td></tr>
+                <tr><td>Juego de Patines:</td><td><span id="juegoPatines"></span> (<span id="cantPatines"></span> piezas)</td></tr>
+                <tr><td>Caja de Herramientas:</td><td><span id="cajaHerramientas"></span></td></tr>
+                <tr><td>Lodera Delantera:</td><td><span id="loderaDelantera"></span></td></tr>
+                <tr><td>Lodera Trasera:</td><td><span id="loderaTrasera"></span></td></tr>
+                <tr><td>Manivelas de Patín:</td><td><span id="manivelasPatin"></span></td></tr>
+                <tr><td>Direccionales:</td><td><span id="direccionales"></span></td></tr>
+                <tr><td>Plafones:</td><td><span id="plafones"></span></td></tr>
             </table>
         </div>
 
         <div class="section">
             <h3 class="section-title">Imágenes de Referencia</h3>
-            <div class="image-container" id="imagenes-container">
-            </div>
+            <div class="image-container" id="imagenes-container"></div>
         </div>
 
         <div class="section">
@@ -262,38 +142,33 @@
             <h3 class="section-title">Resumen de Costos y Términos de Pago</h3>
             <table class="cost-table">
                 <thead>
-                    <tr>
-                        <th>Concepto</th>
-                        <th>Monto</th>
-                    </tr>
+                    <tr><th>Concepto</th><th>Monto</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Costo Total de la Unidad:</td>
-                        <td><span id="costoTotal"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Depósito para Inicio de Fabricación (50%):</td>
-                        <td><span id="deposito"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Saldo a Liquidar a la Entrega (50%):</td>
-                        <td><span id="saldo"></span></td>
-                    </tr>
-                    <tr class="total-row">
-                        <td>TOTAL:</td>
-                        <td><strong><span id="totalFinal"></span></strong></td>
-                    </tr>
+                    <tr><td>Costo Total de la Unidad:</td><td><span id="costoTotal"></span></td></tr>
+                    <tr><td>Depósito para Inicio de Fabricación (50%):</td><td><span id="deposito"></span></td></tr>
+                    <tr><td>Saldo a Liquidar a la Entrega (50%):</td><td><span id="saldo"></span></td></tr>
+                    <tr class="total-row"><td>TOTAL:</td><td><strong><span id="totalFinal"></span></strong></td></tr>
                 </tbody>
             </table>
+
             <div class="bank-info">
                 <p><strong>Datos Bancarios para Depósito:</strong></p>
-                <p><strong>Banco:</strong> BANCOMER</p>
                 <p><strong>Titular:</strong> TALLERES BARRERA S.A. DE C.V.</p>
-                <p><strong>Cuenta:</strong> 0123456789</p>
-                <p><strong>Clabe Interbancaria:</strong> 012180001234567890</p>
-                <p>Favor de enviar el comprobante de pago al correo electrónico o por WhatsApp para confirmar su orden.</p>
+                <table class="bank-table">
+                    <thead>
+                        <tr><th>Banco</th><th>Sucursal</th><th>Cuenta</th><th>CLABE</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>SANTANDER</td><td>3945</td><td>65500883468</td><td>014 595 65500883468 7</td></tr>
+                        <tr><td>BBVA</td><td>1729</td><td>00450461113</td><td>012 580 00450461113 7</td></tr>
+                        <tr><td>CITIBANAMEX</td><td>0796</td><td>07966989054</td><td>002 595 07966989054 8</td></tr>
+                        <tr><td>BANORTE</td><td>060</td><td>00060251843</td><td>072 595 00060251843 3</td></tr>
+                    </tbody>
+                </table>
+                <p>Favor de enviar su notificación de depósito a los siguientes correos: <strong>contabilidad@talleresbarrera.com</strong> y <strong>barrera@talleresbarrera.com</strong>.</p>
             </div>
+
             <p><strong>Consideraciones:</strong></p>
             <ul class="notes-list">
                 <li>El depósito inicial no es reembolsable.</li>
@@ -311,6 +186,11 @@
                 <p>Firma de Aprobación</p>
             </div>
         </div>
+
+        <div class="footer-logo-container">
+            <img src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/CER%20COMPANY%20-%20ISO%209001.png" alt="Empresa Certificada ISO 9001:2015" class="iso-logo">
+        </div>
+
     </div>
 
 <script>
@@ -334,8 +214,10 @@
             return `$${parseFloat(value).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
         };
         
-        // Llenar información general
+        // Información general
         document.getElementById('fechaCotizacion').innerText = new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
+        document.getElementById('correoContacto').innerText = getParam('correo_contacto');
         document.getElementById('cliente').innerText = getParam('cliente');
         document.getElementById('direccionCliente').innerText = getParam('direccion');
         document.getElementById('rfcCliente').innerText = getParam('rfc');
@@ -343,7 +225,7 @@
         document.getElementById('realizadoPor').innerText = getParam('realizado_por');
         document.getElementById('dimensiones').innerText = getParam('dimensiones');
 
-        // Llenar especificaciones
+        // Especificaciones generales
         document.getElementById('colorPrimario').innerText = getParam('color');
         document.getElementById('colorSecundario').innerText = getParam('color_2');
         document.getElementById('suspension').innerText = getParam('suspension');
@@ -356,7 +238,7 @@
         document.getElementById('pernoRey').innerText = getParam('perno_rey');
         document.getElementById('portallantas').innerText = getParam('portallantas');
 
-        // Llenar Carrocería
+        // Carrocería y estructura
         document.getElementById('tipoRedila').innerText = getParam('tipo_de_redila');
         document.getElementById('secciones').innerText = getParam('secciones');
         document.getElementById('puertasLaterales').innerText = getParam('puertas_laterales');
@@ -373,7 +255,7 @@
         document.getElementById('sistemaLona').innerText = getParam('sistema_de_lona');
         document.getElementById('luzPlaca').innerText = getParam('luz_placa');
 
-        // Llenar accesorios
+        // Accesorios
         document.getElementById('rines').innerText = getParam('rines');
         document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
         document.getElementById('llantas').innerText = getParam('llantas_70');
@@ -388,40 +270,35 @@
         document.getElementById('direccionales').innerText = getParam('direccionales');
         document.getElementById('plafones').innerText = getParam('plafones');
 
-        // Llenar Observaciones y Modificaciones
+        // Observaciones
         document.getElementById('observacionesPintura').innerText = getParam('observaciones_de_pintura');
         document.getElementById('observacionesGenerales').innerText = getParam('observaciones');
 
-        // Calcular y llenar costos
-        const costoTotal = parseFloat(getParam('Costo_de_la_Unidad'));
+        // Costos
+        const costoTotal = parseFloat(getParam('Costo_de_la_Unidad')) || 0;
         const deposito = costoTotal * 0.50;
         const saldo = costoTotal - deposito;
-
         document.getElementById('costoTotal').innerText = formatCurrency(costoTotal);
         document.getElementById('deposito').innerText = formatCurrency(deposito);
         document.getElementById('saldo').innerText = formatCurrency(saldo);
         document.getElementById('totalFinal').innerText = formatCurrency(costoTotal);
 
-        // Llenar Imágenes de Referencia
+        // Imágenes
         const imagenesContainer = document.getElementById('imagenes-container');
         const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
         let hasImages = false;
-
         imagenParams.forEach(paramName => {
             const fileName = getParam(paramName);
             if (fileName) {
                 const img = document.createElement('img');
                 img.src = getAppSheetImageUrl(fileName);
-                img.alt = `Imagen de referencia`;
+                img.alt = 'Imagen de referencia';
                 img.className = 'reference-image';
                 imagenesContainer.appendChild(img);
                 hasImages = true;
             }
         });
-
-        if (!hasImages) {
-            imagenesContainer.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
-        }
+        if (!hasImages) imagenesContainer.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
     });
 
     function sendEmail() {
