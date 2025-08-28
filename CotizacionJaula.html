@@ -7,9 +7,9 @@
 
   <!-- Iconos y estilos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-  <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css?v=2"/>
+  <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css?v=3"/>
 
-  <!-- Precarga html2pdf -->
+  <!-- Precarga html2pdf (bundle con html2canvas + jsPDF) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 
   <style>
@@ -273,6 +273,7 @@
         const clean = String(s).replace(/[^\d.,-]/g,'').replace(/,/g,''); // quita símbolos y comas
         const n = parseFloat(clean);
         return isNaN(n) ? 0 : n;
+        // Si AppSheet a veces manda formateado con $ o comas, igual lo capturamos.
       };
 
       const getAppSheetImageUrl = (fileName) => {
@@ -445,10 +446,15 @@
         pagebreak: { mode: ['avoid-all','css','legacy'] }
       };
 
+      // -> versión compatible para obtener BLOB
       window.generatePdfBlob = async () => {
         const wrapper = buildPrintableClone();
         await waitForImages(wrapper);
-        return window.html2pdf().set(html2pdfOpts).from(wrapper).outputPdf('blob');
+        // Cadena segura: toPdf().get('pdf').then(pdf => pdf.output('blob'))
+        const worker = window.html2pdf().set(html2pdfOpts).from(wrapper).toPdf();
+        const pdf = await worker.get('pdf');
+        const blob = pdf.output('blob');
+        return blob;
       };
 
       window.downloadPDF = async () => {
@@ -461,6 +467,7 @@
           a.click();
           setTimeout(()=> { URL.revokeObjectURL(a.href); a.remove(); }, 0);
         } catch(e) {
+          console.error(e);
           alert('No fue posible generar el PDF.');
         }
       };
@@ -493,6 +500,7 @@
             }, 250);
           }
         } catch(e) {
+          console.error(e);
           alert('No fue posible preparar el correo con el PDF.');
         }
       };
