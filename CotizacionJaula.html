@@ -7,11 +7,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
   <style>
-    /* Reglas para controlar saltos de página en el PDF */
     .section {
-      page-break-inside: avoid; /* Evita que una sección se parta entre dos páginas */
+      page-break-inside: avoid;
     }
-
     @media print{
       body{font-size:10px}
       .section,.header{padding:10px;margin-bottom:5px}
@@ -51,7 +49,7 @@
            src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/LOGO%20TB2025.png"
            alt="Logo de Talleres Barrera"
            class="logo"
-           crossorigin="anonymous"
+           style="width: 50%; height: auto;" crossorigin="anonymous"
            referrerpolicy="no-referrer">
     </div>
     <p>Por medio de la presente, <strong>TALLERES BARRERA S.A. DE C.V.</strong> agradece su interés en nuestros productos. A continuación, se presenta la cotización detallada para la fabricación de su remolque, incluyendo especificaciones, costos y términos de pago.</p>
@@ -179,7 +177,6 @@
     </div>
   </div>
   <script>
-    // Tu JavaScript permanece igual, no necesita cambios.
     const urlParams = new URLSearchParams(window.location.search);
     const getParam = (name) => {
       const raw = urlParams.get(name);
@@ -215,7 +212,7 @@
         'compAlPiso': 'comp_al_piso', 'compAtras': 'comp_atras', 'tipoArco': 'tipo_de_arco',
         'pisoMadera': 'piso_de_madera', 'pisoLaminado': 'piso_laminado', 'caballete': 'caballete',
         'tubosInteriores': 'tubos_interiores', 'barroteLateral': 'barrote_lateral', 'compuertaLados': 'compuerta_a_los_lados',
-        'cerrojoPuertas': 'cerrojo_de_puertas_traseras', 'sistemaLona': 'sistema_de_lona', 'luzPlaca': 'luz_placa',
+        'cerrojoPuertas': 'cerrojo_de_puertas_traseras', 'sistemaLona': 'sistema_de_lona',
         'rines': 'rines', 'cantRines': 'cantidad_de_rines', 'llantas': 'llantas_70', 'cantLlantas': 'cantidad_de_llantas',
         'frenos': 'frenos', 'juegoPatines': 'juego_de_patines', 'cantPatines': 'cantidad_de_patines',
         'cajaHerramientas': 'caja_de_herramientas', 'loderaDelantera': 'lodera_delantera', 'loderaTrasera': 'lodera_trasera',
@@ -233,6 +230,10 @@
           }
         }
       }
+      
+      const luzPlacaValue = getParam('luz_placa');
+      document.getElementById('luzPlaca').innerText = (luzPlacaValue.toUpperCase() === 'Y') ? 'Si' : 'No';
+
       const costoBase = parseFloat(urlParams.get('Costo_de_la_Unidad') || '0') || 0;
       setCosts(costoBase);
       document.getElementById('ajusteManual').addEventListener('input', (e) => {
