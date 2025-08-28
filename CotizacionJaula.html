@@ -1,29 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cotización - Talleres Barrera</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
   <style>
+    /* Evitar cortes en impresión/PDF */
     @media print {
       body { font-size: 10px; }
       .section, .header { padding: 10px; margin-bottom: 5px; }
-      .actions-bar { display: none; }
+      .actions-bar, .vendor-only { display: none !important; }
       .info-table td, .cost-table th, .cost-table td { padding: 3px; }
-      .logo { width: 100px; }
+      .logo { width: 100px !important; }
     }
+    .info-table, .cost-table, .bank-table,
+    .header, .footer-logo-container, .section, .image-container, .reference-image {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Barra de acciones (no sale en PDF/impresión) */
+    .actions-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .action-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 0;
+      background: #0f766e;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .action-button.secondary { background: #1f2937; }
+
+    /* Controles solo vendedor (no salen en PDF/impresión) */
+    .vendor-only{background:#f9fafb;border:1px dashed #d1d5db;border-radius:8px;padding:10px;margin:10px 0}
+    .vendor-only .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .vendor-only label{font-weight:600}
+    .vendor-only input,.vendor-only select{padding:6px 8px;border:1px solid #d1d5db;border-radius:6px}
+    .vendor-only button{border:0;background:#0f766e;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer}
+    .vendor-only button.secondary{background:#6b7280}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="actions-bar">
+  <div class="container" id="cotizacion-root">
+    <div class="actions-bar no-pdf">
       <button class="action-button" onclick="window.print()">
         <i class="fas fa-print"></i> Imprimir
       </button>
-      <button class="action-button" onclick="sendEmail()">
-        <i class="fas fa-envelope"></i> Enviar por Correo
+      <button class="action-button" onclick="downloadPDF()">
+        <i class="fas fa-file-pdf"></i> Descargar PDF
+      </button>
+      <button class="action-button secondary" onclick="sharePDFByEmail()">
+        <i class="fas fa-paper-plane"></i> Enviar PDF por correo
       </button>
     </div>
 
@@ -36,7 +73,7 @@
         <p><strong>Correo:</strong> <span id="correoContacto"></span></p>
         <p><strong>RFC:</strong> TBA7504018B4</p>
       </div>
-      <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo de Talleres Barrera" class="logo">
+      <img crossorigin="anonymous" src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo de Talleres Barrera" class="logo"/>
     </div>
 
     <p>Por medio de la presente, <strong>TALLERES BARRERA S.A. DE C.V.</strong> agradece su interés en nuestros productos. A continuación, se presenta la cotización detallada para la fabricación de su remolque, incluyendo especificaciones, costos y términos de pago.</p>
@@ -112,14 +149,28 @@
       <div class="image-container" id="imagenes-container"></div>
     </div>
 
-    <div class="section">
-      <h3 class="section-title">Observaciones y modificaciones a la unidad</h3>
-      <ul class="notes-list">
-        <li><strong>Observaciones de Pintura:</strong> <span id="observacionesPintura"></span></li>
-        <li><strong>Observaciones Generales:</strong> <span id="observacionesGenerales"></span></li>
-      </ul>
+    <!-- Ajuste de precio manual (no se imprime ni sale en PDF) -->
+    <div class="section vendor-only no-pdf">
+      <h3 class="section-title">Ajuste de precio manual (solo vendedor)</h3>
+      <div class="row">
+        <label for="ajusteTipo">Tipo:</label>
+        <select id="ajusteTipo">
+          <option value="descuento">Descuento (-)</option>
+          <option value="incremento">Incremento (+)</option>
+        </select>
+        <label for="ajusteModo">Modo:</label>
+        <select id="ajusteModo">
+          <option value="monto">Monto</option>
+          <option value="porcentaje">Porcentaje</option>
+        </select>
+        <label for="ajusteValor">Valor:</label>
+        <input id="ajusteValor" type="number" step="0.01" placeholder="0" style="width:120px" />
+        <button type="button" id="btnAplicarAjuste"><i class="fas fa-check"></i> Aplicar</button>
+        <button type="button" class="secondary" id="btnQuitarAjuste"><i class="fas fa-undo"></i> Quitar</button>
+      </div>
+      <small>Este ajuste no se guarda en AppSheet; solo modifica esta vista antes de imprimir, enviar o descargar.</small>
     </div>
-    
+
     <div class="section">
       <h3 class="section-title">Resumen de Costos y Términos de Pago</h3>
       <table class="cost-table">
@@ -128,6 +179,8 @@
         </thead>
         <tbody>
           <tr><td>Costo Total de la Unidad:</td><td><span id="costoTotal"></span></td></tr>
+          <!-- Fila visible solo si hay ajuste -->
+          <tr id="rowAjuste" style="display:none"><td>Ajuste de precio manual:</td><td><span id="ajusteMonto"></span></td></tr>
           <tr><td>Depósito para Inicio de Fabricación (50%):</td><td><span id="deposito"></span></td></tr>
           <tr><td>Saldo a Liquidar a la Entrega (50%):</td><td><span id="saldo"></span></td></tr>
           <tr class="total-row"><td>TOTAL:</td><td><strong><span id="totalFinal"></span></strong></td></tr>
@@ -170,7 +223,7 @@
     </div>
 
     <div class="footer-logo-container">
-      <img src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/CER%20COMPANY%20-%20ISO%209001.png" alt="Empresa Certificada ISO 9001:2015" class="iso-logo">
+      <img crossorigin="anonymous" src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/CER%20COMPANY%20-%20ISO%209001.png" alt="Empresa Certificada ISO 9001:2015" class="iso-logo">
     </div>
 
   </div>
@@ -181,7 +234,7 @@
       const appName = "NewApp-1254688";
       const tableName = "Modificaciones";
 
-      // getParam robusto: maneja vacío/null/undefined y normaliza '+'
+      // getParam robusto
       const getParam = (name, fallback = 'Especificación no proporcionada') => {
         const raw = urlParams.get(name);
         if (raw === null || raw === undefined) return fallback;
@@ -206,7 +259,7 @@
         return `$${n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
       };
 
-      // Información general
+      // ====== Poblar datos ======
       document.getElementById('fechaCotizacion').innerText = new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
       document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
       document.getElementById('correoContacto').innerText = getParam('correo_contacto');
@@ -217,7 +270,6 @@
       document.getElementById('realizadoPor').innerText = getParam('realizado_por');
       document.getElementById('dimensiones').innerText = getParam('dimensiones');
 
-      // Especificaciones generales
       document.getElementById('colorPrimario').innerText = getParam('color');
       document.getElementById('colorSecundario').innerText = getParam('color_2');
       document.getElementById('suspension').innerText = getParam('suspension');
@@ -230,7 +282,6 @@
       document.getElementById('pernoRey').innerText = getParam('perno_rey');
       document.getElementById('portallantas').innerText = getParam('portallantas');
 
-      // Carrocería y estructura
       document.getElementById('tipoRedila').innerText = getParam('tipo_de_redila');
       document.getElementById('secciones').innerText = getParam('secciones');
       document.getElementById('puertasLaterales').innerText = getParam('puertas_laterales');
@@ -247,7 +298,6 @@
       document.getElementById('sistemaLona').innerText = getParam('sistema_de_lona');
       document.getElementById('luzPlaca').innerText = getParam('luz_placa');
 
-      // Accesorios
       document.getElementById('rines').innerText = getParam('rines');
       document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
       document.getElementById('llantas').innerText = getParam('llantas_70');
@@ -262,20 +312,55 @@
       document.getElementById('direccionales').innerText = getParam('direccionales');
       document.getElementById('plafones').innerText = getParam('plafones');
 
-      // Observaciones
       document.getElementById('observacionesPintura').innerText = getParam('observaciones_de_pintura');
       document.getElementById('observacionesGenerales').innerText = getParam('observaciones');
 
-      // Costos
-      const costoBase = parseFloat(getParam('Costo_de_la_Unidad', '0')) || 0;
-      const deposito = costoBase * 0.50;
-      const saldo = costoBase - deposito;
-      document.getElementById('costoTotal').innerText = formatCurrency(costoBase);
-      document.getElementById('deposito').innerText = formatCurrency(deposito);
-      document.getElementById('saldo').innerText = formatCurrency(saldo);
-      document.getElementById('totalFinal').innerText = formatCurrency(costoBase);
+      // ====== Costos con ajuste ======
+      let baseCosto = parseFloat(getParam('Costo_de_la_Unidad', '0')) || 0;
+      let ajusteActual = 0; // (+) incremento, (-) descuento
 
-      // Imágenes (ignora el fallback)
+      const renderTotales = () => {
+        const total = Math.max(0, baseCosto + ajusteActual);
+        const deposito = total * 0.50;
+        const saldo = total - deposito;
+
+        document.getElementById('costoTotal').innerText = formatCurrency(baseCosto);
+        if (Math.abs(ajusteActual) > 0) {
+          document.getElementById('rowAjuste').style.display = '';
+          const signo = ajusteActual >= 0 ? '' : '-';
+          document.getElementById('ajusteMonto').innerText = `${signo}${formatCurrency(Math.abs(ajusteActual))}`;
+        } else {
+          document.getElementById('rowAjuste').style.display = 'none';
+        }
+        document.getElementById('deposito').innerText = formatCurrency(deposito);
+        document.getElementById('saldo').innerText = formatCurrency(saldo);
+        document.getElementById('totalFinal').innerText = formatCurrency(total);
+      };
+      renderTotales();
+
+      // Controles de ajuste (solo vendedor)
+      function aplicarAjusteDesdeUI(){
+        const tipo = (document.getElementById('ajusteTipo')?.value || 'descuento');
+        const modo = (document.getElementById('ajusteModo')?.value || 'monto');
+        const val = parseFloat(document.getElementById('ajusteValor')?.value || '0');
+
+        let monto = 0;
+        if (!isNaN(val) && val > 0) {
+          monto = (modo === 'porcentaje') ? (baseCosto * (val/100)) : val;
+          if (tipo === 'descuento') monto = -monto;
+        }
+        ajusteActual = monto;
+        renderTotales();
+      }
+      document.getElementById('btnAplicarAjuste')?.addEventListener('click', aplicarAjusteDesdeUI);
+      document.getElementById('btnQuitarAjuste')?.addEventListener('click', ()=>{
+        document.getElementById('ajusteValor').value = '';
+        ajusteActual = 0;
+        renderTotales();
+      });
+      document.getElementById('ajusteValor')?.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ aplicarAjusteDesdeUI(); }});
+
+      // ====== Imágenes ======
       const imagenesContainer = document.getElementById('imagenes-container');
       const imagenParams = ['imagen_de_referencia','imagen_de_referencia_81','imagen_de_referencia_82','imagen_de_referencia_83','imagen_de_referencia_84','imagen_de_referencia_85'];
       let hasImages = false;
@@ -283,6 +368,7 @@
         const fileName = getParam(paramName, '');
         if (fileName && fileName !== 'Especificación no proporcionada') {
           const img = document.createElement('img');
+          img.crossOrigin = 'anonymous';
           img.src = getAppSheetImageUrl(fileName);
           img.alt = 'Imagen de referencia';
           img.className = 'reference-image';
@@ -293,6 +379,96 @@
       if (!hasImages) {
         imagenesContainer.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
       }
+
+      // ====== PDF helpers ======
+      // Carga html2pdf bajo demanda
+      window.loadHtml2Pdf = (cb)=>{
+        if (window.html2pdf) { cb && cb(); return; }
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+        s.onload = ()=> cb && cb();
+        s.onerror = ()=> alert('No fue posible cargar el generador de PDF.');
+        document.head.appendChild(s);
+      };
+
+      const safe = (s) => (s||'').toString().replace(/[^a-z0-9-_]+/gi,'_').slice(0,60);
+      const todayISO = new Date().toISOString().slice(0,10);
+      const defaultFilename = `Cotizacion_${safe(getParam('cliente','Cliente'))}_${todayISO}.pdf`;
+      window.__pdfFilename = defaultFilename;
+
+      // Generar PDF a partir de un CLONE (quitamos botones .no-pdf)
+      window.generatePdfBlob = (cb) => {
+        loadHtml2Pdf(()=>{
+          const src = document.getElementById('cotizacion-root');
+          const clone = src.cloneNode(true);
+          // Remover nodos no-pdf
+          clone.querySelectorAll('.no-pdf').forEach(n=> n.remove());
+          // Opciones de PDF (tamaño carta)
+          const opt = {
+            margin: [10,10,10,10],
+            filename: window.__pdfFilename,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all','css','legacy'] }
+          };
+          const wrapper = document.createElement('div');
+          wrapper.style.background = '#ffffff';
+          wrapper.appendChild(clone);
+
+          // Usamos html2pdf para obtener blob
+          window.html2pdf().set(opt).from(wrapper).outputPdf('blob').then(blob=>{
+            cb && cb(blob, opt.filename);
+          }).catch(()=> alert('No fue posible generar el PDF.'));
+        });
+      };
+
+      window.downloadPDF = () => {
+        generatePdfBlob((blob, filename)=>{
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = filename || window.__pdfFilename;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(()=> {
+            URL.revokeObjectURL(a.href);
+            a.remove();
+          }, 0);
+        });
+      };
+
+      window.sharePDFByEmail = async () => {
+        generatePdfBlob(async (blob, filename)=>{
+          try {
+            const file = new File([blob], filename || 'Cotizacion.pdf', { type: 'application/pdf' });
+
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                title: 'Cotización - Talleres Barrera',
+                text: 'Adjunto PDF de la cotización.',
+                files: [file]
+              });
+            } else {
+              // Fallback: descarga + mailto
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = filename || 'Cotizacion.pdf';
+              document.body.appendChild(a);
+              a.click();
+              setTimeout(()=> {
+                URL.revokeObjectURL(url);
+                a.remove();
+                const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
+                const body = encodeURIComponent('Adjunto la cotización en PDF. Si no se adjuntó automáticamente, por favor inserte el archivo descargado.');
+                window.location.href = `mailto:?subject=${subject}&body=${body}`;
+              }, 250);
+            }
+          } catch (e) {
+            alert('No fue posible preparar el correo con el PDF.');
+          }
+        });
+      };
     });
 
     function sendEmail() {
