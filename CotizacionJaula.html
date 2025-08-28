@@ -6,28 +6,6 @@
   <title>Cotización - Talleres Barrera</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
-  <style>
-    .section {
-      page-break-inside: avoid;
-    }
-    @media print{
-      body{font-size:10px}
-      .section,.header{padding:10px;margin-bottom:5px}
-      .actions-bar,.vendor-only{display:none!important}
-      .info-table td,.cost-table th,.cost-table td{padding:3px}
-      #logoPrincipal{display:block!important}
-    }
-    img{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .actions-bar{display:flex;gap:.5rem;justify-content:flex-end;margin-bottom:12px}
-    .action-button{background:#1f2937;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
-    .action-button i{margin-right:6px}
-    .action-button:disabled{opacity:.6;cursor:not-allowed}
-    .vendor-only .hint{color:#6b7280;font-size:12px}
-    .vendor-only input{max-width:160px;padding:6px 8px;border:1px solid #d1d5db;border-radius:6px}
-    .image-container{display:flex;flex-wrap:wrap;gap:10px}
-    .reference-image{max-width:220px;max-height:180px;object-fit:contain;border:1px solid #e5e7eb;padding:4px;border-radius:6px;background:#fff}
-    .img-error{font-size:12px;color:#6b7280;word-break:break-all}
-  </style>
 </head>
 <body>
   <div class="container">
@@ -49,7 +27,8 @@
            src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/LOGO%20TB2025.png"
            alt="Logo de Talleres Barrera"
            class="logo"
-           style="width: 50%; height: auto;" crossorigin="anonymous"
+           style="width: 20%; height: auto;" 
+           crossorigin="anonymous"
            referrerpolicy="no-referrer">
     </div>
     <p>Por medio de la presente, <strong>TALLERES BARRERA S.A. DE C.V.</strong> agradece su interés en nuestros productos. A continuación, se presenta la cotización detallada para la fabricación de su remolque, incluyendo especificaciones, costos y términos de pago.</p>
@@ -64,56 +43,59 @@
         <tr><td>Realizado por (Vendedor):</td><td><span id="realizadoPor"></span></td></tr>
       </table>
     </div>
-    <div class="section">
-      <h3 class="section-title">Especificaciones Generales</h3>
-      <table class="info-table">
-        <tr><td>Color Primario:</td><td><span id="colorPrimario"></span></td></tr>
-        <tr><td>Color Secundario:</td><td><span id="colorSecundario"></span></td></tr>
-        <tr><td>Suspensión:</td><td><span id="suspension"></span> (<span id="cantSuspensiones"></span> piezas)</td></tr>
-        <tr><td>Retráctil de Eje:</td><td><span id="retractilEje"></span></td></tr>
-        <tr><td>Ejes:</td><td><span id="ejes"></span></td></tr>
-        <tr><td>Distancia entre Ejes:</td><td><span id="distanciaEjes"></span></td></tr>
-        <tr><td>Personalización de Viga:</td><td><span id="personalizacionViga"></span></td></tr>
-        <tr><td>Faldón:</td><td><span id="faldon"></span></td></tr>
-        <tr><td>Perno Rey:</td><td><span id="pernoRey"></span></td></tr>
-        <tr><td>Portallantas:</td><td><span id="portallantas"></span></td></tr>
-      </table>
-    </div>
-    <div class="section">
-      <h3 class="section-title">Carrocería y Estructura</h3>
-      <table class="info-table">
-        <tr><td>Dimensiones:</td><td><span id="dimensiones"></span></td></tr>
-        <tr><td>Tipo de Redila:</td><td><span id="tipoRedila"></span></td></tr>
-        <tr><td>Secciones:</td><td><span id="secciones"></span></td></tr>
-        <tr><td>Puertas Laterales:</td><td><span id="puertasLaterales"></span></td></tr>
-        <tr><td>Compuerta al Piso:</td><td><span id="compAlPiso"></span></td></tr>
-        <tr><td>Compuerta Trasera:</td><td><span id="compAtras"></span></td></tr>
-        <tr><td>Tipo de Arco:</td><td><span id="tipoArco"></span></td></tr>
-        <tr><td>Piso de Madera:</td><td><span id="pisoMadera"></span></td></tr>
-        <tr><td>Piso Laminado:</td><td><span id="pisoLaminado"></span></td></tr>
-        <tr><td>Caballete:</td><td><span id="caballete"></span></td></tr>
-        <tr><td>Tubos Interiores:</td><td><span id="tubosInteriores"></span></td></tr>
-        <tr><td>Barrote Lateral:</td><td><span id="barroteLateral"></span></td></tr>
-        <tr><td>Compuerta a los Lados:</td><td><span id="compuertaLados"></span></td></tr>
-        <tr><td>Cerrojo de Puertas Traseras:</td><td><span id="cerrojoPuertas"></span></td></tr>
-        <tr><td>Sistema de Lona:</td><td><span id="sistemaLona"></span></td></tr>
-        <tr><td>Luz de Placa:</td><td><span id="luzPlaca"></span></td></tr>
-      </table>
-    </div>
-    <div class="section">
-      <h3 class="section-title">Accesorios</h3>
-      <table class="info-table">
-        <tr><td>Rines:</td><td><span id="rines"></span> (<span id="cantRines"></span> piezas)</td></tr>
-        <tr><td>Llantas:</td><td><span id="llantas"></span> (<span id="cantLlantas"></span> piezas)</td></tr>
-        <tr><td>Frenos:</td><td><span id="frenos"></span></td></tr>
-        <tr><td>Juego de Patines:</td><td><span id="juegoPatines"></span> (<span id="cantPatines"></span> piezas)</td></tr>
-        <tr><td>Caja de Herramientas:</td><td><span id="cajaHerramientas"></span></td></tr>
-        <tr><td>Lodera Delantera:</td><td><span id="loderaDelantera"></span></td></tr>
-        <tr><td>Lodera Trasera:</td><td><span id="loderaTrasera"></span></td></tr>
-        <tr><td>Manivelas de Patín:</td><td><span id="manivelasPatin"></span></td></tr>
-        <tr><td>Direccionales:</td><td><span id="direccionales"></span></td></tr>
-        <tr><td>Plafones:</td><td><span id="plafones"></span></td></tr>
-      </table>
+
+    <div id="especificaciones-container">
+      <div class="section">
+        <h3 class="section-title">Especificaciones Generales</h3>
+        <table class="info-table">
+          <tr><td>Color Primario:</td><td><span id="colorPrimario"></span></td></tr>
+          <tr><td>Color Secundario:</td><td><span id="colorSecundario"></span></td></tr>
+          <tr><td>Suspensión:</td><td><span id="suspension"></span> (<span id="cantSuspensiones"></span> piezas)</td></tr>
+          <tr><td>Retráctil de Eje:</td><td><span id="retractilEje"></span></td></tr>
+          <tr><td>Ejes:</td><td><span id="ejes"></span></td></tr>
+          <tr><td>Distancia entre Ejes:</td><td><span id="distanciaEjes"></span></td></tr>
+          <tr><td>Personalización de Viga:</td><td><span id="personalizacionViga"></span></td></tr>
+          <tr><td>Faldón:</td><td><span id="faldon"></span></td></tr>
+          <tr><td>Perno Rey:</td><td><span id="pernoRey"></span></td></tr>
+          <tr><td>Portallantas:</td><td><span id="portallantas"></span></td></tr>
+        </table>
+      </div>
+      <div class="section">
+        <h3 class="section-title">Carrocería y Estructura</h3>
+        <table class="info-table">
+          <tr><td>Dimensiones:</td><td><span id="dimensiones"></span></td></tr>
+          <tr><td>Tipo de Redila:</td><td><span id="tipoRedila"></span></td></tr>
+          <tr><td>Secciones:</td><td><span id="secciones"></span></td></tr>
+          <tr><td>Puertas Laterales:</td><td><span id="puertasLaterales"></span></td></tr>
+          <tr><td>Compuerta al Piso:</td><td><span id="compAlPiso"></span></td></tr>
+          <tr><td>Compuerta Trasera:</td><td><span id="compAtras"></span></td></tr>
+          <tr><td>Tipo de Arco:</td><td><span id="tipoArco"></span></td></tr>
+          <tr><td>Piso de Madera:</td><td><span id="pisoMadera"></span></td></tr>
+          <tr><td>Piso Laminado:</td><td><span id="pisoLaminado"></span></td></tr>
+          <tr><td>Caballete:</td><td><span id="caballete"></span></td></tr>
+          <tr><td>Tubos Interiores:</td><td><span id="tubosInteriores"></span></td></tr>
+          <tr><td>Barrote Lateral:</td><td><span id="barroteLateral"></span></td></tr>
+          <tr><td>Compuerta a los Lados:</td><td><span id="compuertaLados"></span></td></tr>
+          <tr><td>Cerrojo de Puertas Traseras:</td><td><span id="cerrojoPuertas"></span></td></tr>
+          <tr><td>Sistema de Lona:</td><td><span id="sistemaLona"></span></td></tr>
+          <tr><td>Luz de Placa:</td><td><span id="luzPlaca"></span></td></tr>
+        </table>
+      </div>
+      <div class="section">
+        <h3 class="section-title">Accesorios</h3>
+        <table class="info-table">
+          <tr><td>Rines:</td><td><span id="rines"></span> (<span id="cantRines"></span> piezas)</td></tr>
+          <tr><td>Llantas:</td><td><span id="llantas"></span> (<span id="cantLlantas"></span> piezas)</td></tr>
+          <tr><td>Frenos:</td><td><span id="frenos"></span></td></tr>
+          <tr><td>Juego de Patines:</td><td><span id="juegoPatines"></span> (<span id="cantPatines"></span> piezas)</td></tr>
+          <tr><td>Caja de Herramientas:</td><td><span id="cajaHerramientas"></span></td></tr>
+          <tr><td>Lodera Delantera:</td><td><span id="loderaDelantera"></span></td></tr>
+          <tr><td>Lodera Trasera:</td><td><span id="loderaTrasera"></span></td></tr>
+          <tr><td>Manivelas de Patín:</td><td><span id="manivelasPatin"></span></td></tr>
+          <tr><td>Direccionales:</td><td><span id="direccionales"></span></td></tr>
+          <tr><td>Plafones:</td><td><span id="plafones"></span></td></tr>
+        </table>
+      </div>
     </div>
     <div class="section">
       <h3 class="section-title">Imágenes de Referencia</h3>
@@ -177,6 +159,7 @@
     </div>
   </div>
   <script>
+    // Tu JavaScript permanece igual, no necesita cambios.
     const urlParams = new URLSearchParams(window.location.search);
     const getParam = (name) => {
       const raw = urlParams.get(name);
@@ -282,7 +265,7 @@
       const script = document.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
       script.onload = () => callback && callback();
-      script.onerror = () => alert('No fue posible cargar el generador de PDF.');
+      script.onerror = () => alert('No se pudo cargar el generador de PDF.');
       document.head.appendChild(script);
     }
     function toggleUiForPdf(hide) {
