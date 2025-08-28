@@ -214,28 +214,20 @@
   </div>
 
 <script>
-  // ======= UTILIDADES =======
-  function loadHtml2Pdf(callback){
-    if (window.html2pdf) { callback && callback(); return; }
-    const s = document.createElement('script');
-    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-    s.onload = () => callback && callback();
-    s.onerror = () => alert('No fue posible cargar el generador de PDF. Intenta nuevamente.');
-    document.head.appendChild(s);
-  }
+  // ---------- Utilidades seguras ----------
+  const $ = (id) => document.getElementById(id);
+  const setText = (id, value) => { const el = $(id); if (el) el.textContent = value ?? ''; };
+  const show = (id, v=true) => { const el = $(id); if (el) el.style.display = v ? '' : 'none'; };
 
+  // Ocultar UI de vendedor/botones al imprimir o PDF
   function hideUIForPdf(hide=true){
     document.querySelectorAll('.no-pdf, .vendor-only').forEach(el=>{
-      if (hide) {
-        el.dataset.prevDisplay = el.style.display || '';
-        el.style.display = 'none';
-      } else {
-        el.style.display = el.dataset.prevDisplay || '';
-        delete el.dataset.prevDisplay;
-      }
+      if (hide) { el.dataset.prevDisplay = el.style.display || ''; el.style.display = 'none'; }
+      else { el.style.display = el.dataset.prevDisplay || ''; delete el.dataset.prevDisplay; }
     });
   }
 
+  // Números y moneda robustos
   const parseNumber = (s) => {
     if (s == null) return 0;
     const clean = String(s).replace(/[^\d.,-]/g,'').replace(/,/g,'');
@@ -247,19 +239,29 @@
     return `$${n.toLocaleString('es-MX',{minimumFractionDigits:2, maximumFractionDigits:2})} MXN`;
   };
 
-  // ======= DATOS DESDE URL =======
+  // Carga html2pdf solo cuando se usa
+  function loadHtml2Pdf(cb){
+    if (window.html2pdf) { cb && cb(); return; }
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+    s.onload = () => cb && cb();
+    s.onerror = () => alert('No fue posible cargar el generador de PDF.');
+    document.head.appendChild(s);
+  }
+
+  // ---------- Lógica principal ----------
   document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(location.search);
     const appName = "NewApp-1254688";
     const tableName = "Modificaciones";
 
-    const getParam = (name, fallback='Especificación no proporcionada')=>{
+    // Igual que tu OT: si no hay valor, regresar cadena vacía (no "Especificación…")
+    const getParam = (name) => {
       const raw = urlParams.get(name);
-      if (raw === null || raw === undefined) return fallback;
-      try {
-        const val = decodeURIComponent(String(raw).replace(/\+/g,' '));
-        return val.trim() === '' ? fallback : val;
-      } catch { return raw || fallback; }
+      if (raw === null || raw === undefined) return '';
+      // Decodificar + reemplazar + por espacios
+      try { return decodeURIComponent(String(raw).replace(/\+/g,' ')); }
+      catch { return raw; }
     };
 
     const getAppSheetImageUrl = (fileName) => {
@@ -267,158 +269,149 @@
       return `https://www.appsheet.com/template/gettablefileurl?appName=${appName}&tableName=${tableName}&fileName=${encodeURIComponent(fileName)}`;
     };
 
+    // Fecha y nombre de archivo PDF
     const today = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('fechaCotizacion').innerText = today.toLocaleDateString('es-MX', options);
-
+    setText('fechaCotizacion', today.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' }));
     const safe = (s) => (s||'').toString().replace(/[^a-z0-9-_]+/gi,'_').slice(0,60);
     window.__pdfFilename = `Cotizacion_${safe(getParam('cliente'))}_${today.toISOString().slice(0,10)}.pdf`;
 
-    // Contacto
-    document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
-    document.getElementById('correoContacto').innerText = getParam('correo_contacto');
-
-    // Cliente
-    document.getElementById('cliente').innerText = getParam('cliente');
-    document.getElementById('direccionCliente').innerText = getParam('direccion');
-    document.getElementById('rfcCliente').innerText = getParam('rfc');
-    document.getElementById('tipoUnidad').innerText = getParam('tipo_de_unidad');
-    document.getElementById('realizadoPor').innerText = getParam('realizado_por');
-    document.getElementById('dimensiones').innerText = getParam('dimensiones');
+    // Contacto / Cliente (todos los setText son seguros)
+    setText('telefonoContacto',  getParam('telefono_contacto'));
+    setText('correoContacto',    getParam('correo_contacto'));
+    setText('cliente',           getParam('cliente'));
+    setText('direccionCliente',  getParam('direccion'));
+    setText('rfcCliente',        getParam('rfc'));
+    setText('tipoUnidad',        getParam('tipo_de_unidad'));
+    setText('realizadoPor',      getParam('realizado_por'));
+    setText('dimensiones',       getParam('dimensiones'));
 
     // Especificaciones
-    document.getElementById('colorPrimario').innerText = getParam('color');
-    document.getElementById('colorSecundario').innerText = getParam('color_2');
-    document.getElementById('suspension').innerText = getParam('suspension');
-    document.getElementById('cantSuspensiones').innerText = getParam('cantidad_de_suspensiones');
-    document.getElementById('retractilEje').innerText = getParam('retractil_eje');
-    document.getElementById('ejes').innerText = getParam('ejes');
-    document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
-    document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
-    document.getElementById('faldon').innerText = getParam('faldon');
-    document.getElementById('pernoRey').innerText = getParam('perno_rey');
-    document.getElementById('portallantas').innerText = getParam('portallantas');
+    setText('colorPrimario',         getParam('color'));
+    setText('colorSecundario',       getParam('color_2'));
+    setText('suspension',            getParam('suspension'));
+    setText('cantSuspensiones',      getParam('cantidad_de_suspensiones'));
+    setText('retractilEje',          getParam('retractil_eje'));
+    setText('ejes',                   getParam('ejes'));
+    setText('distanciaEjes',          getParam('distancia_de_ejes'));
+    setText('personalizacionViga',    getParam('personalizacion_de_viga'));
+    setText('faldon',                 getParam('faldon'));
+    setText('pernoRey',               getParam('perno_rey'));
+    setText('portallantas',           getParam('portallantas'));
 
     // Carrocería
-    document.getElementById('tipoRedila').innerText = getParam('tipo_de_redila');
-    document.getElementById('secciones').innerText = getParam('secciones');
-    document.getElementById('puertasLaterales').innerText = getParam('puertas_laterales');
-    document.getElementById('compAlPiso').innerText = getParam('comp_al_piso');
-    document.getElementById('compAtras').innerText = getParam('comp_atras');
-    document.getElementById('tipoArco').innerText = getParam('tipo_de_arco');
-    document.getElementById('pisoMadera').innerText = getParam('piso_de_madera');
-    document.getElementById('pisoLaminado').innerText = getParam('piso_laminado');
-    document.getElementById('caballete').innerText = getParam('caballete');
-    document.getElementById('tubosInteriores').innerText = getParam('tubos_interiores');
-    document.getElementById('barroteLateral').innerText = getParam('barrote_lateral');
-    document.getElementById('compuertaLados').innerText = getParam('compuerta_a_los_lados');
-    document.getElementById('cerrojoPuertas').innerText = getParam('cerrojo_de_puertas_traseras');
-    document.getElementById('sistemaLona').innerText = getParam('sistema_de_lona');
-    document.getElementById('luzPlaca').innerText = getParam('luz_placa');
+    setText('tipoRedila',             getParam('tipo_de_redila'));
+    setText('secciones',              getParam('secciones'));
+    setText('puertasLaterales',       getParam('puertas_laterales'));
+    setText('compAlPiso',             getParam('comp_al_piso'));
+    setText('compAtras',              getParam('comp_atras'));
+    setText('tipoArco',               getParam('tipo_de_arco'));
+    setText('pisoMadera',             getParam('piso_de_madera'));
+    setText('pisoLaminado',           getParam('piso_laminado'));
+    setText('caballete',              getParam('caballete'));
+    setText('tubosInteriores',        getParam('tubos_interiores'));
+    setText('barroteLateral',         getParam('barrote_lateral'));
+    setText('compuertaLados',         getParam('compuerta_a_los_lados'));
+    setText('cerrojoPuertas',         getParam('cerrojo_de_puertas_traseras'));
+    setText('sistemaLona',            getParam('sistema_de_lona'));
+    setText('luzPlaca',               getParam('luz_placa'));
 
     // Accesorios
-    document.getElementById('rines').innerText = getParam('rines');
-    document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
-    document.getElementById('llantas').innerText = getParam('llantas_70');
-    document.getElementById('cantLlantas').innerText = getParam('cantidad_de_llantas');
-    document.getElementById('frenos').innerText = getParam('frenos');
-    document.getElementById('juegoPatines').innerText = getParam('juego_de_patines');
-    document.getElementById('cantPatines').innerText = getParam('cantidad_de_patines');
-    document.getElementById('cajaHerramientas').innerText = getParam('caja_de_herramientas');
-    document.getElementById('loderaDelantera').innerText = getParam('lodera_delantera');
-    document.getElementById('loderaTrasera').innerText = getParam('lodera_trasera');
-    document.getElementById('manivelasPatin').innerText = getParam('manivelas_de_patin');
-    document.getElementById('direccionales').innerText = getParam('direccionales');
-    document.getElementById('plafones').innerText = getParam('plafones');
+    setText('rines',                  getParam('rines'));
+    setText('cantRines',              getParam('cantidad_de_rines'));
+    setText('llantas',                getParam('llantas_70'));
+    setText('cantLlantas',            getParam('cantidad_de_llantas'));
+    setText('frenos',                 getParam('frenos'));
+    setText('juegoPatines',           getParam('juego_de_patines'));
+    setText('cantPatines',            getParam('cantidad_de_patines'));
+    setText('cajaHerramientas',       getParam('caja_de_herramientas'));
+    setText('loderaDelantera',        getParam('lodera_delantera'));
+    setText('loderaTrasera',          getParam('lodera_trasera'));
+    setText('manivelasPatin',         getParam('manivelas_de_patin'));
+    setText('direccionales',          getParam('direccionales'));
+    setText('plafones',               getParam('plafones'));
 
     // Observaciones
-    document.getElementById('observacionesPintura').innerText = getParam('observaciones_de_pintura');
-    document.getElementById('observacionesGenerales').innerText = getParam('observaciones');
+    setText('observacionesPintura',   getParam('observaciones_de_pintura'));
+    setText('observacionesGenerales', getParam('observaciones'));
 
-    // Costos (con parse robusto)
-    let baseCosto = parseNumber(getParam('Costo_de_la_Unidad', '0'));
+    // ----- COSTOS (a prueba de nulos) -----
+    let baseCosto = parseNumber(getParam('Costo_de_la_Unidad'));  // viene como 707000
     let ajusteActual = 0;
 
-    const renderTotales = ()=>{
+    function renderTotales(){
       const total = Math.max(0, baseCosto + ajusteActual);
       const deposito = total * 0.50;
       const saldo = total - deposito;
 
-      document.getElementById('costoTotal').innerText = formatCurrency(baseCosto);
+      setText('costoTotal', formatCurrency(baseCosto));
       if (Math.abs(ajusteActual) > 0) {
-        document.getElementById('rowAjuste').style.display = '';
+        show('rowAjuste', true);
         const signo = ajusteActual >= 0 ? '' : '-';
-        document.getElementById('ajusteMonto').innerText = `${signo}${formatCurrency(Math.abs(ajusteActual))}`;
+        setText('ajusteMonto', `${signo}${formatCurrency(Math.abs(ajusteActual))}`);
       } else {
-        document.getElementById('rowAjuste').style.display = 'none';
+        show('rowAjuste', false);
       }
-      document.getElementById('deposito').innerText = formatCurrency(deposito);
-      document.getElementById('saldo').innerText = formatCurrency(saldo);
-      document.getElementById('totalFinal').innerText = formatCurrency(total);
-    };
+      setText('deposito',  formatCurrency(deposito));
+      setText('saldo',     formatCurrency(saldo));
+      setText('totalFinal',formatCurrency(total));
+    }
     renderTotales();
 
-    // Ajuste manual
-    function aplicarAjusteDesdeUI(){
-      const tipo = (document.getElementById('ajusteTipo')?.value || 'descuento');
-      const modo = (document.getElementById('ajusteModo')?.value || 'monto');
-      const val = parseNumber(document.getElementById('ajusteValor')?.value || '0');
-
+    // Ajuste manual (solo visual)
+    function aplicarAjuste(){
+      const tipo = ($('ajusteTipo')?.value || 'descuento');
+      const modo = ($('ajusteModo')?.value || 'monto');
+      const val  = parseNumber($('ajusteValor')?.value || '0');
       let monto = 0;
-      if (!isNaN(val) && val > 0) {
+      if (val > 0) {
         monto = (modo === 'porcentaje') ? (baseCosto * (val/100)) : val;
         if (tipo === 'descuento') monto = -monto;
       }
       ajusteActual = monto;
       renderTotales();
     }
-    document.getElementById('btnAplicarAjuste')?.addEventListener('click', aplicarAjusteDesdeUI);
-    document.getElementById('btnQuitarAjuste')?.addEventListener('click', ()=>{
-      document.getElementById('ajusteValor').value='';
-      ajusteActual = 0;
-      renderTotales();
-    });
-    document.getElementById('ajusteValor')?.addEventListener('keydown', e=>{ if(e.key==='Enter'){ aplicarAjusteDesdeUI(); } });
+    $('btnAplicarAjuste')?.addEventListener('click', aplicarAjuste);
+    $('btnQuitarAjuste')?.addEventListener('click', ()=>{ if($('ajusteValor')) $('ajusteValor').value=''; ajusteActual = 0; renderTotales(); });
+    $('ajusteValor')?.addEventListener('keydown', e=>{ if(e.key==='Enter'){ aplicarAjuste(); } });
 
-    // Imágenes
-    const imagenesContainer = document.getElementById('imagenes-container');
-    const imagenParams = ['imagen_de_referencia','imagen_de_referencia_81','imagen_de_referencia_82','imagen_de_referencia_83','imagen_de_referencia_84','imagen_de_referencia_85'];
-    let hasImages = false;
-    imagenParams.forEach(p=>{
-      const fileName = getParam(p, '');
-      if (fileName && fileName !== 'Especificación no proporcionada') {
-        const img = document.createElement('img');
-        img.src = getAppSheetImageUrl(fileName);
-        img.alt = 'Imagen de referencia';
-        img.className = 'reference-image';
-        imagenesContainer.appendChild(img);
-        hasImages = true;
-      }
-    });
-    if (!hasImages) imagenesContainer.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
+    // ----- IMÁGENES (con CORS y sin “Especificación…”) -----
+    const imagenesContainer = $('imagenes-container');
+    if (imagenesContainer) {
+      const keys = ['imagen_de_referencia','imagen_de_referencia_81','imagen_de_referencia_82','imagen_de_referencia_83','imagen_de_referencia_84','imagen_de_referencia_85'];
+      let any = false;
+      keys.forEach(k=>{
+        const fileName = getParam(k);         // '' si no viene
+        if (fileName) {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';      // ayuda a que html2pdf renderice
+          img.referrerPolicy = 'no-referrer'; // por si el host bloquea Referer
+          img.src = getAppSheetImageUrl(fileName);
+          img.alt = 'Imagen de referencia';
+          img.className = 'reference-image';
+          imagenesContainer.appendChild(img);
+          any = true;
+        }
+      });
+      if (!any) imagenesContainer.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
+    }
   });
 
-  // ======= PDF / CORREO =======
+  // ---------- PDF / Correo ----------
   function downloadPDF(){
     loadHtml2Pdf(() => {
-      const element = document.querySelector('.container'); // igual que tu versión que funcionaba
+      const element = document.querySelector('.container');
       const filename = window.__pdfFilename || 'Cotizacion.pdf';
       const opt = {
         margin: [10,10,10,10],
-        filename: filename,
-        image: { type: 'jpeg', quality: 0.98 },
+        filename, image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true, letterRendering: true, allowTaint: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
-
       hideUIForPdf(true);
       try {
-        window.html2pdf().set(opt).from(element).toPdf().get('pdf').then(pdf => {
-          pdf.save(filename);
-        }).finally(()=>{
-          hideUIForPdf(false);
-        });
-      } catch (e) {
+        window.html2pdf().set(opt).from(element).toPdf().get('pdf').then(pdf => pdf.save(filename))
+          .finally(()=> hideUIForPdf(false));
+      } catch(e){
         hideUIForPdf(false);
         alert('No fue posible generar el PDF.');
       }
@@ -430,11 +423,10 @@
       const element = document.querySelector('.container');
       const filename = window.__pdfFilename || 'Cotizacion.pdf';
       const opt = {
-        margin: [10,10,10,10],
-        filename: filename,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, letterRendering: true, allowTaint: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        margin:[10,10,10,10], filename,
+        image:{ type:'jpeg', quality:0.98 },
+        html2canvas:{ scale:2, useCORS:true, letterRendering:true, allowTaint:true },
+        jsPDF:{ unit:'mm', format:'a4', orientation:'portrait' }
       };
       hideUIForPdf(true);
       try {
@@ -444,33 +436,21 @@
         const file = new File([blob], filename, { type: 'application/pdf' });
 
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            title: 'Cotización - Talleres Barrera',
-            text: 'Adjunto PDF de la cotización.',
-            files: [file]
-          });
+          await navigator.share({ title:'Cotización - Talleres Barrera', text:'Adjunto PDF de la cotización.', files:[file] });
         } else {
           const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+          const a = document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click();
           setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 0);
           const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
           const body = encodeURIComponent('Adjunto la cotización en PDF. Si no se adjuntó automáticamente, por favor inserte el archivo descargado.');
-          window.location.href = `mailto:?subject=${subject}&body=${body}`;
+          location.href = `mailto:?subject=${subject}&body=${body}`;
         }
-      } catch (e) {
+      } catch(e){
         alert('No fue posible preparar el correo con el PDF.');
       } finally {
         hideUIForPdf(false);
       }
     });
-  }
-
-  // (Compatibilidad) Enviar correo sin adjunto
-  function sendEmail() {
-    const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
-    const body = encodeURIComponent(`Estimado cliente,\n\nAdjunto encontrará la cotización detallada para la fabricación de su remolque con Talleres Barrera S.A. de C.V.\n\nGracias por su preferencia.\n\nSaludos cordiales,\nEquipo de Ventas de Talleres Barrera S.A. de C.V.`);
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
   }
 </script>
 </body>
