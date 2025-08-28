@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
   <style>
+    /* Reglas para controlar saltos de página en el PDF */
+    .section {
+      page-break-inside: avoid; /* Evita que una sección se parta entre dos páginas */
+    }
+
     @media print{
       body{font-size:10px}
       .section,.header{padding:10px;margin-bottom:5px}
@@ -43,7 +48,7 @@
         <p><strong>RFC:</strong> TBA7504018B4</p>
       </div>
       <img id="logoPrincipal"
-           src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688"
+           src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/LOGO%20TB2025.png"
            alt="Logo de Talleres Barrera"
            class="logo"
            crossorigin="anonymous"
@@ -174,7 +179,7 @@
     </div>
   </div>
   <script>
-    // ====== UTILIDADES ======
+    // Tu JavaScript permanece igual, no necesita cambios.
     const urlParams = new URLSearchParams(window.location.search);
     const getParam = (name) => {
       const raw = urlParams.get(name);
@@ -183,32 +188,22 @@
       catch { return raw; }
     };
     const getParamRaw = (name) => urlParams.get(name) || '';
-
     const appName = "NewApp-1254688";
-    const tableName = "Modificaciones"; // Tabla donde están las imágenes
-
-    // ✅ CAMBIO 1: Función corregida para no hacer doble codificación.
+    const tableName = "Modificaciones";
     function getAppSheetImageUrl(fileNameRaw) {
       if (!fileNameRaw) return '';
-      // El valor 'fileNameRaw' ya viene codificado desde la URL, no necesitamos volver a codificarlo.
-      // Simplemente lo usamos directamente.
       return `https://www.appsheet.com/template/gettablefileurl?appName=${encodeURIComponent(appName)}&tableName=${encodeURIComponent(tableName)}&fileName=${fileNameRaw}&_=${Date.now()}`;
     }
-
     const money = (v) => {
       const n = Number(v);
       if (!isFinite(n)) return '$0.00';
       return n.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
     };
-
     const safe = (s) => (s || '').toString().replace(/[^a-z0-9-_]+/gi, '_').slice(0, 60);
     const today = new Date();
     window.__pdfFilename = `Cotizacion_${safe(getParam('cliente'))}_${today.toISOString().slice(0, 10)}.pdf`;
-
-    // ====== CARGA DE DATOS ======
     function fillData() {
       document.getElementById('fechaCotizacion').innerText = today.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
-      
       const fields = {
         'telefonoContacto': 'telefono_contacto', 'correoContacto': 'correo_contacto', 'cliente': 'cliente',
         'direccionCliente': 'direccion', 'rfcCliente': 'rfc', 'tipoUnidad': 'tipo_de_unidad',
@@ -228,7 +223,6 @@
         'observacionesPintura': ['observaciones_de_pintura', 'OBSERVACIONES_DE_PINTURA'],
         'observacionesGenerales': ['observaciones', 'OBSERVACIONES']
       };
-
       for (const id in fields) {
         const paramNames = Array.isArray(fields[id]) ? fields[id] : [fields[id]];
         for (const name of paramNames) {
@@ -239,17 +233,14 @@
           }
         }
       }
-
       const costoBase = parseFloat(urlParams.get('Costo_de_la_Unidad') || '0') || 0;
       setCosts(costoBase);
       document.getElementById('ajusteManual').addEventListener('input', (e) => {
         const ajuste = parseFloat(e.target.value || '0') || 0;
         setCosts(costoBase + ajuste);
       });
-
       loadImages();
     }
-
     function setCosts(total) {
       const deposito = total * 0.5;
       const saldo = total - deposito;
@@ -258,7 +249,6 @@
       document.getElementById('saldo').innerText = money(saldo);
       document.getElementById('totalFinal').innerText = money(total);
     }
-
     function loadImages() {
       const container = document.getElementById('imagenes-container');
       const keys = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
@@ -270,7 +260,6 @@
           const img = new Image();
           img.className = 'reference-image';
           img.alt = 'Imagen de referencia';
-          // Atributos necesarios para que html2pdf pueda usar la imagen
           img.crossOrigin = 'anonymous';
           img.referrerPolicy = 'no-referrer';
           img.src = getAppSheetImageUrl(fileRaw);
@@ -287,8 +276,6 @@
         container.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
       }
     }
-
-    // ====== PDF / CORREO ======
     function loadHtml2Pdf(callback) {
       if (window.html2pdf) { callback && callback(); return; }
       const script = document.createElement('script');
@@ -297,7 +284,6 @@
       script.onerror = () => alert('No fue posible cargar el generador de PDF.');
       document.head.appendChild(script);
     }
-
     function toggleUiForPdf(hide) {
       document.querySelectorAll('.actions-bar, .vendor-only').forEach(el => {
         if (hide) {
@@ -308,7 +294,6 @@
         }
       });
     }
-
     function downloadPDF() {
       loadHtml2Pdf(() => {
         toggleUiForPdf(true);
@@ -323,7 +308,6 @@
         window.html2pdf().set(opt).from(element).save().finally(() => toggleUiForPdf(false));
       });
     }
-
     function makePdfBlob(callback) {
         loadHtml2Pdf(() => {
             toggleUiForPdf(true);
@@ -341,7 +325,6 @@
               }).catch(() => toggleUiForPdf(false));
         });
     }
-
     async function emailWithPdf() {
         makePdfBlob(async (blob) => {
             const filename = window.__pdfFilename || 'Cotizacion.pdf';
@@ -352,7 +335,6 @@
                     return;
                 } catch (e) { console.warn("Share API cancelado."); }
             }
-            // Fallback para escritorio
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = filename;
@@ -363,8 +345,6 @@
             window.location.href = `mailto:?subject=${subject}&body=${body}`;
         });
     }
-    
-    // Iniciar carga de datos cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', fillData);
   </script>
 </body>
