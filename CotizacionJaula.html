@@ -8,11 +8,26 @@
   <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
 
   <style>
+    /* 1. Contenedor principal de especificaciones */
+    #especificaciones-container {
+      display: flex;              /* Activa el modo Flexbox */
+      flex-wrap: wrap;            /* Permite que los elementos se muevan a la siguiente línea */
+      justify-content: space-between; /* Crea espacio entre las columnas */
+      page-break-inside: avoid;   /* Intenta mantener todo el bloque en una página */
+    }
+
+    /* 2. Cada sección dentro del contenedor */
+    #especificaciones-container > .section {
+      width: 48%;                 /* Cada sección ocupa un poco menos de la mitad del espacio */
+      break-inside: avoid;        /* Evita que una sección se parta en un salto de página */
+    }
+
+    /* 3. Estilos de las imágenes de referencia (se mantienen igual) */
     .image-container {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      justify-content: flex-start; /* Alinea las imágenes */
+      justify-content: flex-start;
     }
     .reference-image {
       max-width: 220px;
@@ -47,7 +62,7 @@
            src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/LOGO%20TB2025.png"
            alt="Logo de Talleres Barrera"
            class="logo"
-           style="width: 15%; height: auto;" 
+           style="width: 50%; height: auto;" 
            crossorigin="anonymous"
            referrerpolicy="no-referrer">
     </div>
@@ -180,7 +195,7 @@
     </div>
   </div>
   <script>
-    // Tu JavaScript permanece igual.
+    // El JavaScript no necesita cambios.
     const urlParams = new URLSearchParams(window.location.search);
     const getParam = (name) => {
       const raw = urlParams.get(name);
@@ -284,7 +299,7 @@
       const script = document.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
       script.onload = () => callback && callback();
-      script.onerror = () => alert('No se pudo cargar el generador de PDF.');
+      script.onerror = () => alert('No fue posible cargar el generador de PDF.');
       document.head.appendChild(script);
     }
     function toggleUiForPdf(hide) {
