@@ -1,347 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cotización - Talleres Barrera</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cotización - Talleres Barrera</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Tu CSS actual -->
+  <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css">
+  <!-- Fallback mínimo por si el CSS externo falla -->
+  <style>
+    :root { --accent:#0f766e; --ink:#0b1324; --muted:#6b7280; }
+    body{font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; color:var(--ink);}
+    .container{max-width:980px;margin:24px auto;padding:24px;background:#fff;}
+    .actions-bar{display:flex;gap:8px;justify-content:flex-end;margin-bottom:12px}
+    .action-button{border:0;background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer}
+    .header{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:2px solid #e5e7eb;padding-bottom:12px;margin-bottom:16px}
+    .header h1{margin:0;color:var(--accent)}
+    .logo{height:84px;object-fit:contain}
+    .section{margin:18px 0}
+    .section-title{margin:0 0 10px 0;color:var(--accent)}
+    .info-table,.cost-table,.bank-table{width:100%;border-collapse:collapse}
+    .info-table td{border:1px solid #e5e7eb;padding:8px}
+    .cost-table th,.cost-table td,.bank-table th,.bank-table td{border:1px solid #e5e7eb;padding:8px;text-align:left}
+    .cost-table thead th{background:#f3f4f6}
+    .total-row td{font-size:1.05rem;border-top:2px solid #111827}
+    .notes-list{margin:0;padding-left:18px}
+    .image-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+    .reference-image{width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb}
+    .firma-section{margin-top:24px}
+    .firma-line{height:2px;background:#111827;margin:36px 0 4px}
+    @media print {.actions-bar{display:none}}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="actions-bar">
-            <button class="action-button" onclick="window.print()">
-                <i class="fas fa-print"></i> Imprimir
-            </button>
-            <button class="action-button" onclick="sendEmail()">
-                <i class="fas fa-envelope"></i> Enviar por Correo
-            </button>
-        </div>
-        
-        <div class="header">
-            <div class="header-info">
-                <h1>COTIZACIÓN</h1>
-                <h2>TALLERES BARRERA S.A. DE C.V.</h2>
-                <p><strong>Dirección:</strong> Industria Automotriz #126, Col. Parque Industrial, CP 67735, Linares N.L. México</p>
-                <p><strong>Teléfono:</strong> <span id="telefonoContacto"></span></p>
-                <p><strong>Correo:</strong> <span id="correoContacto"></span></p>
-                <p><strong>RFC:</strong> TBA7504018B4</p>
-            </div>
-            <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo de Talleres Barrera" class="logo">
-        </div>
+  <div class="container">
+    <div class="actions-bar">
+      <button class="action-button" id="copyLinkBtn"><i class="fas fa-link"></i> Copiar enlace</button>
+      <button class="action-button" onclick="window.print()"><i class="fas fa-print"></i> Imprimir / PDF</button>
+      <button class="action-button" onclick="sendEmail()"><i class="fas fa-envelope"></i> Enviar por correo</button>
+    </div>
 
-        <p>Por medio de la presente, <strong>TALLERES BARRERA S.A. DE C.V.</strong> agradece su interés en nuestros productos. A continuación, se presenta la cotización detallada para la fabricación de su remolque, incluyendo especificaciones, costos y términos de pago.</p>
+    <div class="header">
+      <div class="header-info">
+        <h1>COTIZACIÓN</h1>
+        <h2 id="empresaNombre">TALLERES BARRERA S.A. DE C.V.</h2>
+        <p><strong>Dirección:</strong> <span id="empresaDireccion">Industria Automotriz #126, Col. Parque Industrial, CP 67735, Linares N.L. México</span></p>
+        <p><strong>Teléfono:</strong> <span id="telefonoContacto"></span></p>
+        <p><strong>Correo:</strong> <span id="correoContacto"></span></p>
+        <p><strong>RFC:</strong> <span id="empresaRfc">TBA7504018B4</span></p>
+      </div>
+      <img id="empresaLogo" src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo" class="logo">
+    </div>
 
-        <div class="section">
-            <h3 class="section-title">Información del Cliente y General</h3>
-            <table class="info-table">
-                <tr>
-                    <td>Fecha de Cotización:</td>
-                    <td id="fechaCotizacion"></td>
-                </tr>
-                <tr>
-                    <td>Cliente:</td>
-                    <td><span id="cliente"></span></td>
-                </tr>
-                <tr>
-                    <td>Dirección del Cliente:</td>
-                    <td><span id="direccionCliente"></span></td>
-                </tr>
-                <tr>
-                    <td>RFC del Cliente:</td>
-                    <td><span id="rfcCliente"></span></td>
-                </tr>
-                <tr>
-                    <td>Tipo de Unidad:</td>
-                    <td><span id="tipoUnidad"></span></td>
-                </tr>
-                <tr>
-                    <td>Realizado por:</td>
-                    <td><span id="realizadoPor"></span></td>
-                </tr>
-            </table>
-        </div>
+    <p>Por medio de la presente, <strong id="empresaNombreInline">TALLERES BARRERA S.A. DE C.V.</strong> agradece su interés en nuestros productos. A continuación, se presenta la cotización detallada para la fabricación de su remolque.</p>
 
-        <div class="section">
-            <h3 class="section-title">Especificaciones de la Unidad</h3>
-            <table class="info-table">
-                <tr>
-                    <td>Color Primario:</td>
-                    <td><span id="colorPrimario"></span></td>
-                </tr>
-                <tr>
-                    <td>Color Secundario:</td>
-                    <td><span id="colorSecundario"></span></td>
-                </tr>
-                <tr>
-                    <td>Suspensión:</td>
-                    <td><span id="suspension"></span> (<span id="cantSuspensiones"></span> piezas)</td>
-                </tr>
-                <tr>
-                    <td>Retráctil de Eje:</td>
-                    <td><span id="retractilEje"></span></td>
-                </tr>
-                <tr>
-                    <td>Ejes:</td>
-                    <td><span id="ejes"></span></td>
-                </tr>
-                <tr>
-                    <td>Faldón:</td>
-                    <td><span id="faldon"></span></td>
-                </tr>
-                <tr>
-                    <td>Lanza:</td>
-                    <td><span id="lanza"></span></td>
-                </tr>
-                <tr>
-                    <td>Distancia entre Ejes:</td>
-                    <td><span id="distanciaEjes"></span></td>
-                </tr>
-                <tr>
-                    <td>Personalización de Viga:</td>
-                    <td><span id="personalizacionViga"></span></td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="section">
-            <h3 class="section-title">Accesorios</h3>
-            <table class="info-table">
-                <tr>
-                    <td>Rines:</td>
-                    <td><span id="rines"></span> (<span id="cantRines"></span> piezas)</td>
-                </tr>
-                <tr>
-                    <td>Llantas:</td>
-                    <td><span id="llantas"></span> (<span id="cantLlantas"></span> piezas)</td>
-                </tr>
-                <tr>
-                    <td>Frenos:</td>
-                    <td><span id="frenos"></span></td>
-                </tr>
-                <tr>
-                    <td>Sistema de Inflado PSI:</td>
-                    <td><span id="sistemaInflado"></span></td>
-                </tr>
-                <tr>
-                    <td>Quinta Rueda:</td>
-                    <td><span id="quintaRueda"></span></td>
-                </tr>
-                <tr>
-                    <td>Plafones:</td>
-                    <td><span id="plafones"></span></td>
-                </tr>
-                <tr>
-                    <td>Argolla:</td>
-                    <td><span id="argolla"></span></td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="section">
-            <h3 class="section-title">Imágenes de Referencia</h3>
-            <div class="image-container" id="imagenes-container">
-            </div>
-        </div>
-
-        <div class="section">
-            <h3 class="section-title">Observaciones y modificaciones a la unidad</h3>
-            <ul class="notes-list">
-                <li><strong>Observaciones de Pintura:</strong> <span id="observacionesPintura"></span></li>
-                <li><strong>Observaciones Generales:</strong> <span id="observacionesGenerales"></span></li>
-            </ul>
-        </div>
-        
-        <div class="section">
-            <h3 class="section-title">Resumen de Costos y Términos de Pago</h3>
-            <table class="cost-table">
-                <thead>
-                    <tr>
-                        <th>Concepto</th>
-                        <th>Monto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Costo Total de la Unidad:</td>
-                        <td><span id="costoTotal"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Depósito para Inicio de Fabricación (50%):</td>
-                        <td><span id="deposito"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Saldo a Liquidar a la Entrega (50%):</td>
-                        <td><span id="saldo"></span></td>
-                    </tr>
-                    <tr class="total-row">
-                        <td>TOTAL:</td>
-                        <td><strong><span id="totalFinal"></span></strong></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="bank-info">
-                <p><strong>Datos Bancarios para Depósito:</strong></p>
-                <p><strong>Titular:</strong> TALLERES BARRERA S.A. DE C.V.</p>
-                <table class="bank-table">
-                    <thead>
-                        <tr>
-                            <th>Banco</th>
-                            <th>Sucursal</th>
-                            <th>Cuenta</th>
-                            <th>CLABE</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>SANTANDER</td>
-                            <td>3945</td>
-                            <td>65500883468</td>
-                            <td>014 595 65500883468 7</td>
-                        </tr>
-                        <tr>
-                            <td>BBVA</td>
-                            <td>1729</td>
-                            <td>00450461113</td>
-                            <td>012 580 00450461113 7</td>
-                        </tr>
-                        <tr>
-                            <td>CITIBANAMEX</td>
-                            <td>0796</td>
-                            <td>07966989054</td>
-                            <td>002 595 07966989054 8</td>
-                        </tr>
-                        <tr>
-                            <td>BANORTE</td>
-                            <td>060</td>
-                            <td>00060251843</td>
-                            <td>072 595 00060251843 3</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p>Favor de enviar su notificación de depósito a los siguientes correos: <strong>contabilidad@talleresbarrera.com</strong> y <strong>barrera@talleresbarrera.com</strong>.</p>
-            </div>
-
-            <p><strong>Consideraciones:</strong></p>
-            <ul class="notes-list">
-                <li>El depósito inicial no es reembolsable.</li>
-                <li>El precio final puede ajustarse en caso de que se soliciten modificaciones adicionales no contempladas en esta cotización.</li>
-                <li>El tiempo de entrega estimado es de 6 a 8 semanas, a partir de la confirmación del depósito inicial.</li>
-                <li>A partir de la fecha de entrega emitida, se tendrá un tiempo de almacén de 15 días naturales. A partir de este tiempo, se generará un costo por almacenamiento de la unidad de $1,000 pesos por semana.</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h3 class="section-title">Aprobación del Cliente</h3>
-            <p>Con la firma de este documento, usted confirma que ha revisado y aprobado las especificaciones y los costos detallados en esta cotización. Esta firma autoriza a TALLERES BARRERA S.A. DE C.V. a iniciar el proceso de fabricación de la unidad.</p>
-            <div class="firma-section">
-                <div class="firma-line"></div>
-                <p>Firma de Aprobación</p>
-            </div>
-        </div>
-
-        <div class="footer-logo-container">
-            <img src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/CER%20COMPANY%20-%20ISO%209001.png" alt="Empresa Certificada ISO 9001:2015" class="iso-logo">
-        </div>
-
-    </div> <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const appName = "NewApp-1254688";
-        const tableName = "Modificaciones";
-
-        const getParam = (name) => {
-            const value = urlParams.get(name);
-            if (value === null || value === undefined || value.trim() === '') {
-                return 'Especificación no proporcionada';
-            }
-            return decodeURIComponent(value);
-        };
-
-        const getAppSheetImageUrl = (fileName) => {
-            if (!fileName) return '';
-            return `https://www.appsheet.com/template/gettablefileurl?appName=${appName}&tableName=${tableName}&fileName=${encodeURIComponent(fileName)}`;
-        };
-
-        const formatCurrency = (value) => {
-            const numberValue = parseFloat(value);
-            if (isNaN(numberValue)) return '$0.00 MXN';
-            return `$${numberValue.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
-        };
-        
-        const today = new Date();
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('fechaCotizacion').innerText = today.toLocaleDateString('es-MX', options);
-
-        document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
-        document.getElementById('correoContacto').innerText = getParam('correo_contacto');
-        
-        document.getElementById('cliente').innerText = getParam('cliente');
-        document.getElementById('direccionCliente').innerText = getParam('direccion');
-        document.getElementById('rfcCliente').innerText = getParam('rfc');
-        document.getElementById('tipoUnidad').innerText = getParam('tipo_de_unidad');
-        document.getElementById('realizadoPor').innerText = getParam('realizado_por');
-        
-        document.getElementById('colorPrimario').innerText = getParam('color');
-        document.getElementById('colorSecundario').innerText = getParam('color_2');
-        document.getElementById('suspension').innerText = getParam('suspension');
-        document.getElementById('cantSuspensiones').innerText = getParam('cantidad_de_suspensiones');
-        document.getElementById('retractilEje').innerText = getParam('retractil_eje');
-        document.getElementById('ejes').innerText = getParam('ejes');
-        document.getElementById('faldon').innerText = getParam('faldon');
-        document.getElementById('lanza').innerText = getParam('lanza');
-        document.getElementById('distanciaEjes').innerText = getParam('distancia_de_ejes');
-        document.getElementById('personalizacionViga').innerText = getParam('personalizacion_de_viga');
-        
-        document.getElementById('rines').innerText = getParam('rines');
-        document.getElementById('cantRines').innerText = getParam('cantidad_de_rines');
-        document.getElementById('llantas').innerText = getParam('llantas_70');
-        document.getElementById('cantLlantas').innerText = getParam('cantidad_de_llantas');
-        document.getElementById('frenos').innerText = getParam('frenos');
-        document.getElementById('sistemaInflado').innerText = getParam('sistema_de_inflado_psi');
-        document.getElementById('quintaRueda').innerText = getParam('quinta_rueda');
-        document.getElementById('plafones').innerText = getParam('plafones');
-        document.getElementById('argolla').innerText = getParam('argolla');
-
-        document.getElementById('observacionesPintura').innerText = getParam('OBSERVACIONES_DE_PINTURA');
-        document.getElementById('observacionesGenerales').innerText = getParam('OBSERVACIONES');
-
-        const costoTotal = getParam('Costo_de_la_Unidad');
-        const deposito = parseFloat(costoTotal) * 0.50;
-        const saldo = parseFloat(costoTotal) - deposito;
-
-        document.getElementById('costoTotal').innerText = formatCurrency(costoTotal);
-        document.getElementById('deposito').innerText = formatCurrency(deposito);
-        document.getElementById('saldo').innerText = formatCurrency(saldo);
-        document.getElementById('totalFinal').innerText = formatCurrency(costoTotal);
-
-        const imagenesContainer = document.getElementById('imagenes-container');
-        const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
-        let hasImages = false;
-
-        imagenParams.forEach(paramName => {
-            const fileName = getParam(paramName);
-            if (fileName && fileName !== 'Especificación no proporcionada') {
-                const img = document.createElement('img');
-                img.src = getAppSheetImageUrl(fileName);
-                img.alt = `Imagen de referencia`;
-                img.className = 'reference-image';
-                imagenesContainer.appendChild(img);
-                hasImages = true;
-            }
-        });
-
-        if (!hasImages) {
-            imagenesContainer.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
-        }
-    });
-
-    function sendEmail() {
-        const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
-        const body = encodeURIComponent(`Estimado cliente,\n\nAdjunto encontrará la cotización detallada para la fabricación de su remolque con Talleres Barrera S.A. de C.V.\n\nGracias por su preferencia.\n\nSaludos cordiales,\nEquipo de Ventas de Talleres Barrera S.A. de C.V.`);
-        window.location.href = `mailto:?subject=${subject}&body=${body}`;
-    }
-</script>
-</body>
-</html>
+    <div class="section">
+      <h3 class="section-title">Información del Cliente y General</h3>
+      <table class="info-table">
+        <tr><td>Fecha de Cotización:</td><td id="fechaCotizacion"></td></tr>
+        <tr><td>Cliente:</td><td><span id="cliente"></span></td></tr
