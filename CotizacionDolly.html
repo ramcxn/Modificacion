@@ -16,6 +16,9 @@
             <button class="action-button" onclick="sendEmail()">
                 <i class="fas fa-envelope"></i> Enviar por Correo
             </button>
+            <button class="action-button" onclick="downloadPDF()">
+                <i class="fas fa-file-pdf"></i> Descargar PDF
+            </button>
         </div>
         
         <div class="header">
@@ -274,6 +277,10 @@
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('fechaCotizacion').innerText = today.toLocaleDateString('es-MX', options);
 
+        // Nombre de archivo sugerido para el PDF
+        const safe = (s) => (s||'').toString().replace(/[^a-z0-9-_]+/gi,'_').slice(0,60);
+        window.__pdfFilename = `Cotizacion_${safe(getParam('cliente'))}_${today.toISOString().slice(0,10)}.pdf`;
+
         document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
         document.getElementById('correoContacto').innerText = getParam('correo_contacto');
         
@@ -336,6 +343,32 @@
             imagenesContainer.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
         }
     });
+
+    // Carga html2pdf.js bajo demanda desde CDN
+    function loadHtml2Pdf(callback){
+        if (window.html2pdf) { callback && callback(); return; }
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+        s.onload = () => callback && callback();
+        s.onerror = () => alert('No fue posible cargar el generador de PDF. Intenta nuevamente.');
+        document.head.appendChild(s);
+    }
+
+    // Generar y descargar PDF de la cotización
+    function downloadPDF(){
+        loadHtml2Pdf(() => {
+            const element = document.querySelector('.container');
+            const filename = window.__pdfFilename || 'Cotizacion.pdf';
+            const opt = {
+                margin:       [10,10,10,10],
+                filename:     filename,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            window.html2pdf().set(opt).from(element).save();
+        });
+    }
 
     function sendEmail() {
         const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
