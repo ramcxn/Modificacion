@@ -6,6 +6,26 @@
   <title>Cotización - Talleres Barrera</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
+
+  <style>
+    .image-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-start; /* Alinea las imágenes */
+    }
+    .reference-image {
+      max-width: 220px;
+      max-height: 180px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border: 1px solid #e5e7eb;
+      padding: 4px;
+      border-radius: 6px;
+      background: #fff;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -27,7 +47,7 @@
            src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/LOGO%20TB2025.png"
            alt="Logo de Talleres Barrera"
            class="logo"
-           style="width: 10%; height: auto;" 
+           style="width: 50%; height: auto;" 
            crossorigin="anonymous"
            referrerpolicy="no-referrer">
     </div>
@@ -97,6 +117,7 @@
         </table>
       </div>
     </div>
+
     <div class="section">
       <h3 class="section-title">Imágenes de Referencia</h3>
       <div class="image-container" id="imagenes-container"></div>
@@ -159,7 +180,7 @@
     </div>
   </div>
   <script>
-    // Tu JavaScript permanece igual, no necesita cambios.
+    // Tu JavaScript permanece igual.
     const urlParams = new URLSearchParams(window.location.search);
     const getParam = (name) => {
       const raw = urlParams.get(name);
@@ -213,10 +234,8 @@
           }
         }
       }
-      
       const luzPlacaValue = getParam('luz_placa');
       document.getElementById('luzPlaca').innerText = (luzPlacaValue.toUpperCase() === 'Y') ? 'Si' : 'No';
-
       const costoBase = parseFloat(urlParams.get('Costo_de_la_Unidad') || '0') || 0;
       setCosts(costoBase);
       document.getElementById('ajusteManual').addEventListener('input', (e) => {
