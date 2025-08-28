@@ -138,6 +138,27 @@
             </ul>
         </div>
         
+        <div class="section vendor-only">
+            <h3 class="section-title">Ajuste de precio manual (solo vendedor)</h3>
+            <div class="row">
+                <label for="ajusteTipo">Tipo:</label>
+                <select id="ajusteTipo">
+                    <option value="descuento">Descuento (-)</option>
+                    <option value="incremento">Incremento (+)</option>
+                </select>
+                <label for="ajusteModo">Modo:</label>
+                <select id="ajusteModo">
+                    <option value="monto">Monto</option>
+                    <option value="porcentaje">Porcentaje</option>
+                </select>
+                <label for="ajusteValor">Valor:</label>
+                <input id="ajusteValor" type="number" step="0.01" placeholder="0" style="width:120px" />
+                <button type="button" id="btnAplicarAjuste"><i class="fas fa-check"></i> Aplicar</button>
+                <button type="button" id="btnQuitarAjuste" style="background:#6b7280"><i class="fas fa-undo"></i> Quitar</button>
+            </div>
+            <small>Este ajuste no se guarda en AppSheet; solo modifica esta vista antes de imprimir, enviar o descargar.</small>
+        </div>
+
         <div class="section">
             <h3 class="section-title">Resumen de Costos y Términos de Pago</h3>
             <table class="cost-table">
@@ -148,6 +169,7 @@
                     <tr><td>Costo Total de la Unidad:</td><td><span id="costoTotal"></span></td></tr>
                     <tr><td>Depósito para Inicio de Fabricación (50%):</td><td><span id="deposito"></span></td></tr>
                     <tr><td>Saldo a Liquidar a la Entrega (50%):</td><td><span id="saldo"></span></td></tr>
+                    <tr id="rowAjuste" style="display:none"><td>Ajuste de precio manual:</td><td><span id="ajusteMonto"></span></td></tr>
                     <tr class="total-row"><td>TOTAL:</td><td><strong><span id="totalFinal"></span></strong></td></tr>
                 </tbody>
             </table>
@@ -277,11 +299,25 @@
         // Costos
         const costoTotal = parseFloat(getParam('Costo_de_la_Unidad')) || 0;
         const deposito = costoTotal * 0.50;
-        const saldo = costoTotal - deposito;
-        document.getElementById('costoTotal').innerText = formatCurrency(costoTotal);
-        document.getElementById('deposito').innerText = formatCurrency(deposito);
-        document.getElementById('saldo').innerText = formatCurrency(saldo);
-        document.getElementById('totalFinal').innerText = formatCurrency(costoTotal);
+        let baseCosto = costoTotal;
+        let ajusteActual = 0; // monto (+ incrementa, - descuenta)
+        let adjustedTotal = baseCosto + ajusteActual;
+        let deposito = adjustedTotal * 0.50;
+        let saldo = adjustedTotal - deposito;
+        const renderTotales = () => {
+            document.getElementById('costoTotal').innerText = formatCurrency(baseCosto);
+            if (ajusteActual !== 0) {
+                document.getElementById('rowAjuste').style.display = '';
+                const signo = ajusteActual >= 0 ? '' : '-';
+                document.getElementById('ajusteMonto').innerText = `${signo}${formatCurrency(Math.abs(ajusteActual))}`;
+            } else {
+                document.getElementById('rowAjuste').style.display = 'none';
+            }
+            document.getElementById('deposito').innerText = formatCurrency(deposito);
+            document.getElementById('saldo').innerText = formatCurrency(saldo);
+            document.getElementById('totalFinal').innerText = formatCurrency(adjustedTotal);
+        };
+        renderTotales();
 
         // Imágenes
         const imagenesContainer = document.getElementById('imagenes-container');
