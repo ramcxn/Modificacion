@@ -4,8 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cotización - Talleres Barrera</title>
+
+  <!-- Iconos y estilos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-  <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
+  <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css?v=2"/>
+
+  <!-- Precarga html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+
   <style>
     /* Evitar cortes en impresión/PDF */
     @media print {
@@ -73,7 +79,11 @@
         <p><strong>Correo:</strong> <span id="correoContacto"></span></p>
         <p><strong>RFC:</strong> TBA7504018B4</p>
       </div>
-      <img crossorigin="anonymous" src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo de Talleres Barrera" class="logo"/>
+      <img id="logoPrincipal"
+           src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688"
+           alt="Logo de Talleres Barrera"
+           class="logo"
+           onerror="(function(img){try{const p=new URLSearchParams(location.search);const alt=p.get('logo');if(alt){img.src=alt;}}catch(e){}})(this)"/>
     </div>
 
     <p>Por medio de la presente, <strong>TALLERES BARRERA S.A. DE C.V.</strong> agradece su interés en nuestros productos. A continuación, se presenta la cotización detallada para la fabricación de su remolque, incluyendo especificaciones, costos y términos de pago.</p>
@@ -223,7 +233,10 @@
     </div>
 
     <div class="footer-logo-container">
-      <img crossorigin="anonymous" src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/CER%20COMPANY%20-%20ISO%209001.png" alt="Empresa Certificada ISO 9001:2015" class="iso-logo">
+      <img id="logoISO"
+           src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/CER%20COMPANY%20-%20ISO%209001.png"
+           alt="Empresa Certificada ISO 9001:2015"
+           class="iso-logo">
     </div>
 
   </div>
@@ -233,6 +246,12 @@
       const urlParams = new URLSearchParams(window.location.search);
       const appName = "NewApp-1254688";
       const tableName = "Modificaciones";
+
+      // Permite override de logo via ?logo=...
+      try {
+        const altLogo = urlParams.get('logo');
+        if (altLogo) document.getElementById('logoPrincipal').src = altLogo;
+      } catch(e) {}
 
       // getParam robusto
       const getParam = (name, fallback = 'Especificación no proporcionada') => {
@@ -248,14 +267,21 @@
         }
       };
 
+      // Convierte número desde texto con comas/símbolos
+      const parseNumber = (s) => {
+        if (s == null) return 0;
+        const clean = String(s).replace(/[^\d.,-]/g,'').replace(/,/g,''); // quita símbolos y comas
+        const n = parseFloat(clean);
+        return isNaN(n) ? 0 : n;
+      };
+
       const getAppSheetImageUrl = (fileName) => {
         if (!fileName) return '';
         return `https://www.appsheet.com/template/gettablefileurl?appName=${appName}&tableName=${tableName}&fileName=${encodeURIComponent(fileName)}`;
       };
 
       const formatCurrency = (value) => {
-        const n = parseFloat(value);
-        if (isNaN(n)) return '$0.00 MXN';
+        const n = typeof value === 'number' ? value : parseNumber(value);
         return `$${n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
       };
 
@@ -316,7 +342,7 @@
       document.getElementById('observacionesGenerales').innerText = getParam('observaciones');
 
       // ====== Costos con ajuste ======
-      let baseCosto = parseFloat(getParam('Costo_de_la_Unidad', '0')) || 0;
+      let baseCosto = parseNumber(getParam('Costo_de_la_Unidad', '0'));
       let ajusteActual = 0; // (+) incremento, (-) descuento
 
       const renderTotales = () => {
@@ -342,7 +368,7 @@
       function aplicarAjusteDesdeUI(){
         const tipo = (document.getElementById('ajusteTipo')?.value || 'descuento');
         const modo = (document.getElementById('ajusteModo')?.value || 'monto');
-        const val = parseFloat(document.getElementById('ajusteValor')?.value || '0');
+        const val = parseNumber(document.getElementById('ajusteValor')?.value || '0');
 
         let monto = 0;
         if (!isNaN(val) && val > 0) {
@@ -368,7 +394,6 @@
         const fileName = getParam(paramName, '');
         if (fileName && fileName !== 'Especificación no proporcionada') {
           const img = document.createElement('img');
-          img.crossOrigin = 'anonymous';
           img.src = getAppSheetImageUrl(fileName);
           img.alt = 'Imagen de referencia';
           img.className = 'reference-image';
@@ -380,97 +405,100 @@
         imagenesContainer.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
       }
 
-      // ====== PDF helpers ======
-      // Carga html2pdf bajo demanda
-      window.loadHtml2Pdf = (cb)=>{
-        if (window.html2pdf) { cb && cb(); return; }
-        const s = document.createElement('script');
-        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-        s.onload = ()=> cb && cb();
-        s.onerror = ()=> alert('No fue posible cargar el generador de PDF.');
-        document.head.appendChild(s);
+      // ====== Helpers PDF ======
+      const waitForImages = (root, timeoutMs = 6000) => {
+        const imgs = Array.from(root.querySelectorAll('img'));
+        if (!imgs.length) return Promise.resolve();
+        return Promise.race([
+          Promise.all(imgs.map(img => new Promise(res => {
+            if (img.complete) return res();
+            const done = () => { img.removeEventListener('load', done); img.removeEventListener('error', done); res(); };
+            img.addEventListener('load', done); img.addEventListener('error', done);
+          })) ),
+          new Promise(res => setTimeout(res, timeoutMs))
+        ]);
       };
 
-      const safe = (s) => (s||'').toString().replace(/[^a-z0-9-_]+/gi,'_').slice(0,60);
       const todayISO = new Date().toISOString().slice(0,10);
+      const safe = (s) => (s||'').toString().replace(/[^a-z0-9-_]+/gi,'_').slice(0,60);
       const defaultFilename = `Cotizacion_${safe(getParam('cliente','Cliente'))}_${todayISO}.pdf`;
       window.__pdfFilename = defaultFilename;
 
-      // Generar PDF a partir de un CLONE (quitamos botones .no-pdf)
-      window.generatePdfBlob = (cb) => {
-        loadHtml2Pdf(()=>{
-          const src = document.getElementById('cotizacion-root');
-          const clone = src.cloneNode(true);
-          // Remover nodos no-pdf
-          clone.querySelectorAll('.no-pdf').forEach(n=> n.remove());
-          // Opciones de PDF (tamaño carta)
-          const opt = {
-            margin: [10,10,10,10],
-            filename: window.__pdfFilename,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-            jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
-            pagebreak: { mode: ['avoid-all','css','legacy'] }
-          };
-          const wrapper = document.createElement('div');
-          wrapper.style.background = '#ffffff';
-          wrapper.appendChild(clone);
-
-          // Usamos html2pdf para obtener blob
-          window.html2pdf().set(opt).from(wrapper).outputPdf('blob').then(blob=>{
-            cb && cb(blob, opt.filename);
-          }).catch(()=> alert('No fue posible generar el PDF.'));
-        });
+      const buildPrintableClone = () => {
+        const src = document.getElementById('cotizacion-root');
+        const clone = src.cloneNode(true);
+        // Remover elementos de UI que no van al PDF
+        clone.querySelectorAll('.no-pdf, .vendor-only').forEach(n=> n.remove());
+        // Envolver en contenedor blanco
+        const wrap = document.createElement('div');
+        wrap.style.background = '#ffffff';
+        wrap.appendChild(clone);
+        return wrap;
       };
 
-      window.downloadPDF = () => {
-        generatePdfBlob((blob, filename)=>{
+      const html2pdfOpts = {
+        margin: [10,10,10,10],
+        filename: window.__pdfFilename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, allowTaint: true, letterRendering: true },
+        jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all','css','legacy'] }
+      };
+
+      window.generatePdfBlob = async () => {
+        const wrapper = buildPrintableClone();
+        await waitForImages(wrapper);
+        return window.html2pdf().set(html2pdfOpts).from(wrapper).outputPdf('blob');
+      };
+
+      window.downloadPDF = async () => {
+        try {
+          const blob = await generatePdfBlob();
           const a = document.createElement('a');
           a.href = URL.createObjectURL(blob);
-          a.download = filename || window.__pdfFilename;
+          a.download = window.__pdfFilename;
           document.body.appendChild(a);
           a.click();
-          setTimeout(()=> {
-            URL.revokeObjectURL(a.href);
-            a.remove();
-          }, 0);
-        });
+          setTimeout(()=> { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+        } catch(e) {
+          alert('No fue posible generar el PDF.');
+        }
       };
 
       window.sharePDFByEmail = async () => {
-        generatePdfBlob(async (blob, filename)=>{
-          try {
-            const file = new File([blob], filename || 'Cotizacion.pdf', { type: 'application/pdf' });
+        try {
+          const blob = await generatePdfBlob();
+          const file = new File([blob], window.__pdfFilename, { type: 'application/pdf' });
 
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-              await navigator.share({
-                title: 'Cotización - Talleres Barrera',
-                text: 'Adjunto PDF de la cotización.',
-                files: [file]
-              });
-            } else {
-              // Fallback: descarga + mailto
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = filename || 'Cotizacion.pdf';
-              document.body.appendChild(a);
-              a.click();
-              setTimeout(()=> {
-                URL.revokeObjectURL(url);
-                a.remove();
-                const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
-                const body = encodeURIComponent('Adjunto la cotización en PDF. Si no se adjuntó automáticamente, por favor inserte el archivo descargado.');
-                window.location.href = `mailto:?subject=${subject}&body=${body}`;
-              }, 250);
-            }
-          } catch (e) {
-            alert('No fue posible preparar el correo con el PDF.');
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              title: 'Cotización - Talleres Barrera',
+              text: 'Adjunto PDF de la cotización.',
+              files: [file]
+            });
+          } else {
+            // Fallback: descarga + mailto
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = window.__pdfFilename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(()=> {
+              URL.revokeObjectURL(url);
+              a.remove();
+              const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
+              const body = encodeURIComponent('Adjunto la cotización en PDF. Si no se adjuntó automáticamente, por favor inserte el archivo descargado.');
+              window.location.href = `mailto:?subject=${subject}&body=${body}`;
+            }, 250);
           }
-        });
+        } catch(e) {
+          alert('No fue posible preparar el correo con el PDF.');
+        }
       };
     });
 
+    // (Opcional) Enviar correo simple sin adjunto (se deja por compatibilidad)
     function sendEmail() {
       const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
       const body = encodeURIComponent(`Estimado cliente,\n\nAdjunto encontrará la cotización detallada para la fabricación de su remolque con Talleres Barrera S.A. de C.V.\n\nGracias por su preferencia.\n\nSaludos cordiales,\nEquipo de Ventas de Talleres Barrera S.A. de C.V.`);
