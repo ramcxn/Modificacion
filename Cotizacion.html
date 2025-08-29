@@ -479,7 +479,6 @@
         const today = new Date();
         window.__pdfFilename = `Cotizacion_${safe(getParam('cliente'))}_${today.toISOString().slice(0, 10)}.pdf`;
 
-        // --- Función Principal ---
         function fillData() {
             // 1. Llenar datos comunes iniciales
             document.getElementById('fechaCotizacion').innerText = today.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -490,22 +489,26 @@
             document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
             document.getElementById('correoContacto').innerText = getParam('correo_contacto');
 
-            const tipoUnidadValue = getParam('tipo_de_unidad').toLowerCase(); // Convertir a minúsculas
             const anioActual = today.getFullYear();
-            if (tipoUnidadValue) {
-                document.getElementById('tipoUnidad').innerText = `${getParam('tipo_de_unidad')} Modelo ${anioActual}`;
+            const tipoUnidadOriginal = getParam('tipo_de_unidad');
+            if (tipoUnidadOriginal) {
+                document.getElementById('tipoUnidad').innerText = `${tipoUnidadOriginal} Modelo ${anioActual}`;
             }
-            
+
+            // ✅ CAMBIO 1: Convertimos el valor de la URL a minúsculas para que no importen las mayúsculas.
+            const tipoUnidadValue = tipoUnidadOriginal.toLowerCase();
+
             // 2. Lógica para mostrar secciones dinámicas
+            // ✅ CAMBIO 2: Todas las "llaves" de la configuración están en minúsculas.
             const configuracionUnidades = {
-                'Jaula': ['jaula-specs-1', 'jaula-specs-2', 'jaula-accesorios'],
-                'Dolly': ['dolly-specs', 'dolly-accesorios'],
-                'Highcube': ['highcube-specs', 'highcube-accesorios'],
-                'Jaula Laminada': ['jaula_laminada-specs', 'jaula_laminada-estructura', 'jaula_laminada-accesorios'],
-                'Plataforma': ['plataforma-specs', 'plataforma-estructura', 'plataforma-accesorios'],
-                'Tolva': ['tolva-specs', 'tolva-accesorios'],
-                'Tolva Jaula': ['tolva_jaula-specs', 'tolva_jaula-estructura', 'tolva_jaula-accesorios'],
-                'Volteo': ['volteo-specs', 'volteo-estructura', 'volteo-accesorios']
+                'jaula': ['jaula-specs-1', 'jaula-specs-2', 'jaula-accesorios'],
+                'dolly': ['dolly-specs', 'dolly-accesorios'],
+                'highcube': ['highcube-specs', 'highcube-accesorios'],
+                'jaula laminada': ['jaula_laminada-specs', 'jaula_laminada-estructura', 'jaula_laminada-accesorios'],
+                'plataforma': ['plataforma-specs', 'plataforma-estructura', 'plataforma-accesorios'],
+                'tolva': ['tolva-specs', 'tolva-accesorios'],
+                'tolva jaula': ['tolva_jaula-specs', 'tolva_jaula-estructura', 'tolva_jaula-accesorios'],
+                'volteo': ['volteo-specs', 'volteo-estructura', 'volteo-accesorios']
             };
             const seccionesAMostrar = configuracionUnidades[tipoUnidadValue];
             if (seccionesAMostrar) {
@@ -514,7 +517,7 @@
                     if (seccion) seccion.style.display = 'block';
                 });
             }
-
+            
             // 3. Llenar TODOS los campos posibles
             const fields = {
                 // Jaula
