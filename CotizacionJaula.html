@@ -8,18 +8,13 @@
   <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
 
   <style>
-    /* Estilos para el contenedor de 2 columnas */
-    #especificaciones-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+    /* ✅ CAMBIO: Se redujo el margen inferior para un diseño más compacto */
+    .section {
+      margin-bottom: 5px; /* Ajusta este valor si quieres más o menos espacio */
+      break-inside: avoid;
       page-break-inside: avoid;
     }
-    #especificaciones-container > .section {
-      width: 48%;
-      break-inside: avoid;
-    }
-    /* Estilos para las imágenes de referencia */
+
     .image-container {
       display: flex;
       flex-wrap: wrap;
@@ -77,43 +72,41 @@
       </table>
     </div>
 
-    <div id="especificaciones-container">
-      <div class="section">
-        <h3 class="section-title">Especificaciones Generales</h3>
-        <table class="info-table">
-          <tr><td>Color Primario:</td><td><span id="colorPrimario"></span></td></tr>
-          <tr><td>Color Secundario:</td><td><span id="colorSecundario"></span></td></tr>
-          <tr><td>Suspensión:</td><td><span id="suspension"></span> (<span id="cantSuspensiones"></span> piezas)</td></tr>
-          <tr><td>Retráctil de Eje:</td><td><span id="retractilEje"></span></td></tr>
-          <tr><td>Ejes:</td><td><span id="ejes"></span></td></tr>
-          <tr><td>Distancia entre Ejes:</td><td><span id="distanciaEjes"></span></td></tr>
-          <tr><td>Personalización de Viga:</td><td><span id="personalizacionViga"></span></td></tr>
-          <tr><td>Faldón:</td><td><span id="faldon"></span></td></tr>
-          <tr><td>Perno Rey:</td><td><span id="pernoRey"></span></td></tr>
-          <tr><td>Portallantas:</td><td><span id="portallantas"></span></td></tr>
-        </table>
-      </div>
-      <div class="section">
-        <h3 class="section-title">Carrocería y Estructura</h3>
-        <table class="info-table">
-          <tr><td>Dimensiones:</td><td><span id="dimensiones"></span></td></tr>
-          <tr><td>Tipo de Redila:</td><td><span id="tipoRedila"></span></td></tr>
-          <tr><td>Secciones:</td><td><span id="secciones"></span></td></tr>
-          <tr><td>Puertas Laterales:</td><td><span id="puertasLaterales"></span></td></tr>
-          <tr><td>Compuerta al Piso:</td><td><span id="compAlPiso"></span></td></tr>
-          <tr><td>Compuerta Trasera:</td><td><span id="compAtras"></span></td></tr>
-          <tr><td>Tipo de Arco:</td><td><span id="tipoArco"></span></td></tr>
-          <tr><td>Piso de Madera:</td><td><span id="pisoMadera"></span></td></tr>
-          <tr><td>Piso Laminado:</td><td><span id="pisoLaminado"></span></td></tr>
-          <tr><td>Caballete:</td><td><span id="caballete"></span></td></tr>
-          <tr><td>Tubos Interiores:</td><td><span id="tubosInteriores"></span></td></tr>
-          <tr><td>Barrote Lateral:</td><td><span id="barroteLateral"></span></td></tr>
-          <tr><td>Compuerta a los Lados:</td><td><span id="compuertaLados"></span></td></tr>
-          <tr><td>Cerrojo de Puertas Traseras:</td><td><span id="cerrojoPuertas"></span></td></tr>
-          <tr><td>Sistema de Lona:</td><td><span id="sistemaLona"></span></td></tr>
-          <tr><td>Luz de Placa:</td><td><span id="luzPlaca"></span></td></tr>
-        </table>
-      </div>
+    <div class="section">
+      <h3 class="section-title">Especificaciones Generales</h3>
+      <table class="info-table">
+        <tr><td>Color Primario:</td><td><span id="colorPrimario"></span></td></tr>
+        <tr><td>Color Secundario:</td><td><span id="colorSecundario"></span></td></tr>
+        <tr><td>Suspensión:</td><td><span id="suspension"></span> (<span id="cantSuspensiones"></span> piezas)</td></tr>
+        <tr><td>Retráctil de Eje:</td><td><span id="retractilEje"></span></td></tr>
+        <tr><td>Ejes:</td><td><span id="ejes"></span></td></tr>
+        <tr><td>Distancia entre Ejes:</td><td><span id="distanciaEjes"></span></td></tr>
+        <tr><td>Personalización de Viga:</td><td><span id="personalizacionViga"></span></td></tr>
+        <tr><td>Faldón:</td><td><span id="faldon"></span></td></tr>
+        <tr><td>Perno Rey:</td><td><span id="pernoRey"></span></td></tr>
+        <tr><td>Portallantas:</td><td><span id="portallantas"></span></td></tr>
+      </table>
+    </div>
+    <div class="section">
+      <h3 class="section-title">Carrocería y Estructura</h3>
+      <table class="info-table">
+        <tr><td>Dimensiones:</td><td><span id="dimensiones"></span></td></tr>
+        <tr><td>Tipo de Redila:</td><td><span id="tipoRedila"></span></td></tr>
+        <tr><td>Secciones:</td><td><span id="secciones"></span></td></tr>
+        <tr><td>Puertas Laterales:</td><td><span id="puertasLaterales"></span></td></tr>
+        <tr><td>Compuerta al Piso:</td><td><span id="compAlPiso"></span></td></tr>
+        <tr><td>Compuerta Trasera:</td><td><span id="compAtras"></span></td></tr>
+        <tr><td>Tipo de Arco:</td><td><span id="tipoArco"></span></td></tr>
+        <tr><td>Piso de Madera:</td><td><span id="pisoMadera"></span></td></tr>
+        <tr><td>Piso Laminado:</td><td><span id="pisoLaminado"></span></td></tr>
+        <tr><td>Caballete:</td><td><span id="caballete"></span></td></tr>
+        <tr><td>Tubos Interiores:</td><td><span id="tubosInteriores"></span></td></tr>
+        <tr><td>Barrote Lateral:</td><td><span id="barroteLateral"></span></td></tr>
+        <tr><td>Compuerta a los Lados:</td><td><span id="compuertaLados"></span></td></tr>
+        <tr><td>Cerrojo de Puertas Traseras:</td><td><span id="cerrojoPuertas"></span></td></tr>
+        <tr><td>Sistema de Lona:</td><td><span id="sistemaLona"></span></td></tr>
+        <tr><td>Luz de Placa:</td><td><span id="luzPlaca"></span></td></tr>
+      </table>
     </div>
     <div class="section">
       <h3 class="section-title">Accesorios</h3>
@@ -193,7 +186,6 @@
     </div>
   </div>
   <script>
-    // El JavaScript no necesita cambios.
     const urlParams = new URLSearchParams(window.location.search);
     const getParam = (name) => {
       const raw = urlParams.get(name);
@@ -234,7 +226,7 @@
         'frenos': 'frenos', 'juegoPatines': 'juego_de_patines', 'cantPatines': 'cantidad_de_patines',
         'cajaHerramientas': 'caja_de_herramientas', 'loderaDelantera': 'lodera_delantera', 'loderaTrasera': 'lodera_trasera',
         'manivelasPatin': 'manivelas_de_patin', 'direccionales': 'direccionales', 'plafones': 'plafones',
-        'observacionesPintura': ['observaciones_de_pintura', 'OBSERVaciones_DE_PINTURA'],
+        'observacionesPintura': ['observaciones_de_pintura', 'OBSERVACIONES_DE_PINTURA'],
         'observacionesGenerales': ['observaciones', 'OBSERVACIONES']
       };
       for (const id in fields) {
