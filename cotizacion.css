@@ -5,6 +5,7 @@ body {
     background-color: #f4f4f4;
     color: #333;
 }
+
 .container {
     max-width: 850px;
     margin: 0 auto;
@@ -13,6 +14,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -21,88 +23,116 @@ body {
     padding-bottom: 20px;
     margin-bottom: 20px;
 }
+
 .header-info {
     text-align: left;
 }
+
 .header-info h1 {
-    color: #722F37; /* Color vino */
+    color: #722F37;
     margin: 0;
     font-size: 28px;
 }
+
 .header-info h2 {
     color: #555;
     margin: 5px 0 0;
     font-size: 18px;
 }
+
 .header-info p {
     margin: 2px 0;
     font-size: 14px;
 }
+
 .logo {
     max-width: 200px;
     height: auto;
 }
+
 .section {
-    margin-bottom: 25px;
+    margin-bottom: 5px; 
+    break-inside: avoid;
+    page-break-inside: avoid;
 }
+
 .section-title {
     font-size: 20px;
-    color: #722F37; /* Color vino */
+    color: #722F37;
     border-bottom: 1px solid #ccc;
     padding-bottom: 5px;
     margin-bottom: 15px;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 15px;
 }
+
 .info-table td {
     padding: 8px;
     vertical-align: top;
     font-size: 14px;
 }
+
 .info-table td:first-child {
     font-weight: bold;
     width: 30%;
 }
+
 .cost-table th, .cost-table td {
     border: 1px solid #ddd;
     text-align: left;
     padding: 10px;
     font-size: 14px;
 }
+
 .cost-table th {
     background-color: #f2f2f2;
 }
+
 .total-row td {
     font-weight: bold;
     background-color: #e9ecef;
 }
+
 .notes-list {
     padding-left: 20px;
+    margin: 0;
     font-size: 14px;
+    list-style-type: disc;
 }
+
+.observation-title {
+    list-style-type: none;
+    margin-left: -20px;
+}
+
 .firma-section {
     margin-top: 50px;
     text-align: center;
 }
+
 .firma-line {
     display: inline-block;
     width: 250px;
     border-bottom: 1px solid #000;
     margin-top: 40px;
 }
+
 .bank-info {
     margin-top: 30px;
     font-size: 14px;
 }
+
 .actions-bar {
     text-align: right;
     margin-bottom: 20px;
 }
+
 .action-button {
-    background-color: #722F37; /* Color vino */
+    background-color: #722F37;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -112,26 +142,28 @@ table {
     margin-left: 10px;
     transition: background-color 0.3s;
 }
+
 .action-button:hover {
-    background-color: #5d262d; /* Tono más oscuro al pasar el cursor */
+    background-color: #5d262d;
 }
+
 .image-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: center;
-}
-.reference-image {
-    max-width: 100%;
-    height: auto;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    justify-content: flex-start;
 }
 
-@media print {
-    .actions-bar {
-        display: none;
-    }
+.reference-image {
+    max-width: 220px;
+    max-height: 180px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid #e5e7eb;
+    padding: 4px;
+    border-radius: 6px;
+    background: #fff;
 }
 
 .footer-logo-container {
@@ -146,9 +178,8 @@ table {
     height: auto;
 }
 
-/* --- ESTILOS AÑADIDOS PARA LA TABLA DE BANCOS --- */
 .bank-table {
-    font-size: 12px; /* Letra más pequeña para ahorrar espacio */
+    font-size: 12px;
     text-align: left;
     margin-top: 15px;
 }
@@ -163,15 +194,13 @@ table {
     font-weight: bold;
 }
 
-/* Estilo para el contenedor de especificaciones */
-#especificaciones-container {
-  column-count: 2; /* Divide el contenido en 2 columnas */
-  column-gap: 25px; /* Espacio entre las columnas */
-  page-break-inside: avoid; /* Intenta no romper este bloque en un salto de página */
+/* Estilo para ocultar secciones dinámicas por defecto */
+.seccion-opcional {
+    display: none;
 }
 
-/* Evita que las secciones dentro de las columnas se rompan */
-.section {
-  break-inside: avoid-page;
-  page-break-inside: avoid;
+@media print {
+    .actions-bar, .vendor-only {
+        display: none !important;
+    }
 }
