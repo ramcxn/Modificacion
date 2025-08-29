@@ -590,13 +590,124 @@
             loadImages();
         }
         
-        function setCosts(total) { /* ... (código sin cambios) ... */ }
-        function loadImages() { /* ... (código sin cambios) ... */ }
-        function loadHtml2Pdf(callback) { /* ... (código sin cambios) ... */ }
-        function toggleUiForPdf(hide) { /* ... (código sin cambios) ... */ }
-        function downloadPDF() { /* ... (código sin cambios) ... */ }
-        function makePdfBlob(callback) { /* ... (código sin cambios) ... */ }
-        async function emailWithPdf() { /* ... (código sin cambios) ... */ }
+function setCosts(total) {
+            const deposito = total * 0.5;
+            const saldo = total - deposito;
+            document.getElementById('costoTotal').innerText = money(total);
+            document.getElementById('deposito').innerText = money(deposito);
+            document.getElementById('saldo').innerText = money(saldo);
+            document.getElementById('totalFinal').innerText = money(total);
+        }
+        
+        function loadImages() {
+            const container = document.getElementById('imagenes-container');
+            container.innerHTML = '';
+            const keys = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
+            let hasImages = false;
+            keys.forEach(key => {
+                const fileRaw = getParamRaw(key);
+                if (fileRaw) {
+                    hasImages = true;
+                    const img = new Image();
+                    img.className = 'reference-image';
+                    img.alt = 'Imagen de referencia';
+                    img.crossOrigin = 'anonymous';
+                    img.referrerPolicy = 'no-referrer';
+                    img.src = getAppSheetImageUrl(fileRaw);
+                    container.appendChild(img);
+                }
+            });
+            if (!hasImages) {
+                container.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
+            }
+        }
+        
+        function loadHtml2Pdf(callback) {
+            if (window.html2pdf) { callback(); return; }
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+            script.onload = () => callback();
+            script.onerror = () => alert('No fue posible cargar el generador de PDF.');
+            document.head.appendChild(script);
+        }
+        
+        function toggleUiForPdf(hide) {
+            document.querySelectorAll('.actions-bar, .vendor-only').forEach(el => {
+                el.style.display = hide ? 'none' : '';
+            });
+        }
+        
+        function downloadPDF() {
+            loadHtml2Pdf(() => {
+                toggleUiForPdf(true);
+                const element = document.querySelector('.container');
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    filename: window.__pdfFilename || 'Cotizacion.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true, allowTaint: true, letterRendering: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                window.html2pdf().set(opt).from(element).save().finally(() => toggleUiForPdf(false));
+            });
+        }
+        
+        function makePdfBlob(callback) {
+            loadHtml2Pdf(() => {
+                toggleUiForPdf(true);
+                const element = document.querySelector('.container');
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true, allowTaint: true, letterRendering: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                window.html2pdf().set(opt).from(element).outputPdf('blob')
+                  .then(blob => {
+                      toggleUiForPdf(false);
+                      if (callback) callback(blob);
+                  }).catch(() => toggleUiForPdf(false));
+            });
+        }
+
+        async function emailWithPdf() {
+            const cliente = getParam('cliente');
+            const tipoUnidad = getParam('tipo_de_unidad');
+            const anioActual = new Date().getFullYear();
+            const vendedor = getParam('realizado_por');
+            const subject = `Cotización de ${tipoUnidad} para ${cliente} - Talleres Barrera`;
+            const body = `
+Estimado(a) ${cliente},
+
+Adjunto a este correo encontrará la cotización detallada para la fabricación de su unidad ${tipoUnidad} Modelo ${anioActual}.
+
+Agradecemos su interés en nuestros productos y quedamos a su disposición para cualquier duda o aclaración.
+
+Saludos cordiales,
+
+${vendedor || 'Equipo de Ventas'}
+Talleres Barrera S.A. de C.V.`;
+            makePdfBlob(async (blob) => {
+                const filename = window.__pdfFilename || 'Cotizacion.pdf';
+                const file = new File([blob], filename, { type: 'application/pdf' });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    try {
+                        await navigator.share({ 
+                            files: [file], 
+                            title: subject, 
+                            text: 'Adjunto encontrará la cotización en PDF.' 
+                        });
+                        return;
+                    } catch (e) { console.warn("Share API cancelado."); }
+                }
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = filename;
+                a.click();
+                setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+                window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            });
+        }
         
         document.addEventListener('DOMContentLoaded', fillData);
     </script>
