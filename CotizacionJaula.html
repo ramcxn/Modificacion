@@ -30,6 +30,11 @@
       border-radius: 6px;
       background: #fff;
     }
+    /* Estilo para la lista de observaciones */
+    .notes-list {
+      padding-left: 20px;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
@@ -128,10 +133,7 @@
     </div>
     <div class="section">
       <h3 class="section-title">Observaciones y modificaciones a la unidad</h3>
-      <ul class="notes-list">
-        <li><strong>Observaciones de Pintura:</strong> <span id="observacionesPintura"></span></li>
-        <li><strong>Observaciones Generales:</strong> <span id="observacionesGenerales"></span></li>
-      </ul>
+      <ul class="notes-list" id="observaciones-lista"></ul>
     </div>
     <div class="section">
       <h3 class="section-title">Resumen de Costos y Términos de Pago</h3>
@@ -235,10 +237,33 @@
         }
       }
       
-      // ✅ CAMBIO: Tratamiento especial para las observaciones para que siempre se muestren
-      document.getElementById('observacionesPintura').innerText = getParam('observaciones_de_pintura') || getParam('OBSERVACIONES_DE_PINTURA');
-      document.getElementById('observacionesGenerales').innerText = getParam('observaciones') || getParam('OBSERVACIONES');
+      // ✅ CAMBIO: Lógica para crear la lista de observaciones
+      const obsLista = document.getElementById('observaciones-lista');
+      const obsPintura = getParam('observaciones_de_pintura') || getParam('OBSERVACIONES_DE_PINTURA');
+      const obsGenerales = getParam('observaciones') || getParam('OBSERVACIONES');
       
+      // Función para añadir elementos a la lista
+      const addToList = (label, text) => {
+        if (text && text.trim()) {
+          // Asumimos que los ítems vienen separados por coma
+          text.split(',').forEach(item => {
+            if (item.trim()) {
+              const li = document.createElement('li');
+              // Si es la primera, añade la etiqueta en negritas
+              if (!obsLista.innerHTML.includes(`<strong>${label}:</strong>`)) {
+                li.innerHTML = `<strong>${label}:</strong> ${item.trim()}`;
+              } else {
+                li.innerText = item.trim();
+              }
+              obsLista.appendChild(li);
+            }
+          });
+        }
+      };
+      
+      addToList('Observaciones de Pintura', obsPintura);
+      addToList('Observaciones Generales', obsGenerales);
+
       const luzPlacaValue = getParam('luz_placa');
       document.getElementById('luzPlaca').innerText = (luzPlacaValue.toUpperCase() === 'Y') ? 'Si' : 'No';
 
@@ -293,7 +318,7 @@
       const script = document.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
       script.onload = () => callback();
-      script.onerror = () => alert('No fue posible cargar el generador de PDF.');
+      script.onerror = () => alert('No se pudo cargar el generador de PDF.');
       document.head.appendChild(script);
     }
     
