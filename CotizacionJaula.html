@@ -8,13 +8,11 @@
   <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
 
   <style>
-    /* ✅ CAMBIO: Se redujo el margen inferior para un diseño más compacto */
     .section {
-      margin-bottom: 5px; /* Ajusta este valor si quieres más o menos espacio */
+      margin-bottom: 5px; 
       break-inside: avoid;
       page-break-inside: avoid;
     }
-
     .image-container {
       display: flex;
       flex-wrap: wrap;
@@ -208,8 +206,10 @@
     const safe = (s) => (s || '').toString().replace(/[^a-z0-9-_]+/gi, '_').slice(0, 60);
     const today = new Date();
     window.__pdfFilename = `Cotizacion_${safe(getParam('cliente'))}_${today.toISOString().slice(0, 10)}.pdf`;
+    
     function fillData() {
       document.getElementById('fechaCotizacion').innerText = today.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+      
       const fields = {
         'telefonoContacto': 'telefono_contacto', 'correoContacto': 'correo_contacto', 'cliente': 'cliente',
         'direccionCliente': 'direccion', 'rfcCliente': 'rfc', 'tipoUnidad': 'tipo_de_unidad',
@@ -225,22 +225,23 @@
         'rines': 'rines', 'cantRines': 'cantidad_de_rines', 'llantas': 'llantas_70', 'cantLlantas': 'cantidad_de_llantas',
         'frenos': 'frenos', 'juegoPatines': 'juego_de_patines', 'cantPatines': 'cantidad_de_patines',
         'cajaHerramientas': 'caja_de_herramientas', 'loderaDelantera': 'lodera_delantera', 'loderaTrasera': 'lodera_trasera',
-        'manivelasPatin': 'manivelas_de_patin', 'direccionales': 'direccionales', 'plafones': 'plafones',
-        'observacionesPintura': ['observaciones_de_pintura', 'OBSERVACIONES_DE_PINTURA'],
-        'observacionesGenerales': ['observaciones', 'OBSERVACIONES']
+        'manivelasPatin': 'manivelas_de_patin', 'direccionales': 'direccionales', 'plafones': 'plafones'
       };
+      
       for (const id in fields) {
-        const paramNames = Array.isArray(fields[id]) ? fields[id] : [fields[id]];
-        for (const name of paramNames) {
-          const value = getParam(name);
-          if (value) {
-            document.getElementById(id).innerText = value;
-            break;
-          }
+        const value = getParam(fields[id]);
+        if (value) {
+          document.getElementById(id).innerText = value;
         }
       }
+      
+      // ✅ CAMBIO: Tratamiento especial para las observaciones para que siempre se muestren
+      document.getElementById('observacionesPintura').innerText = getParam('observaciones_de_pintura') || getParam('OBSERVACIONES_DE_PINTURA');
+      document.getElementById('observacionesGenerales').innerText = getParam('observaciones') || getParam('OBSERVACIONES');
+      
       const luzPlacaValue = getParam('luz_placa');
       document.getElementById('luzPlaca').innerText = (luzPlacaValue.toUpperCase() === 'Y') ? 'Si' : 'No';
+
       const costoBase = parseFloat(urlParams.get('Costo_de_la_Unidad') || '0') || 0;
       setCosts(costoBase);
       document.getElementById('ajusteManual').addEventListener('input', (e) => {
@@ -249,6 +250,7 @@
       });
       loadImages();
     }
+    
     function setCosts(total) {
       const deposito = total * 0.5;
       const saldo = total - deposito;
@@ -257,6 +259,7 @@
       document.getElementById('saldo').innerText = money(saldo);
       document.getElementById('totalFinal').innerText = money(total);
     }
+    
     function loadImages() {
       const container = document.getElementById('imagenes-container');
       const keys = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
@@ -284,24 +287,22 @@
         container.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
       }
     }
+    
     function loadHtml2Pdf(callback) {
-      if (window.html2pdf) { callback && callback(); return; }
+      if (window.html2pdf) { callback(); return; }
       const script = document.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-      script.onload = () => callback && callback();
+      script.onload = () => callback();
       script.onerror = () => alert('No fue posible cargar el generador de PDF.');
       document.head.appendChild(script);
     }
+    
     function toggleUiForPdf(hide) {
       document.querySelectorAll('.actions-bar, .vendor-only').forEach(el => {
-        if (hide) {
-          el.dataset.prevDisplay = el.style.display || '';
-          el.style.display = 'none';
-        } else {
-          el.style.display = el.dataset.prevDisplay || '';
-        }
+        el.style.display = hide ? 'none' : '';
       });
     }
+    
     function downloadPDF() {
       loadHtml2Pdf(() => {
         toggleUiForPdf(true);
@@ -316,43 +317,46 @@
         window.html2pdf().set(opt).from(element).save().finally(() => toggleUiForPdf(false));
       });
     }
+    
     function makePdfBlob(callback) {
-        loadHtml2Pdf(() => {
-            toggleUiForPdf(true);
-            const element = document.querySelector('.container');
-            const opt = {
-                margin: [10, 10, 10, 10],
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, allowTaint: true, letterRendering: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            window.html2pdf().set(opt).from(element).outputPdf('blob')
-              .then(blob => {
-                  toggleUiForPdf(false);
-                  callback && callback(blob);
-              }).catch(() => toggleUiForPdf(false));
-        });
+      loadHtml2Pdf(() => {
+        toggleUiForPdf(true);
+        const element = document.querySelector('.container');
+        const opt = {
+          margin: [10, 10, 10, 10],
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, allowTaint: true, letterRendering: true },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        window.html2pdf().set(opt).from(element).outputPdf('blob')
+          .then(blob => {
+            toggleUiForPdf(false);
+            if (callback) callback(blob);
+          }).catch(() => toggleUiForPdf(false));
+      });
     }
+
     async function emailWithPdf() {
-        makePdfBlob(async (blob) => {
-            const filename = window.__pdfFilename || 'Cotizacion.pdf';
-            const file = new File([blob], filename, { type: 'application/pdf' });
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                try {
-                    await navigator.share({ files: [file], title: 'Cotización', text: 'Adjunto PDF de la cotización.' });
-                    return;
-                } catch (e) { console.warn("Share API cancelado."); }
-            }
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = filename;
-            a.click();
-            setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-            const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
-            const body = encodeURIComponent('Estimado cliente,\n\nAdjunto encontrará la cotización en PDF (si no se adjuntó automáticamente, utilice el archivo descargado).\n\nSaludos,\nEquipo de Ventas');
-            window.location.href = `mailto:?subject=${subject}&body=${body}`;
-        });
+      makePdfBlob(async (blob) => {
+        const filename = window.__pdfFilename || 'Cotizacion.pdf';
+        const file = new File([blob], filename, { type: 'application/pdf' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({ files: [file], title: 'Cotización', text: 'Adjunto PDF de la cotización.' });
+            return;
+          } catch (e) { console.warn("Share API cancelado."); }
+        }
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+        const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
+        const body = encodeURIComponent('Estimado cliente,\n\nAdjunto encontrará la cotización en PDF (si no se adjuntó automáticamente, utilice el archivo descargado).\n\nSaludos,\nEquipo de Ventas');
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      });
     }
+    
     document.addEventListener('DOMContentLoaded', fillData);
   </script>
 </body>
