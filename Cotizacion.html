@@ -490,12 +490,12 @@
             document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
             document.getElementById('correoContacto').innerText = getParam('correo_contacto');
 
-            const tipoUnidadValue = getParam('tipo_de_unidad');
+            const tipoUnidadValue = getParam('tipo_de_unidad').toLowerCase(); // Convertir a minúsculas
             const anioActual = today.getFullYear();
             if (tipoUnidadValue) {
-                document.getElementById('tipoUnidad').innerText = `${tipoUnidadValue} Modelo ${anioActual}`;
+                document.getElementById('tipoUnidad').innerText = `${getParam('tipo_de_unidad')} Modelo ${anioActual}`;
             }
-
+            
             // 2. Lógica para mostrar secciones dinámicas
             const configuracionUnidades = {
                 'Jaula': ['jaula-specs-1', 'jaula-specs-2', 'jaula-accesorios'],
