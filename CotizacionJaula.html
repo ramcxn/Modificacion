@@ -33,12 +33,11 @@
     .notes-list {
       padding-left: 20px;
       margin: 0;
-      list-style-type: disc; /* Asegura que se usen viñetas */
+      list-style-type: disc;
     }
-    /* Estilo para el título de la observación para que no tenga viñeta */
     .observation-title {
         list-style-type: none;
-        margin-left: -20px; /* Compensa el padding de la lista */
+        margin-left: -20px;
     }
   </style>
 </head>
@@ -62,7 +61,7 @@
            src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/LOGO%20TB2025.png"
            alt="Logo de Talleres Barrera"
            class="logo"
-           style="width: 15%; height: auto;" 
+           style="width: 50%; height: auto;" 
            crossorigin="anonymous"
            referrerpolicy="no-referrer">
     </div>
@@ -207,7 +206,7 @@
     }
     const money = (v) => {
       const n = Number(v);
-      if (!isFinite(n)) return '$0.00';
+      if (!isFinite(n)) return '$0.00 MXN';
       return n.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
     };
     const safe = (s) => (s || '').toString().replace(/[^a-z0-9-_]+/gi, '_').slice(0, 60);
@@ -219,7 +218,7 @@
       
       const fields = {
         'telefonoContacto': 'telefono_contacto', 'correoContacto': 'correo_contacto', 'cliente': 'cliente',
-        'direccionCliente': 'direccion', 'rfcCliente': 'rfc', 'tipoUnidad': 'tipo_de_unidad',
+        'direccionCliente': 'direccion', 'rfcCliente': 'rfc',
         'realizadoPor': 'realizado_por', 'colorPrimario': 'color', 'colorSecundario': 'color_2',
         'suspension': 'suspension', 'cantSuspensiones': 'cantidad_de_suspensiones', 'retractilEje': 'retractil_eje',
         'ejes': 'ejes', 'distanciaEjes': 'distancia_de_ejes', 'personalizacionViga': 'personalizacion_de_viga',
@@ -239,25 +238,28 @@
         const value = getParam(fields[id]);
         if (value) {
           document.getElementById(id).innerText = value;
+        } else {
+          document.getElementById(id).innerText = '';
         }
       }
       
-      // ✅ CAMBIO: Lógica ajustada para el nuevo formato de lista
+      // ✅ CAMBIO 1: Formato especial para "Tipo de Unidad" con el año actual
+      const tipoUnidadValue = getParam('tipo_de_unidad');
+      const anioActual = today.getFullYear();
+      if (tipoUnidadValue) {
+          document.getElementById('tipoUnidad').innerText = `${tipoUnidadValue} Modelo ${anioActual}`;
+      }
+
       const obsLista = document.getElementById('observaciones-lista');
       obsLista.innerHTML = ''; 
-
       const obsPintura = getParam('observaciones_de_pintura') || getParam('OBSERVACIONES_DE_PINTURA');
       const obsGenerales = getParam('observaciones') || getParam('OBSERVACIONES');
-
       const processObservations = (label, text) => {
-        // Añade el título de la sección (sin viñeta)
         const titleLi = document.createElement('li');
-        titleLi.className = 'observation-title'; // Clase para quitar la viñeta
+        titleLi.className = 'observation-title';
         titleLi.innerHTML = `<strong>${label}:</strong>`;
         obsLista.appendChild(titleLi);
-
         if (text && text.trim()) {
-          // Si hay texto, lo divide y añade cada parte como un nuevo ítem
           text.split(',').forEach(item => {
             if (item.trim()) {
               const itemLi = document.createElement('li');
@@ -265,18 +267,13 @@
               obsLista.appendChild(itemLi);
             }
           });
-        } else {
-          // Si no hay texto, se puede dejar vacío o añadir "N/A"
-          // Dejarlo vacío se ve más limpio con este formato
         }
       };
-      
       processObservations('Observaciones de Pintura', obsPintura);
       processObservations('Observaciones Generales', obsGenerales);
-
+      
       const luzPlacaValue = getParam('luz_placa');
       document.getElementById('luzPlaca').innerText = (luzPlacaValue.toUpperCase() === 'Y') ? 'Si' : 'No';
-
       const costoBase = parseFloat(urlParams.get('Costo_de_la_Unidad') || '0') || 0;
       setCosts(costoBase);
       document.getElementById('ajusteManual').addEventListener('input', (e) => {
@@ -297,6 +294,7 @@
     
     function loadImages() {
       const container = document.getElementById('imagenes-container');
+      container.innerHTML = '';
       const keys = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
       let hasImages = false;
       keys.forEach(key => {
@@ -371,25 +369,47 @@
       });
     }
 
+    // ✅ CAMBIO 2: Función de correo actualizada con todos los detalles
     async function emailWithPdf() {
-      makePdfBlob(async (blob) => {
-        const filename = window.__pdfFilename || 'Cotizacion.pdf';
-        const file = new File([blob], filename, { type: 'application/pdf' });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          try {
-            await navigator.share({ files: [file], title: 'Cotización', text: 'Adjunto PDF de la cotización.' });
-            return;
-          } catch (e) { console.warn("Share API cancelado."); }
-        }
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = filename;
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-        const subject = encodeURIComponent('Cotización de Remolque - Talleres Barrera');
-        const body = encodeURIComponent('Estimado cliente,\n\nAdjunto encontrará la cotización en PDF (si no se adjuntó automáticamente, utilice el archivo descargado).\n\nSaludos,\nEquipo de Ventas');
-        window.location.href = `mailto:?subject=${subject}&body=${body}`;
-      });
+        const cliente = getParam('cliente');
+        const tipoUnidad = getParam('tipo_de_unidad');
+        const anioActual = new Date().getFullYear();
+        const vendedor = getParam('realizado_por');
+
+        const subject = `Cotización de ${tipoUnidad} para ${cliente} - Talleres Barrera`;
+        const body = `
+Estimado(a) ${cliente},
+
+Adjunto a este correo encontrará la cotización detallada para la fabricación de su unidad ${tipoUnidad} Modelo ${anioActual}.
+
+Agradecemos su interés en nuestros productos y quedamos a su disposición para cualquier duda o aclaración.
+
+Saludos cordiales,
+
+${vendedor || 'Equipo de Ventas'}
+Talleres Barrera S.A. de C.V.
+        `;
+
+        makePdfBlob(async (blob) => {
+            const filename = window.__pdfFilename || 'Cotizacion.pdf';
+            const file = new File([blob], filename, { type: 'application/pdf' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({ 
+                        files: [file], 
+                        title: subject, 
+                        text: 'Adjunto encontrará la cotización en PDF.' 
+                    });
+                    return;
+                } catch (e) { console.warn("Share API cancelado."); }
+            }
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+            window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        });
     }
     
     document.addEventListener('DOMContentLoaded', fillData);
