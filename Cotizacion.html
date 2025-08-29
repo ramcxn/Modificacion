@@ -6,34 +6,6 @@
     <title>Cotización - Talleres Barrera</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/cotizacion.css"/>
-
-    <style>
-        /* ✅ CSS: Oculta por defecto todas las secciones que son opcionales */
-        .seccion-opcional {
-            display: none;
-        }
-
-        /* --- Estilos generales que ya teníamos --- */
-        .section {
-            margin-bottom: 5px; 
-            break-inside: avoid;
-            page-break-inside: avoid;
-        }
-        .image-container {
-            display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start;
-        }
-        .reference-image {
-            max-width: 220px; max-height: 180px; width: auto; height: auto;
-            object-fit: contain; border: 1px solid #e5e7eb; padding: 4px;
-            border-radius: 6px; background: #fff;
-        }
-        .notes-list {
-            padding-left: 20px; margin: 0; list-style-type: disc;
-        }
-        .observation-title {
-            list-style-type: none; margin-left: -20px;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -53,7 +25,7 @@
             </div>
             <img id="logoPrincipal" src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/LOGO%20TB2025.png" alt="Logo de Talleres Barrera" class="logo" style="width: 50%; height: auto;" crossorigin="anonymous" referrerpolicy="no-referrer">
         </div>
-        <p>Por medio de la presente, <strong>TALLERES BARRERA S.A. DE C.V.</strong> agradece su interés en nuestros productos...</p>
+        <p>Por medio de la presente, <strong>TALLERES BARRERA S.A. DE C.V.</strong> agradece su interés en nuestros productos. A continuación, se presenta la cotización detallada para la fabricación de su remolque, incluyendo especificaciones, costos y términos de pago.</p>
         
         <div class="section">
             <h3 class="section-title">Información del Cliente y General</h3>
@@ -68,81 +40,81 @@
         </div>
 
         <div class="section seccion-opcional" id="jaula-specs-1">
-            <h3 class="section-title">Especificaciones Generales</h3>
+            <h3 class="section-title">Especificaciones Generales (Jaula)</h3>
             <table class="info-table">
-                <tr><td>Color Primario:</td><td><span id="colorPrimario"></span></td></tr>
-                <tr><td>Color Secundario:</td><td><span id="colorSecundario"></span></td></tr>
-                <tr><td>Suspensión:</td><td><span id="suspension"></span> (<span id="cantSuspensiones"></span> piezas)</td></tr>
-                <tr><td>Retráctil de Eje:</td><td><span id="retractilEje"></span></td></tr>
-                <tr><td>Ejes:</td><td><span id="ejes"></span></td></tr>
-                <tr><td>Distancia entre Ejes:</td><td><span id="distanciaEjes"></span></td></tr>
-                <tr><td>Personalización de Viga:</td><td><span id="personalizacionViga"></span></td></tr>
-                <tr><td>Faldón:</td><td><span id="faldon"></span></td></tr>
-                <tr><td>Perno Rey:</td><td><span id="pernoRey"></span></td></tr>
-                <tr><td>Portallantas:</td><td><span id="portallantas"></span></td></tr>
+                <tr><td>Color Primario:</td><td><span id="jaula-colorPrimario"></span></td></tr>
+                <tr><td>Color Secundario:</td><td><span id="jaula-colorSecundario"></span></td></tr>
+                <tr><td>Suspensión:</td><td><span id="jaula-suspension"></span> (<span id="jaula-cantSuspensiones"></span> piezas)</td></tr>
+                <tr><td>Retráctil de Eje:</td><td><span id="jaula-retractilEje"></span></td></tr>
+                <tr><td>Ejes:</td><td><span id="jaula-ejes"></span></td></tr>
+                <tr><td>Distancia entre Ejes:</td><td><span id="jaula-distanciaEjes"></span></td></tr>
+                <tr><td>Personalización de Viga:</td><td><span id="jaula-personalizacionViga"></span></td></tr>
+                <tr><td>Faldón:</td><td><span id="jaula-faldon"></span></td></tr>
+                <tr><td>Perno Rey:</td><td><span id="jaula-pernoRey"></span></td></tr>
+                <tr><td>Portallantas:</td><td><span id="jaula-portallantas"></span></td></tr>
             </table>
         </div>
         <div class="section seccion-opcional" id="jaula-specs-2">
-            <h3 class="section-title">Carrocería y Estructura</h3>
+            <h3 class="section-title">Carrocería y Estructura (Jaula)</h3>
             <table class="info-table">
-                <tr><td>Dimensiones:</td><td><span id="dimensiones"></span></td></tr>
-                <tr><td>Tipo de Redila:</td><td><span id="tipoRedila"></span></td></tr>
-                <tr><td>Secciones:</td><td><span id="secciones"></span></td></tr>
-                <tr><td>Puertas Laterales:</td><td><span id="puertasLaterales"></span></td></tr>
-                <tr><td>Compuerta al Piso:</td><td><span id="compAlPiso"></span></td></tr>
-                <tr><td>Compuerta Trasera:</td><td><span id="compAtras"></span></td></tr>
-                <tr><td>Tipo de Arco:</td><td><span id="tipoArco"></span></td></tr>
-                <tr><td>Piso de Madera:</td><td><span id="pisoMadera"></span></td></tr>
-                <tr><td>Piso Laminado:</td><td><span id="pisoLaminado"></span></td></tr>
-                <tr><td>Caballete:</td><td><span id="caballete"></span></td></tr>
-                <tr><td>Tubos Interiores:</td><td><span id="tubosInteriores"></span></td></tr>
-                <tr><td>Barrote Lateral:</td><td><span id="barroteLateral"></span></td></tr>
-                <tr><td>Compuerta a los Lados:</td><td><span id="compuertaLados"></span></td></tr>
-                <tr><td>Cerrojo de Puertas Traseras:</td><td><span id="cerrojoPuertas"></span></td></tr>
-                <tr><td>Sistema de Lona:</td><td><span id="sistemaLona"></span></td></tr>
-                <tr><td>Luz de Placa:</td><td><span id="luzPlaca"></span></td></tr>
+                <tr><td>Dimensiones:</td><td><span id="jaula-dimensiones"></span></td></tr>
+                <tr><td>Tipo de Redila:</td><td><span id="jaula-tipoRedila"></span></td></tr>
+                <tr><td>Secciones:</td><td><span id="jaula-secciones"></span></td></tr>
+                <tr><td>Puertas Laterales:</td><td><span id="jaula-puertasLaterales"></span></td></tr>
+                <tr><td>Compuerta al Piso:</td><td><span id="jaula-compAlPiso"></span></td></tr>
+                <tr><td>Compuerta Trasera:</td><td><span id="jaula-compAtras"></span></td></tr>
+                <tr><td>Tipo de Arco:</td><td><span id="jaula-tipoArco"></span></td></tr>
+                <tr><td>Piso de Madera:</td><td><span id="jaula-pisoMadera"></span></td></tr>
+                <tr><td>Piso Laminado:</td><td><span id="jaula-pisoLaminado"></span></td></tr>
+                <tr><td>Caballete:</td><td><span id="jaula-caballete"></span></td></tr>
+                <tr><td>Tubos Interiores:</td><td><span id="jaula-tubosInteriores"></span></td></tr>
+                <tr><td>Barrote Lateral:</td><td><span id="jaula-barroteLateral"></span></td></tr>
+                <tr><td>Compuerta a los Lados:</td><td><span id="jaula-compuertaLados"></span></td></tr>
+                <tr><td>Cerrojo de Puertas Traseras:</td><td><span id="jaula-cerrojoPuertas"></span></td></tr>
+                <tr><td>Sistema de Lona:</td><td><span id="jaula-sistemaLona"></span></td></tr>
+                <tr><td>Luz de Placa:</td><td><span id="jaula-luzPlaca"></span></td></tr>
             </table>
         </div>
         <div class="section seccion-opcional" id="jaula-accesorios">
-            <h3 class="section-title">Accesorios</h3>
+            <h3 class="section-title">Accesorios (Jaula)</h3>
             <table class="info-table">
-                <tr><td>Rines:</td><td><span id="rines"></span> (<span id="cantRines"></span> piezas)</td></tr>
-                <tr><td>Llantas:</td><td><span id="llantas"></span> (<span id="cantLlantas"></span> piezas)</td></tr>
-                <tr><td>Frenos:</td><td><span id="frenos"></span></td></tr>
-                <tr><td>Juego de Patines:</td><td><span id="juegoPatines"></span> (<span id="cantPatines"></span> piezas)</td></tr>
-                <tr><td>Caja de Herramientas:</td><td><span id="cajaHerramientas"></span></td></tr>
-                <tr><td>Lodera Delantera:</td><td><span id="loderaDelantera"></span></td></tr>
-                <tr><td>Lodera Trasera:</td><td><span id="loderaTrasera"></span></td></tr>
-                <tr><td>Manivelas de Patín:</td><td><span id="manivelasPatin"></span></td></tr>
-                <tr><td>Direccionales:</td><td><span id="direccionales"></span></td></tr>
-                <tr><td>Plafones:</td><td><span id="plafones"></span></td></tr>
+                <tr><td>Rines:</td><td><span id="jaula-rines"></span> (<span id="jaula-cantRines"></span> piezas)</td></tr>
+                <tr><td>Llantas:</td><td><span id="jaula-llantas"></span> (<span id="jaula-cantLlantas"></span> piezas)</td></tr>
+                <tr><td>Frenos:</td><td><span id="jaula-frenos"></span></td></tr>
+                <tr><td>Juego de Patines:</td><td><span id="jaula-juegoPatines"></span> (<span id="jaula-cantPatines"></span> piezas)</td></tr>
+                <tr><td>Caja de Herramientas:</td><td><span id="jaula-cajaHerramientas"></span></td></tr>
+                <tr><td>Lodera Delantera:</td><td><span id="jaula-loderaDelantera"></span></td></tr>
+                <tr><td>Lodera Trasera:</td><td><span id="jaula-loderaTrasera"></span></td></tr>
+                <tr><td>Manivelas de Patín:</td><td><span id="jaula-manivelasPatin"></span></td></tr>
+                <tr><td>Direccionales:</td><td><span id="jaula-direccionales"></span></td></tr>
+                <tr><td>Plafones:</td><td><span id="jaula-plafones"></span></td></tr>
             </table>
         </div>
 
         <div class="section seccion-opcional" id="dolly-specs">
-            <h3 class="section-title">Especificaciones de la Unidad</h3>
+            <h3 class="section-title">Especificaciones de la Unidad (Dolly)</h3>
             <table class="info-table">
-                <tr><td>Color Primario:</td><td><span id="colorPrimarioDolly"></span></td></tr>
-                <tr><td>Color Secundario:</td><td><span id="colorSecundarioDolly"></span></td></tr>
-                <tr><td>Suspensión:</td><td><span id="suspensionDolly"></span> (<span id="cantSuspensionesDolly"></span> piezas)</td></tr>
-                <tr><td>Retráctil de Eje:</td><td><span id="retractilEjeDolly"></span></td></tr>
-                <tr><td>Ejes:</td><td><span id="ejesDolly"></span></td></tr>
-                <tr><td>Faldón:</td><td><span id="faldonDolly"></span></td></tr>
-                <tr><td>Lanza:</td><td><span id="lanza"></span></td></tr>
-                <tr><td>Distancia entre Ejes:</td><td><span id="distanciaEjesDolly"></span></td></tr>
-                <tr><td>Personalización de Viga:</td><td><span id="personalizacionVigaDolly"></span></td></tr>
+                <tr><td>Color Primario:</td><td><span id="dolly-colorPrimario"></span></td></tr>
+                <tr><td>Color Secundario:</td><td><span id="dolly-colorSecundario"></span></td></tr>
+                <tr><td>Suspensión:</td><td><span id="dolly-suspension"></span> (<span id="dolly-cantSuspensiones"></span> piezas)</td></tr>
+                <tr><td>Retráctil de Eje:</td><td><span id="dolly-retractilEje"></span></td></tr>
+                <tr><td>Ejes:</td><td><span id="dolly-ejes"></span></td></tr>
+                <tr><td>Faldón:</td><td><span id="dolly-faldon"></span></td></tr>
+                <tr><td>Lanza:</td><td><span id="dolly-lanza"></span></td></tr>
+                <tr><td>Distancia entre Ejes:</td><td><span id="dolly-distanciaEjes"></span></td></tr>
+                <tr><td>Personalización de Viga:</td><td><span id="dolly-personalizacionViga"></span></td></tr>
             </table>
         </div>
         <div class="section seccion-opcional" id="dolly-accesorios">
-            <h3 class="section-title">Accesorios</h3>
+            <h3 class="section-title">Accesorios (Dolly)</h3>
             <table class="info-table">
-                <tr><td>Rines:</td><td><span id="rinesDolly"></span> (<span id="cantRinesDolly"></span> piezas)</td></tr>
-                <tr><td>Llantas:</td><td><span id="llantasDolly"></span> (<span id="cantLlantasDolly"></span> piezas)</td></tr>
-                <tr><td>Frenos:</td><td><span id="frenosDolly"></span></td></tr>
-                <tr><td>Sistema de Inflado PSI:</td><td><span id="sistemaInflado"></span></td></tr>
-                <tr><td>Quinta Rueda:</td><td><span id="quintaRueda"></span></td></tr>
-                <tr><td>Plafones:</td><td><span id="plafonesDolly"></span></td></tr>
-                <tr><td>Argolla:</td><td><span id="argolla"></span></td></tr>
+                <tr><td>Rines:</td><td><span id="dolly-rines"></span> (<span id="dolly-cantRines"></span> piezas)</td></tr>
+                <tr><td>Llantas:</td><td><span id="dolly-llantas"></span> (<span id="dolly-cantLlantas"></span> piezas)</td></tr>
+                <tr><td>Frenos:</td><td><span id="dolly-frenos"></span></td></tr>
+                <tr><td>Sistema de Inflado PSI:</td><td><span id="dolly-sistemaInflado"></span></td></tr>
+                <tr><td>Quinta Rueda:</td><td><span id="dolly-quintaRueda"></span></td></tr>
+                <tr><td>Plafones:</td><td><span id="dolly-plafones"></span></td></tr>
+                <tr><td>Argolla:</td><td><span id="dolly-argolla"></span></td></tr>
             </table>
         </div>
 
@@ -156,65 +128,292 @@
         </div>
         <div class="section">
             <h3 class="section-title">Resumen de Costos y Términos de Pago</h3>
+            <div class="vendor-only" style="margin-bottom:8px;">
+                <label><strong>Ajuste de precio manual:</strong></label>
+                <input type="number" id="ajusteManual" step="0.01" placeholder="0.00" />
+                <span class="hint">Use valores positivos (+) o negativos (−).</span>
+            </div>
+            <table class="cost-table">
+                <thead><tr><th>Concepto</th><th>Monto</th></tr></thead>
+                <tbody>
+                    <tr><td>Costo Total de la Unidad:</td><td><span id="costoTotal"></span></td></tr>
+                    <tr><td>Depósito para Inicio de Fabricación (50%):</td><td><span id="deposito"></span></td></tr>
+                    <tr><td>Saldo a Liquidar a la Entrega (50%):</td><td><span id="saldo"></span></td></tr>
+                    <tr class="total-row"><td>TOTAL:</td><td><strong><span id="totalFinal"></span></strong></td></tr>
+                </tbody>
+            </table>
+            <div class="bank-info">
+                <p><strong>Datos Bancarios para Depósito:</strong></p>
+                <p><strong>Titular:</strong> TALLERES BARRERA S.A. DE C.V.</p>
+                <table class="bank-table">
+                    <thead><tr><th>Banco</th><th>Sucursal</th><th>Cuenta</th><th>CLABE</th></tr></thead>
+                    <tbody>
+                        <tr><td>SANTANDER</td><td>3945</td><td>65500883468</td><td>014 595 65500883468 7</td></tr>
+                        <tr><td>BBVA</td><td>1729</td><td>00450461113</td><td>012 580 00450461113 7</td></tr>
+                        <tr><td>CITIBANAMEX</td><td>0796</td><td>07966989054</td><td>002 595 07966989054 8</td></tr>
+                        <tr><td>BANORTE</td><td>060</td><td>00060251843</td><td>072 595 00060251843 3</td></tr>
+                    </tbody>
+                </table>
+                <p>Favor de enviar su notificación de depósito a <strong>contabilidad@talleresbarrera.com</strong> y <strong>barrera@talleresbarrera.com</strong>.</p>
+            </div>
+            <p><strong>Consideraciones:</strong></p>
+            <ul class="notes-list">
+                <li>El depósito inicial no es reembolsable.</li>
+                <li>El precio final puede ajustarse en caso de que se soliciten modificaciones adicionales no contempladas en esta cotización.</li>
+                <li>El tiempo de entrega estimado es de 6 a 8 semanas, a partir de la confirmación del depósito inicial.</li>
+                <li>A partir de la fecha de entrega emitida, se tendrá un tiempo de almacén de 15 días naturales. Después, $1,000 MXN por semana.</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h3 class="section-title">Aprobación del Cliente</h3>
+            <p>Con la firma de este documento, usted confirma que ha revisado y aprobado las especificaciones y los costos detallados en esta cotización. Esta firma autoriza a TALLERES BARRERA S.A. DE C.V. a iniciar el proceso de fabricación de la unidad.</p>
+            <div class="firma-section">
+                <div class="firma-line"></div>
+                <p>Firma de Aprobación</p>
             </div>
         </div>
+        <div class="footer-logo-container">
+            <img src="https://raw.githubusercontent.com/ramcxn/Modificacion/main/CER%20COMPANY%20-%20ISO%209001.png" alt="Empresa Certificada ISO 9001:2015" class="iso-logo">
+        </div>
+    </div> 
 
     <script>
-        // --- Funciones de ayuda (getParam, money, etc.) se mantienen igual ---
         const urlParams = new URLSearchParams(window.location.search);
-        const getParam = (name) => { /* ... (código sin cambios) ... */ };
-        const getParamRaw = (name) => { /* ... (código sin cambios) ... */ };
-        // ... (resto de funciones de ayuda) ...
+        const getParam = (name) => {
+            const raw = urlParams.get(name);
+            if (raw === null || raw === undefined) return '';
+            try { return decodeURIComponent(String(raw).replace(/\+/g, ' ')); }
+            catch { return raw; }
+        };
+        const getParamRaw = (name) => urlParams.get(name) || '';
+        const appName = "NewApp-1254688";
+        const tableName = "Modificaciones";
+        function getAppSheetImageUrl(fileNameRaw) {
+            if (!fileNameRaw) return '';
+            return `https://www.appsheet.com/template/gettablefileurl?appName=${encodeURIComponent(appName)}&tableName=${encodeURIComponent(tableName)}&fileName=${fileNameRaw}&_=${Date.now()}`;
+        }
+        const money = (v) => {
+            const n = parseFloat(v);
+            if (!isFinite(n)) return '$0.00 MXN';
+            return n.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+        };
+        const safe = (s) => (s || '').toString().replace(/[^a-z0-9-_]+/gi, '_').slice(0, 60);
+        const today = new Date();
+        window.__pdfFilename = `Cotizacion_${safe(getParam('cliente'))}_${today.toISOString().slice(0, 10)}.pdf`;
 
         function fillData() {
-            // ... (código para llenar fecha, cliente, etc., se mantiene igual) ...
+            // 1. Llenar datos comunes
+            document.getElementById('fechaCotizacion').innerText = today.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('cliente').innerText = getParam('cliente');
+            document.getElementById('direccionCliente').innerText = getParam('direccion');
+            document.getElementById('rfcCliente').innerText = getParam('rfc');
+            document.getElementById('realizadoPor').innerText = getParam('realizado_por');
+            document.getElementById('telefonoContacto').innerText = getParam('telefono_contacto');
+            document.getElementById('correoContacto').innerText = getParam('correo_contacto');
 
-            // ✅ JAVASCRIPT: El "Mesero Inteligente"
-            // 1. Mapa de configuración
+            const tipoUnidadValue = getParam('tipo_de_unidad');
+            const anioActual = today.getFullYear();
+            if (tipoUnidadValue) {
+                document.getElementById('tipoUnidad').innerText = `${tipoUnidadValue} Modelo ${anioActual}`;
+            }
+
+            // 2. Lógica para mostrar secciones dinámicas
             const configuracionUnidades = {
                 'Jaula': ['jaula-specs-1', 'jaula-specs-2', 'jaula-accesorios'],
                 'Dolly': ['dolly-specs', 'dolly-accesorios']
-                // Agrega aquí más tipos de unidad en el futuro
             };
-
-            // 2. Lógica para mostrar las secciones correctas
-            const tipoUnidad = getParam('tipo_de_unidad');
-            const seccionesAMostrar = configuracionUnidades[tipoUnidad];
-
+            const seccionesAMostrar = configuracionUnidades[tipoUnidadValue];
             if (seccionesAMostrar) {
-                seccionesAMostrar.forEach(idDeLaSeccion => {
-                    const seccion = document.getElementById(idDeLaSeccion);
-                    if (seccion) {
-                        seccion.style.display = 'block'; // Se hace visible
-                    }
+                seccionesAMostrar.forEach(id => {
+                    const seccion = document.getElementById(id);
+                    if (seccion) seccion.style.display = 'block';
                 });
-            } else {
-                // Si no se reconoce el tipo de unidad, no se mostrarán secciones opcionales
-                console.error(`Tipo de unidad "${tipoUnidad}" no reconocido.`);
             }
 
-            // --- Llenado de TODOS los campos ---
-            // El script llenará todos los spans, pero solo serán visibles los de las secciones activas.
-            
-            // Campos de Cliente (siempre se llenan)
-            document.getElementById('cliente').innerText = getParam('cliente');
-            // ... (resto de campos de cliente) ...
+            // 3. Llenar TODOS los campos posibles. Solo se verán los de las secciones activas.
+            const fields = {
+                // Jaula
+                'jaula-colorPrimario': 'color', 'jaula-colorSecundario': 'color_2', 'jaula-suspension': 'suspension',
+                'jaula-cantSuspensiones': 'cantidad_de_suspensiones', 'jaula-retractilEje': 'retractil_eje', 'jaula-ejes': 'ejes',
+                'jaula-distanciaEjes': 'distancia_de_ejes', 'jaula-personalizacionViga': 'personalizacion_de_viga', 'jaula-faldon': 'faldon',
+                'jaula-pernoRey': 'perno_rey', 'jaula-portallantas': 'portallantas', 'jaula-dimensiones': 'dimensiones',
+                'jaula-tipoRedila': 'tipo_de_redila', 'jaula-secciones': 'secciones', 'jaula-puertasLaterales': 'puertas_laterales',
+                'jaula-compAlPiso': 'comp_al_piso', 'jaula-compAtras': 'comp_atras', 'jaula-tipoArco': 'tipo_de_arco',
+                'jaula-pisoMadera': 'piso_de_madera', 'jaula-pisoLaminado': 'piso_laminado', 'jaula-caballete': 'caballete',
+                'jaula-tubosInteriores': 'tubos_interiores', 'jaula-barroteLateral': 'barrote_lateral', 'jaula-compuertaLados': 'compuerta_a_los_lados',
+                'jaula-cerrojoPuertas': 'cerrojo_de_puertas_traseras', 'jaula-sistemaLona': 'sistema_de_lona',
+                'jaula-rines': 'rines', 'jaula-cantRines': 'cantidad_de_rines', 'jaula-llantas': 'llantas_70', 'jaula-cantLlantas': 'cantidad_de_llantas',
+                'jaula-frenos': 'frenos', 'jaula-juegoPatines': 'juego_de_patines', 'jaula-cantPatines': 'cantidad_de_patines',
+                'jaula-cajaHerramientas': 'caja_de_herramientas', 'jaula-loderaDelantera': 'lodera_delantera', 'jaula-loderaTrasera': 'lodera_trasera',
+                'jaula-manivelasPatin': 'manivelas_de_patin', 'jaula-direccionales': 'direccionales', 'jaula-plafones': 'plafones',
+                // Dolly
+                'dolly-colorPrimario': 'color', 'dolly-colorSecundario': 'color_2', 'dolly-suspension': 'suspension',
+                'dolly-cantSuspensiones': 'cantidad_de_suspensiones', 'dolly-retractilEje': 'retractil_eje', 'dolly-ejes': 'ejes',
+                'dolly-faldon': 'faldon', 'dolly-lanza': 'lanza', 'dolly-distanciaEjes': 'distancia_de_ejes', 'dolly-personalizacionViga': 'personalizacion_de_viga',
+                'dolly-rines': 'rines', 'dolly-cantRines': 'cantidad_de_rines', 'dolly-llantas': 'llantas_70', 'dolly-cantLlantas': 'cantidad_de_llantas',
+                'dolly-frenos': 'frenos', 'dolly-sistemaInflado': 'sistema_de_inflado_psi', 'dolly-quintaRueda': 'quinta_rueda',
+                'dolly-plafones': 'plafones', 'dolly-argolla': 'argolla'
+            };
+            for (const id in fields) {
+                const value = getParam(fields[id]);
+                const element = document.getElementById(id);
+                if (element) {
+                    element.innerText = value || '';
+                }
+            }
+            document.getElementById('jaula-luzPlaca').innerText = (getParam('luz_placa').toUpperCase() === 'Y') ? 'Si' : 'No';
 
-            // --- Campos de Jaula ---
-            document.getElementById('colorPrimario').innerText = getParam('color');
-            // ... (todos los demás spans de Jaula) ...
+            // 4. Llenar secciones comunes restantes
+            const obsLista = document.getElementById('observaciones-lista');
+            obsLista.innerHTML = '';
+            const obsPintura = getParam('observaciones_de_pintura') || getParam('OBSERVACIONES_DE_PINTURA');
+            const obsGenerales = getParam('observaciones') || getParam('OBSERVACIONES');
+            const processObservations = (label, text) => {
+                const titleLi = document.createElement('li');
+                titleLi.className = 'observation-title';
+                titleLi.innerHTML = `<strong>${label}:</strong>`;
+                obsLista.appendChild(titleLi);
+                if (text && text.trim()) {
+                    text.split(',').forEach(item => {
+                        if (item.trim()) {
+                            const itemLi = document.createElement('li');
+                            itemLi.innerText = item.trim();
+                            obsLista.appendChild(itemLi);
+                        }
+                    });
+                }
+            };
+            processObservations('Observaciones de Pintura', obsPintura);
+            processObservations('Observaciones Generales', obsGenerales);
 
-            // --- Campos de Dolly ---
-            // NOTA: Debes darles IDs únicos en el HTML si los nombres de campo se repiten
-            document.getElementById('colorPrimarioDolly').innerText = getParam('color');
-            // ... (todos los demás spans de Dolly) ...
-
-            // ... (resto del script para observaciones, imágenes, costos, etc., se mantiene igual) ...
+            const costoBase = parseFloat(getParam('Costo_de_la_Unidad')) || 0;
+            setCosts(costoBase);
+            document.getElementById('ajusteManual').addEventListener('input', (e) => {
+                const ajuste = parseFloat(e.target.value) || 0;
+                setCosts(costoBase + ajuste);
+            });
+            loadImages();
+        }
+        
+        function setCosts(total) {
+            const deposito = total * 0.5;
+            const saldo = total - deposito;
+            document.getElementById('costoTotal').innerText = money(total);
+            document.getElementById('deposito').innerText = money(deposito);
+            document.getElementById('saldo').innerText = money(saldo);
+            document.getElementById('totalFinal').innerText = money(total);
+        }
+        
+        function loadImages() {
+            const container = document.getElementById('imagenes-container');
+            container.innerHTML = '';
+            const keys = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
+            let hasImages = false;
+            keys.forEach(key => {
+                const fileRaw = getParamRaw(key);
+                if (fileRaw) {
+                    hasImages = true;
+                    const img = new Image();
+                    img.className = 'reference-image';
+                    img.alt = 'Imagen de referencia';
+                    img.crossOrigin = 'anonymous';
+                    img.referrerPolicy = 'no-referrer';
+                    img.src = getAppSheetImageUrl(fileRaw);
+                    container.appendChild(img);
+                }
+            });
+            if (!hasImages) {
+                container.innerHTML = '<p>No se han proporcionado imágenes de referencia.</p>';
+            }
+        }
+        
+        function loadHtml2Pdf(callback) {
+            if (window.html2pdf) { callback(); return; }
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+            script.onload = () => callback();
+            script.onerror = () => alert('No fue posible cargar el generador de PDF.');
+            document.head.appendChild(script);
+        }
+        
+        function toggleUiForPdf(hide) {
+            document.querySelectorAll('.actions-bar, .vendor-only').forEach(el => {
+                el.style.display = hide ? 'none' : '';
+            });
+        }
+        
+        function downloadPDF() {
+            loadHtml2Pdf(() => {
+                toggleUiForPdf(true);
+                const element = document.querySelector('.container');
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    filename: window.__pdfFilename || 'Cotizacion.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true, allowTaint: true, letterRendering: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                window.html2pdf().set(opt).from(element).save().finally(() => toggleUiForPdf(false));
+            });
+        }
+        
+        function makePdfBlob(callback) {
+            loadHtml2Pdf(() => {
+                toggleUiForPdf(true);
+                const element = document.querySelector('.container');
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true, allowTaint: true, letterRendering: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                window.html2pdf().set(opt).from(element).outputPdf('blob')
+                  .then(blob => {
+                      toggleUiForPdf(false);
+                      if (callback) callback(blob);
+                  }).catch(() => toggleUiForPdf(false));
+            });
         }
 
-        // --- Resto del script (loadImages, downloadPDF, emailWithPdf, etc.) ---
-        // ... (código sin cambios) ...
+        async function emailWithPdf() {
+            const cliente = getParam('cliente');
+            const tipoUnidad = getParam('tipo_de_unidad');
+            const anioActual = new Date().getFullYear();
+            const vendedor = getParam('realizado_por');
+            const subject = `Cotización de ${tipoUnidad} para ${cliente} - Talleres Barrera`;
+            const body = `
+Estimado(a) ${cliente},
 
+Adjunto a este correo encontrará la cotización detallada para la fabricación de su unidad ${tipoUnidad} Modelo ${anioActual}.
+
+Agradecemos su interés en nuestros productos y quedamos a su disposición para cualquier duda o aclaración.
+
+Saludos cordiales,
+
+${vendedor || 'Equipo de Ventas'}
+Talleres Barrera S.A. de C.V.`;
+            makePdfBlob(async (blob) => {
+                const filename = window.__pdfFilename || 'Cotizacion.pdf';
+                const file = new File([blob], filename, { type: 'application/pdf' });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    try {
+                        await navigator.share({ 
+                            files: [file], 
+                            title: subject, 
+                            text: 'Adjunto encontrará la cotización en PDF.' 
+                        });
+                        return;
+                    } catch (e) { console.warn("Share API cancelado."); }
+                }
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = filename;
+                a.click();
+                setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+                window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            });
+        }
+        
         document.addEventListener('DOMContentLoaded', fillData);
     </script>
 </body>
