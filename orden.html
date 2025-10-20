@@ -487,6 +487,151 @@
             </tr>
         </table>
     </div>
-    
-    </body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const appName = "NewApp-1254688";
+            const tableName = "Modificaciones";
+
+            const getParam = (name) => urlParams.get(name) || '';
+            const getAppSheetImageUrl = (fileName) => {
+                if (!fileName) return '';
+                const decodedName = decodeURIComponent(fileName);
+                return `https://www.appsheet.com/template/gettablefileurl?appName=${appName}&tableName=${tableName}&fileName=${encodeURIComponent(decodedName)}`;
+            };
+
+            const tipoDeUnidad = decodeURIComponent(getParam('tipo_de_unidad'));
+            if (tipoDeUnidad) {
+                const seccionId = 'seccion-' + tipoDeUnidad.toLowerCase().replace(/ /g, '-').replace(/[í]/g, 'i');
+                const seccionAMostrar = document.getElementById(seccionId);
+                if (seccionAMostrar) {
+                    seccionAMostrar.style.display = 'block';
+                    document.getElementById('main-title').innerText = 'ORDEN DE TRABAJO - ' + tipoDeUnidad.toUpperCase();
+                }
+            }
+            
+            const ordenNumero = decodeURIComponent(getParam('imprimir'));
+            document.getElementById('ordenTrabajo').innerText = ordenNumero;
+            document.getElementById('ordenNumeroHeader').innerText = ordenNumero;
+            document.getElementById('mesProduccion').innerText = decodeURIComponent(getParam('mes_de_produccion'));
+            document.getElementById('niv').innerText = decodeURIComponent(getParam('niv'));
+            document.getElementById('cliente').innerText = decodeURIComponent(getParam('cliente'));
+            document.getElementById('realizadoPor').innerText = decodeURIComponent(getParam('realizado_por'));
+            document.getElementById('tipoUnidad').innerText = tipoDeUnidad;
+
+            const fieldsToFill = {
+                'medidas': 'dimensiones', 'ejes': 'ejes', 'cantEjes': 'cantidad_de_ejes', 'distanciaEjes': 'distancia_de_ejes',
+                'suspension': 'suspension', 'cantSuspensiones': 'cantidad_de_suspensiones', 'sistemaInflado': 'sistema_de_inflado_psi',
+                'manivelasPatin': 'manivelas_de_patin', 'ganchoTiron': 'gancho_tiron', 'juegoPatines': 'juego_de_patines',
+                'cantPatines': 'cantidad_de_patines', 'pernoRey': 'perno_rey', 'pisoMadera': 'piso_de_madera', 'cajaHerramientas': 'caja_de_herramientas',
+                'direccionales': 'direccionales', 'retractilEje': 'retractil_eje', 'pisoLaminado': 'piso_laminado', 'plafonesPorLado': 'plafones_por_lado',
+                'personalizacionViga': 'personalizacion_de_viga', 'colorPrimario': 'color', 'colorSecundario': 'color_2', 'loderaDelantera': 'loderas_delantera',
+                'loderaTrasera': 'loderas_trasera', 'frenos': 'frenos', 'rines': 'rines', 'cantRines': 'cantidad_de_rines',
+                'llantas': 'llantas_70', 'cantLlantas': 'cantidad_de_llantas', 'portallantas': 'portallantas', 'tipoArco': 'tipo_de_arco',
+                'sistemaLona': 'sistema_de_lona', 'compAtras': 'comp_atras', 'puertasLaterales': 'puertas_laterales', 'escalera': 'escalera',
+                'compuertaLados': 'compuerta_a_los_lados', 'puertaTrasera': 'puerta_trasera', 'conos': 'conos', 'estructura': 'estructura',
+                'piso': 'piso', 'laminaFrontal': 'lamina_frontal', 'laminaCostados': 'lamina_en_costados', 'laminaPuertasTraseras': 'lamina_en_puertas_traseras',
+                'polveras': 'polveras', 'plafones': 'plafones', 'frente': 'frente', 'paredes': 'paredes', 'piston': 'piston', 'canoas': 'canoas',
+                'escalerasInterior': 'escaleras_interior', 'tipoRedila': 'tipo_de_redila', 'tipoCerrada': 'tipo_cerrada',
+                'ganchosAmarre': 'ganchos_de_amarre', 'cerrojoPuertas': 'cerrojo_de_puertas_traseras',
+                'barroteLateral': 'barrote_lateral', 'camarote': 'camarote', 'canastillaSuperior': 'canastilla_superior',
+                'bastidor': 'bastidor', 'tubosInteriores': 'tubos_interiores', 'compAlPiso': 'comp_al_piso',
+                'caballete': 'caballete', 'faldon': 'faldon', 'winchers': 'eje_unimont', 'lanza': 'lanzas',
+                'quintaRueda': 'quinta_rueda', 'argolla': 'argolla', 'colorSoleraArrimadero': 'color_de_solera_de_arrimadero'
+            };
+
+            for (const id in fieldsToFill) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.innerText = decodeURIComponent(getParam(fieldsToFill[id]));
+                }
+            }
+            
+            const luzPlacaValue = getParam('luz_placa');
+            const luzPlacaElement = document.getElementById('luzPlaca');
+            if (luzPlacaElement) {
+                luzPlacaElement.innerText = (luzPlacaValue === 'true' || luzPlacaValue === '1') ? 'SI' : 'NO';
+            }
+
+            const idFab = getParam('id_fab');
+            const qrCodeImage = document.getElementById('qrCodeImage');
+            if (idFab) {
+                qrCodeImage.src = `https://quickchart.io/qr?text=${encodeURIComponent(idFab)}&size=800`;
+                qrCodeImage.style.display = 'block';
+            }
+            
+            const modificationsContainer = document.getElementById('modifications-container');
+            const modificacionesData = getParam('modificaciones_data');
+            if (modificacionesData) {
+                const decodedData = decodeURIComponent(modificacionesData);
+                const parts = decodedData.split('|');
+                if (parts.length >= 4) {
+                    const modificaciones = parts[0].split(',');
+                    const motivos = parts[1].split(',');
+                    const solicitados = parts[2].split(',');
+                    const status = parts[3].split(',');
+                    for (let i = 0; i < modificaciones.length; i++) {
+                        if (modificaciones[i] && modificaciones[i].trim() !== '') {
+                            const section = document.createElement('div');
+                            section.className = 'modification-section';
+                            section.innerHTML = `<div><strong>Modificación:</strong> ${modificaciones[i] || ''}</div>
+                                               <div><strong>Motivo:</strong> ${motivos[i] || ''}</div>
+                                               <div><strong>Solicitado por:</strong> ${solicitados[i] || ''} <strong>Status:</strong> ${status[i] || ''}</div>`;
+                            modificationsContainer.appendChild(section);
+                        }
+                    }
+                }
+            }
+
+            const observacionesContainer = document.getElementById('observaciones-container');
+            const obsPintura = decodeURIComponent(getParam('observaciones_de_pintura'));
+            const obsGenerales = decodeURIComponent(getParam('observaciones'));
+            let allObservations = [];
+            if (obsPintura) allObservations.push(...obsPintura.split(','));
+            if (obsGenerales) allObservations.push(...obsGenerales.split(','));
+            const uniqueObservations = [...new Set(allObservations)].filter(obs => obs.trim().length > 0);
+            if (uniqueObservations.length > 0) {
+                document.getElementById('observaciones-section').style.display = 'block';
+                const ul = document.createElement('ul');
+                uniqueObservations.forEach(obs => {
+                    const li = document.createElement('li');
+                    li.innerText = obs.trim();
+                    ul.appendChild(li);
+                });
+                observacionesContainer.appendChild(ul);
+            }
+            
+            const imagenesContainer = document.getElementById('imagenes-container');
+            const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
+            let hasImages = false;
+            imagenParams.forEach(paramName => {
+                const fileName = getParam(paramName);
+                if (fileName) {
+                    const img = document.createElement('img');
+                    img.src = getAppSheetImageUrl(fileName);
+                    img.alt = `Imagen de referencia`;
+                    imagenesContainer.appendChild(img);
+                    hasImages = true;
+                }
+            });
+            if (hasImages) {
+                document.getElementById('reference-section').style.display = 'block';
+            }
+
+            const fechaMesProduccion = getParam('mes_de_produccion_fecha');
+            const fechaFinalizacion = getParam('fecha_de_finalizacion');
+            if (fechaMesProduccion || fechaFinalizacion) {
+                document.getElementById('fecha-section').style.display = 'block';
+                document.getElementById('fechaMesProduccion').innerText = decodeURIComponent(fechaMesProduccion);
+                document.getElementById('fechaFinalizacion').innerText = decodeURIComponent(fechaFinalizacion);
+            }
+            const firmaFileName = getParam('firma_aprobacion');
+            if (firmaFileName) {
+                document.getElementById('firma-section').style.display = 'block';
+                document.getElementById('firmaAprobacionImg').src = getAppSheetImageUrl(firmaFileName);
+            }
+        });
+    </script>
+</body>
 </html>
