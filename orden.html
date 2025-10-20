@@ -1,88 +1,241 @@
-CONCATENATE(
-    "https://ramcxn.github.io/Modificacion/OrdenGeneral.html?",
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orden de Trabajo General</title>
+    <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/Style.CSS">
+    <style>
+        /* Oculta todas las secciones específicas de unidad por defecto */
+        .unit-section {
+            display: none;
+        }
+
+        /* Estilo para ocultar la imagen del QR al imprimir si no tiene fuente */
+        @media print {
+            #qrCodeImage[src=""] {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://www.appsheet.com:443/fsimage.png?appid=15ab7ef8-4923-40f5-80ca-3607e9850805&datasource=google&filename=DocId%3D1ON0AOw6aLouPB4hLD4HSPHQrMyYHFX5x&signature=47171ea295d0c06dc250337a646296a67b31c22191c59f9869bf63a365b8ae49&tableprovider=google&userid=1254688" alt="Logo de la empresa" class="logo">
+        <div class="title-container">
+            <h1 id="main-title" class="header-title">ORDEN DE TRABAJO</h1>
+            <h2 class="header-subtitle">Documento de Fabricación</h2>
+        </div>
+        <img id="qrCodeImage" src="" alt="Código QR" class="logo" style="display: none;">
+    </div>
     
-    /* PARÁMETROS COMUNES PARA TODAS LAS UNIDADES */
-    "mes_de_produccion=", ENCODEURL([MES DE PRODUCCIÓN]),
-    "&imprimir=", ENCODEURL([Imprimir]),
-    "&niv=", ENCODEURL([NIV:]),
-    "&cliente=", ENCODEURL([CLIENTE:]),
-    "&tipo_de_unidad=", ENCODEURL([TIPO DE UNIDAD]),
-    "&realizado_por=", ENCODEURL([REALIZADO POR:]),
-    "&id_fab=", ENCODEURL([IDFAB]),
-    "&dimensiones=", ENCODEURL([DIMENSIONES]),
+    <table class="header-table">
+        <tr>
+            <td><strong>Mes de Producción:</strong></td>
+            <td><span id="mesProduccion"></span></td>
+            <td><strong>Orden de trabajo:</strong></td>
+            <td><span id="ordenTrabajo"></span></td>
+            <td><strong>NIV:</strong></td>
+            <td><span id="niv"></span></td>
+        </tr>
+        <tr>
+            <td><strong>Cliente:</strong></td>
+            <td colspan="3"><span id="cliente"></span></td>
+            <td><strong>Realizado por:</strong></td>
+            <td><span id="realizadoPor"></span></td>
+        </tr>
+        <tr>
+            <td><strong>Tipo de unidad:</strong></td>
+            <td colspan="5"><span id="tipoUnidad"></span></td>
+        </tr>
+    </table>
+
+    <div id="seccion-plataforma" class="unit-section">
+        <table class="main-content">
+             <tr><td class="section-header" colspan="2"><strong>Especificaciones de Plataforma</strong></td></tr>
+             </table>
+    </div>
+
+    <div id="seccion-dolly" class="unit-section">
+        <table class="main-content">
+            <tr><td class="section-header" colspan="2"><strong>Estructura Dolly</strong></td></tr>
+            </table>
+    </div>
+
+    <div id="seccion-high-cube" class="unit-section">
+        <table class="main-content">
+             <tr><td class="section-header" colspan="2"><strong>Plataforma High Cube</strong></td></tr>
+             </table>
+    </div>
+
+    <div id="seccion-jaula" class="unit-section">
+        <table class="main-content">
+             <tr><td class="section-header" colspan="2"><strong>Plataforma Jaula</strong></td></tr>
+             </table>
+    </div>
     
-    /* PARÁMETROS COMPARTIDOS (Se reutilizan en múltiples unidades) */
-    "&color=", ENCODEURL([COLOR:]),
-    "&color_2=", ENCODEURL([COLOR 2:]),
-    "&ejes=", ENCODEURL([EJES:]),
-    "&cantidad_de_ejes=", ENCODEURL([Cantidad de Ejes]),
-    "&distancia_de_ejes=", ENCODEURL([DISTANCIA DE EJES]),
-    "&personalizacion_de_viga=", ENCODEURL([PERSONALIZACIÓN DE VIGA]),
-    "&suspension=", ENCODEURL([SUSPENSION:]),
-    "&cantidad_de_suspensiones=", ENCODEURL([Cantidad de Suspensiones]),
-    "&gancho_tiron=", ENCODEURL([GANCHO TIRON:]),
-    "&portallantas=", ENCODEURL([PORTALLANTAS:]),
-    "&perno_rey=", ENCODEURL([PERNO REY:]),
-    "&juego_de_patines=", ENCODEURL([JUEGO DE PATINES:]),
-    "&cantidad_de_patines=", ENCODEURL([Cantidad de patines]),
-    "&caja_de_herramientas=", ENCODEURL([CAJA DE HERRAMIENTAS]),
-    "&manivelas_de_patin=", ENCODEURL([MANIVELAS DE PATIN]),
-    "&faldon=", ENCODEURL([FALDON:]),
-    "&direccionales=", ENCODEURL([DIRECCIONALES:]),
-    "&retractil_eje=", ENCODEURL([RETRACTIL EJE:]),
-    "&comp_atras=", ENCODEURL([COMP. ATRÁS]),
-    "&tipo_de_arco=", ENCODEURL([TIPO DE ARCO]),
-    "&piso_de_madera=", ENCODEURL([PISO DE MADERA:]),
-    "&piso_laminado=", ENCODEURL([PISO LAMINADO:]),
-    "&plafones_por_lado=", ENCODEURL([PLAFONES POR LADO:]),
-    "&barrote_lateral=", ENCODEURL([BARROTE LATERAL:]),
-    "&puertas_laterales=", ENCODEURL([PUERTAS LATERALES]),
-    "&compuerta_a_los_lados=", ENCODEURL([COMPUERTA A LOS LADOS:]),
-    "&cerrojo_de_puertas_traseras=", ENCODEURL([CERROJO DE PUERTAS TRASERAS:]),
-    "&rines=", ENCODEURL([RINES:]),
-    "&cantidad_de_rines=", ENCODEURL([Cantidad de Rines]),
-    "&llantas_70=", ENCODEURL([LLANTAS:_70]),
-    "&cantidad_de_llantas=", ENCODEURL([Cantidad de Llantas]),
-    "&sistema_de_inflado_psi=", ENCODEURL([SISTEMA DE INFLADO PSI:]),
-    "&loderas_delantera=", ENCODEURL([LODERAS DELANTERA]),
-    "&loderas_trasera=", ENCODEURL([LODERAS TRASERA]),
-    "&sistema_de_lona=", ENCODEURL([SISTEMA DE LONA]),
-    "&luz_placa=", IF([LUZ PLACA:], "true", "false"),
-    "&frenos=", ENCODEURL([FRENOS:]),
-    "&estructura=", ENCODEURL([ESTRUCTURA:]),
-    "&piso=", ENCODEURL([PISO:]),
-    "&polveras=", ENCODEURL([POLVERAS:]),
-    "&plafones=", ENCODEURL([PLAFONES:]),
-    "&frente=", ENCODEURL([FRENTE:]),
-    "&paredes=", ENCODEURL([PAREDES:]),
-    "&piston=", ENCODEURL([PISTON:]),
-    "&canoas=", ENCODEURL([CANOAS:]),
-    "&escaleras_interior=", ENCODEURL([ESCALERAS INTERIOR:]),
-    "&tipo_de_redila=", ENCODEURL([TIPO DE REDILA]),
-    "&tipo_cerrada=", ENCODEURL([TIPO CERRADA]),
-    "&ganchos_de_amarre=", ENCODEURL([GANCHOS DE AMARRE:]),
-    "&camarote=", ENCODEURL([CAMAROTE:]),
-    "&canastilla_superior=", ENCODEURL([CANASTILLA SUPERIOR:]),
-    "&bastidor=", ENCODEURL([BASTIDOR:]),
-    "&escalera=", ENCODEURL([ESCALERA]),
-    "&conos=", ENCODEURL([CONOS:]),
-    "&puerta_trasera=", ENCODEURL([PUERTA TRASERA:]),
+    <div id="seccion-tolva" class="unit-section">
+        <table class="main-content">
+             <tr><td class="section-header" colspan="2"><strong>Plataforma Tolva</strong></td></tr>
+             </table>
+    </div>
     
-    /* PARÁMETROS ESPECÍFICOS DE JAULA LAMINADA */
-    "&tubos_interiores=", ENCODEURL([TUBOS INTERIORES]),
-    "&comp_al_piso=", ENCODEURL([COMP. AL PISO]),
-    "&caballete=", ENCODEURL([CABALLETE]),
+    <div id="seccion-tolva-jaula" class="unit-section">
+        <table class="main-content">
+             <tr><td class="section-header" colspan="2"><strong>Plataforma Tolva Jaula</strong></td></tr>
+             </table>
+    </div>
     
-    /* DATOS RELACIONADOS Y PARÁMETROS FINALES (SIEMPRE AL FINAL) */
-    "&modificaciones_data=", ENCODEURL(CONCATENATE(SELECT([Related Modificaciones][Modificación], TRUE)) & "|" & CONCATENATE(SELECT([Related Modificaciones][Motivo de la Modificación], TRUE)) & "|" & CONCATENATE(SELECT([Related Modificaciones][Solicitado por], TRUE)) & "|" & CONCATENATE(SELECT([Related Modificaciones][Status], TRUE)))),
-    "&observaciones_de_pintura=", ENCODEURL([OBSERVACIONES DE PINTURA]),
-    "&observaciones=", ENCODEURL([OBSERVACIONES:]),
-    "&imagen_de_referencia=", ENCODEURL([IMAGEN DE REFERENCIA]),
-    "&imagen_de_referencia_81=", ENCODEURL([IMAGEN DE REFERENCIA_81]),
-    "&imagen_de_referencia_82=", ENCODEURL([IMAGEN DE REFERENCIA_82]),
-    "&imagen_de_referencia_83=", ENCODEURL([IMAGEN DE REFERENCIA_83]),
-    "&imagen_de_referencia_84=", ENCODEURL([IMAGEN DE REFERENCIA_84]),
-    "&imagen_de_referencia_85=", ENCODEURL([IMAGEN DE REFERENCIA_85]),
-    "&mes_de_produccion_fecha=", ENCODEURL([MES DE PRODUCCIÓN]),
-    "&fecha_de_finalizacion=", ENCODEURL([FECHA DE FINALIZACIÓN:])
-)
+    <div id="seccion-volteo" class="unit-section">
+        <table class="main-content">
+             <tr><td class="section-header" colspan="2"><strong>Plataforma Volteo</strong></td></tr>
+             </table>
+    </div>
+
+    <div id="seccion-carroceria" class="unit-section">
+        <table class="main-content">
+             <tr><td class="section-header" colspan="2"><strong>Especificaciones de la Carrocería</strong></td></tr>
+             </table>
+    </div>
+
+    <div id="seccion-jaula-laminada" class="unit-section">
+        <table class="main-content">
+             <tr><td class="section-header" colspan="2"><strong>Plataforma Jaula Laminada</strong></td></tr>
+             </table>
+    </div>
+    
+    <div id="modifications-container"></div>
+    
+    <div id="observaciones-section" style="display: none;">
+        <table class="observations-table">
+            <tr><td class="section-header"><strong>Observaciones</strong></td></tr>
+            <tr><td><div id="observaciones-container"></div></td></tr>
+        </table>
+    </div>
+
+    <div id="reference-section" style="display: none;">
+        <table class="reference-images">
+            <tr><td class="section-header"><strong>Imágenes de referencia</strong></td></tr>
+            <tr><td id="imagenes-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></td></tr>
+        </table>
+    </div>
+
+    <div id="fecha-section" style="display: none;">
+        <table class="fecha-table">
+            <tr>
+                <td><strong>Mes de Producción:</strong> <span id="fechaMesProduccion"></span></td>
+                <td><strong>Fecha de Finalización:</strong> <span id="fechaFinalizacion"></span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="firma-section" style="display: none;">
+        <div class="firma-container">
+            <div class="field-label">Firma de aprobación:</div>
+            <img id="firmaAprobacionImg" src="" alt="Firma de Aprobación">
+        </div>
+    </div>
+    
+    <button class="save-pdf-button" onclick="window.print()">Guardar como PDF</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const appName = "NewApp-1254688"; // Reemplaza si es necesario
+            const tableName = "Modificaciones"; // Reemplaza si es necesario
+
+            const getParam = (name) => urlParams.get(name) || '';
+
+            // --- LÓGICA PRINCIPAL: Muestra la sección y el título correctos ---
+            const tipoDeUnidad = decodeURIComponent(getParam('tipo_de_unidad'));
+            if (tipoDeUnidad) {
+                // Convierte "Jaula Laminada" a "seccion-jaula-laminada" y maneja acentos.
+                const seccionId = 'seccion-' + tipoDeUnidad.toLowerCase()
+                    .replace(/ /g, '-')
+                    .replace(/[í]/g, 'i');
+                
+                const seccionAMostrar = document.getElementById(seccionId);
+                if (seccionAMostrar) {
+                    seccionAMostrar.style.display = 'block';
+                    document.getElementById('main-title').innerText = 'ORDEN DE TRABAJO - ' + tipoDeUnidad.toUpperCase();
+                }
+            }
+
+            // --- MAPA DE TODOS LOS CAMPOS POSIBLES DE TODAS LAS UNIDADES ---
+            const fieldsToFill = {
+                'medidas': 'dimensiones', 'ejes': 'ejes', 'cantEjes': 'cantidad_de_ejes', 'distanciaEjes': 'distancia_de_ejes',
+                'suspension': 'suspension', 'cantSuspensiones': 'cantidad_de_suspensiones', 'sistemaInflado': 'sistema_de_inflado_psi',
+                'manivelasPatin': 'manivelas_de_patin', 'ganchoTiron': 'gancho_tiron', 'juegoPatines': 'juego_de_patines',
+                'cantPatines': 'cantidad_de_patines', 'pernoRey': 'perno_rey', 'pisoMadera': 'piso_de_madera', 'cajaHerramientas': 'caja_de_herramientas',
+                'direccionales': 'direccionales', 'retractilEje': 'retractil_eje', 'pisoLaminado': 'piso_laminado', 'plafonesPorLado': 'plafones_por_lado',
+                'personalizacionViga': 'personalizacion_de_viga', 'colorPrimario': 'color', 'colorSecundario': 'color_2', 'loderaDelantera': 'loderas_delantera',
+                'loderaTrasera': 'loderas_trasera', 'frenos': 'frenos', 'rines': 'rines', 'cantRines': 'cantidad_de_rines',
+                'llantas': 'llantas_70', 'cantLlantas': 'cantidad_de_llantas', 'portallantas': 'portallantas', 'tipoArco': 'tipo_de_arco',
+                'sistemaLona': 'sistema_de_lona', 'compAtras': 'comp_atras', 'puertasLaterales': 'puertas_laterales', 'escalera': 'escalera',
+                'compuertaLados': 'compuerta_a_los_lados', 'puertaTrasera': 'puerta_trasera', 'conos': 'conos', 'estructura': 'estructura',
+                'piso': 'piso', 'laminaFrontal': 'lamina_frontal', 'laminaCostados': 'lamina_en_costados', 'laminaPuertasTraseras': 'lamina_en_puertas_traseras',
+                'polveras': 'polveras', 'plafones': 'plafones', 'frente': 'frente', 'paredes': 'paredes', 'piston': 'piston', 'canoas': 'canoas',
+                'escalerasInterior': 'escaleras_interior', 'tipoRedila': 'tipo_de_redila', 'tipoCerrada': 'tipo_cerrada',
+                'ganchosAmarre': 'ganchos_de_amarre', 'cerrojoPuertas': 'cerrojo_de_puertas_traseras',
+                'barroteLateral': 'barrote_lateral', 'camarote': 'camarote', 'canastillaSuperior': 'canastilla_superior',
+                'bastidor': 'bastidor', 'tubosInteriores': 'tubos_interiores', 'compAlPiso': 'comp_al_piso',
+                'caballete': 'caballete', 'faldon': 'faldon'
+            };
+
+            // --- Bucle para rellenar los campos ---
+            for (const id in fieldsToFill) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.innerText = decodeURIComponent(getParam(fieldsToFill[id]));
+                }
+            }
+            
+            // --- Lógica común (QR, Modificaciones, Observaciones, etc.) ---
+            
+            // Información General
+            document.getElementById('mesProduccion').innerText = decodeURIComponent(getParam('mes_de_produccion'));
+            document.getElementById('ordenTrabajo').innerText = decodeURIComponent(getParam('imprimir'));
+            document.getElementById('niv').innerText = decodeURIComponent(getParam('niv'));
+            document.getElementById('cliente').innerText = decodeURIComponent(getParam('cliente'));
+            document.getElementById('realizadoPor').innerText = decodeURIComponent(getParam('realizado_por'));
+            
+            // Luz Placa (Manejo especial booleano)
+            const luzPlacaValue = getParam('luz_placa');
+            const luzPlacaElement = document.getElementById('luzPlaca');
+            if (luzPlacaElement) {
+                luzPlacaElement.innerText = (luzPlacaValue === 'true' || luzPlacaValue === '1') ? 'SI' : 'NO';
+            }
+
+            // QR
+            const idFab = getParam('id_fab');
+            if (idFab) {
+                qrCodeImage.src = `https://quickchart.io/qr?text=${encodeURIComponent(idFab)}&size=800`;
+                qrCodeImage.style.display = 'block';
+            }
+
+            // Modificaciones
+            const modificationsContainer = document.getElementById('modifications-container');
+            const modificacionesData = getParam('modificaciones_data');
+            if (modificacionesData) {
+                // ... (Pega aquí tu bloque de código completo para procesar las modificaciones)
+            }
+
+            // Observaciones
+            const observacionesContainer = document.getElementById('observaciones-container');
+            const observacionesPintura = decodeURIComponent(getParam('observaciones_de_pintura'));
+            // ... (Pega aquí tu bloque de código completo para procesar las observaciones)
+            
+            // Imágenes
+            const imagenesContainer = document.getElementById('imagenes-container');
+            const getAppSheetImageUrl = (fileName) => {
+                if (!fileName) return '';
+                return `https://www.appsheet.com/template/gettablefileurl?appName=${appName}&tableName=${tableName}&fileName=${encodeURIComponent(fileName)}`;
+            };
+            // ... (Pega aquí tu bloque de código completo para procesar las imágenes)
+
+            // Fechas y Firma
+            // ... (Pega aquí tu bloque de código para fechas y firma)
+        });
+    </script>
+</body>
+</html>
