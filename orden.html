@@ -6,17 +6,11 @@
     <title>Orden de Trabajo General</title>
     <link rel="stylesheet" href="https://ramcxn.github.io/Modificacion/Style.CSS">
     <style>
-        /* Oculta todas las secciones específicas de unidad por defecto */
-        .unit-section {
-            display: none;
-        }
-
-        /* Estilo para ocultar la imagen del QR al imprimir si no tiene fuente */
-        @media print {
-            #qrCodeImage[src=""] {
-                display: none;
-            }
-        }
+        .unit-section { display: none; }
+        .header-title { font-size: 2.2em; margin-bottom: 5px; text-transform: uppercase; }
+        .header-subtitle, .order-number-title { font-size: 1.35em; margin: 0; padding: 0; font-weight: normal; }
+        .order-number-title { color: #444; margin-top: 4px; }
+        @media print { #qrCodeImage[src=""] { display: none; } }
     </style>
 </head>
 <body>
@@ -25,28 +19,23 @@
         <div class="title-container">
             <h1 id="main-title" class="header-title">ORDEN DE TRABAJO</h1>
             <h2 class="header-subtitle">Documento de Fabricación</h2>
+            <h2 class="order-number-title">Folio No. <span id="ordenNumeroHeader"></span></h2>
         </div>
         <img id="qrCodeImage" src="" alt="Código QR" class="logo" style="display: none;">
     </div>
     
     <table class="header-table">
         <tr>
-            <td><strong>Mes de Producción:</strong></td>
-            <td><span id="mesProduccion"></span></td>
-            <td><strong>Orden de trabajo:</strong></td>
-            <td><span id="ordenTrabajo"></span></td>
-            <td><strong>NIV:</strong></td>
-            <td><span id="niv"></span></td>
+            <td><strong>Mes de Producción:</strong></td><td><span id="mesProduccion"></span></td>
+            <td><strong>Orden de trabajo:</strong></td><td><span id="ordenTrabajo"></span></td>
+            <td><strong>NIV:</strong></td><td><span id="niv"></span></td>
         </tr>
         <tr>
-            <td><strong>Cliente:</strong></td>
-            <td colspan="3"><span id="cliente"></span></td>
-            <td><strong>Realizado por:</strong></td>
-            <td><span id="realizadoPor"></span></td>
+            <td><strong>Cliente:</strong></td><td colspan="3"><span id="cliente"></span></td>
+            <td><strong>Realizado por:</strong></td><td><span id="realizadoPor"></span></td>
         </tr>
         <tr>
-            <td><strong>Tipo de unidad:</strong></td>
-            <td colspan="5"><span id="tipoUnidad"></span></td>
+            <td><strong>Tipo de unidad:</strong></td><td colspan="5"><span id="tipoUnidad"></span></td>
         </tr>
     </table>
 
@@ -58,7 +47,7 @@
                     <div class="field-label">MEDIDAS:</div><div class="field-value"><span id="medidas"></span></div>
                     <div class="field-label">COLOR PRIMARIO:</div><div class="field-value"><span id="colorPrimario"></span></div>
                     <div class="field-label">COLOR SECUNDARIO:</div><div class="field-value"><span id="colorSecundario"></span></div>
-                    <div class="field-label">FRONTAL:</div><div class="field-value"><span id="frontal"></span></div>
+                    <div class="field-label">FRONTAL:</div><div class="field-value"><span id="frente"></span></div>
                     <div class="field-label">SUSPENSIÓN:</div><div class="field-value"><span id="suspension"></span></div>
                     <div class="field-label">CANTIDAD DE SUSPENSIONES:</div><div class="field-value"><span id="cantSuspensiones"></span></div>
                     <div class="field-label">RETRÁCTIL EJE:</div><div class="field-value"><span id="retractilEje"></span></div>
@@ -131,7 +120,7 @@
 
     <div id="seccion-high-cube" class="unit-section">
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Plataforma High Cube</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Plataforma</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">MEDIDAS:</div><div class="field-value"><span id="medidas"></span></div>
@@ -154,7 +143,7 @@
             </tr>
         </table>
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Estructura High Cube</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Estructura</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">DIRECCIONALES:</div><div class="field-value"><span id="direccionales"></span></div>
@@ -170,12 +159,12 @@
             </tr>
         </table>
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Accesorios High Cube</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Accesorios</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">COLOR PRIMARIO:</div><div class="field-value"><span id="colorPrimario"></span></div>
                     <div class="field-label">COLOR SECUNDARIO:</div><div class="field-value"><span id="colorSecundario"></span></div>
-                    <div class="field-label">COLOR DE SOLERA DE ARRIMADERO:</div><div class="field-value"><span id="colorSolera"></span></div>
+                    <div class="field-label">COLOR DE SOLERA DE ARRIMADERO:</div><div class="field-value"><span id="colorSoleraArrimadero"></span></div>
                     <div class="field-label">LODERAS DELANTERA:</div><div class="field-value"><span id="loderaDelantera"></span></div>
                     <div class="field-label">LODERAS TRASERA:</div><div class="field-value"><span id="loderaTrasera"></span></div>
                 </td>
@@ -193,7 +182,7 @@
 
     <div id="seccion-jaula" class="unit-section">
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Plataforma Jaula</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Plataforma</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">MEDIDAS:</div><div class="field-value"><span id="medidas"></span></div>
@@ -226,7 +215,7 @@
             </tr>
         </table>
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Estructura Jaula</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Estructura</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">PUERTAS LATERALES:</div><div class="field-value"><span id="puertasLaterales"></span></div>
@@ -249,7 +238,7 @@
     
     <div id="seccion-tolva" class="unit-section">
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Plataforma Tolva</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Plataforma</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">MEDIDAS:</div><div class="field-value"><span id="medidas"></span></div>
@@ -281,7 +270,7 @@
             </tr>
         </table>
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Accesorios Tolva</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Accesorios</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">FRENOS:</div><div class="field-value"><span id="frenos"></span></div>
@@ -296,7 +285,7 @@
                     <div class="field-label">LODERAS DELANTERA:</div><div class="field-value"><span id="loderaDelantera"></span></div>
                     <div class="field-label">LODERAS TRASERA:</div><div class="field-value"><span id="loderaTrasera"></span></div>
                     <div class="field-label">LUZ PLACA:</div><div class="field-value"><span id="luzPlaca"></span></div>
-                    <div class="field-label">PLAFONES TRASEROS:</div><div class="field-value"><span id="plafones"></span></div>
+                    <div class="field-label">PLAFONES:</div><div class="field-value"><span id="plafones"></span></div>
                 </td>
             </tr>
         </table>
@@ -304,7 +293,7 @@
     
     <div id="seccion-tolva-jaula" class="unit-section">
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Plataforma Tolva Jaula</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Plataforma</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">MEDIDAS:</div><div class="field-value"><span id="medidas"></span></div>
@@ -332,7 +321,7 @@
             </tr>
         </table>
         <table class="main-content">
-             <tr><td class="section-header" colspan="2"><strong>Estructura Tolva Jaula</strong></td></tr>
+             <tr><td class="section-header" colspan="2"><strong>Estructura</strong></td></tr>
              <tr>
                 <td>
                     <div class="field-label">TIPO DE ARCO:</div><div class="field-value"><span id="tipoArco"></span></div>
@@ -356,7 +345,7 @@
     
     <div id="seccion-volteo" class="unit-section">
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Plataforma Volteo</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Plataforma</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">MEDIDAS:</div><div class="field-value"><span id="medidas"></span></div>
@@ -389,7 +378,7 @@
             </tr>
         </table>
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Estructura Volteo</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Estructura</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">FRENTE:</div><div class="field-value"><span id="frente"></span></div>
@@ -449,7 +438,7 @@
 
     <div id="seccion-jaula-laminada" class="unit-section">
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Plataforma Jaula Laminada</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Plataforma</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">MEDIDAS:</div><div class="field-value"><span id="medidas"></span></div>
@@ -478,7 +467,7 @@
             </tr>
         </table>
         <table class="main-content">
-            <tr><td class="section-header" colspan="2"><strong>Estructura Jaula Laminada</strong></td></tr>
+            <tr><td class="section-header" colspan="2"><strong>Estructura</strong></td></tr>
             <tr>
                 <td>
                     <div class="field-label">COMP. AL PISO:</div><div class="field-value"><span id="compAlPiso"></span></div>
@@ -499,98 +488,5 @@
         </table>
     </div>
     
-    <div id="modifications-container"></div>
-    
-    <div id="observaciones-section" style="display: none;">
-        <table class="observations-table">
-            <tr><td class="section-header"><strong>Observaciones</strong></td></tr>
-            <tr><td><div id="observaciones-container"></div></td></tr>
-        </table>
-    </div>
-
-    <div id="reference-section" style="display: none;">
-        <table class="reference-images">
-            <tr><td class="section-header"><strong>Imágenes de referencia</strong></td></tr>
-            <tr><td id="imagenes-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></td></tr>
-        </table>
-    </div>
-
-    <div id="fecha-section" style="display: none;">
-        <table class="fecha-table">
-            <tr>
-                <td><strong>Mes de Producción:</strong> <span id="fechaMesProduccion"></span></td>
-                <td><strong>Fecha de Finalización:</strong> <span id="fechaFinalizacion"></span></td>
-            </tr>
-        </table>
-    </div>
-
-    <div id="firma-section" style="display: none;">
-        <div class="firma-container">
-            <div class="field-label">Firma de aprobación:</div>
-            <img id="firmaAprobacionImg" src="" alt="Firma de Aprobación">
-        </div>
-    </div>
-    
-    <button class="save-pdf-button" onclick="window.print()">Guardar como PDF</button>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const appName = "NewApp-1254688";
-            const tableName = "Modificaciones";
-
-            const getParam = (name) => urlParams.get(name) || '';
-
-            // --- LÓGICA PRINCIPAL: Muestra la sección y el título correctos ---
-            const tipoDeUnidad = decodeURIComponent(getParam('tipo_de_unidad'));
-            document.getElementById('tipoUnidad').innerText = tipoDeUnidad;
-            if (tipoDeUnidad) {
-                const seccionId = 'seccion-' + tipoDeUnidad.toLowerCase().replace(/ /g, '-').replace(/[í]/g, 'i');
-                const seccionAMostrar = document.getElementById(seccionId);
-                if (seccionAMostrar) {
-                    seccionAMostrar.style.display = 'block';
-                    document.getElementById('main-title').innerText = 'ORDEN DE TRABAJO - ' + tipoDeUnidad.toUpperCase();
-                }
-            }
-
-            // --- MAPA DE TODOS LOS CAMPOS POSIBLES ---
-            const fieldsToFill = {
-                // ... (mismo mapa de campos que te proporcioné en el paso anterior)
-            };
-
-            // --- Bucle para rellenar los campos ---
-            for (const id in fieldsToFill) {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.innerText = decodeURIComponent(getParam(fieldsToFill[id]));
-                }
-            }
-            
-            // --- LÓGICA COMÚN ---
-            // Información General
-            document.getElementById('mesProduccion').innerText = decodeURIComponent(getParam('mes_de_produccion'));
-            document.getElementById('ordenTrabajo').innerText = decodeURIComponent(getParam('imprimir'));
-            document.getElementById('niv').innerText = decodeURIComponent(getParam('niv'));
-            document.getElementById('cliente').innerText = decodeURIComponent(getParam('cliente'));
-            document.getElementById('realizadoPor').innerText = decodeURIComponent(getParam('realizado_por'));
-            
-            // Luz Placa
-            const luzPlacaValue = getParam('luz_placa');
-            const luzPlacaElement = document.getElementById('luzPlaca');
-            if (luzPlacaElement) {
-                luzPlacaElement.innerText = (luzPlacaValue === 'true' || luzPlacaValue === '1') ? 'SI' : 'NO';
-            }
-
-            // QR
-            const idFab = getParam('id_fab');
-            const qrCodeImage = document.getElementById('qrCodeImage');
-            if (idFab) {
-                qrCodeImage.src = `https://quickchart.io/qr?text=${encodeURIComponent(idFab)}&size=800`;
-                qrCodeImage.style.display = 'block';
-            }
-            
-            // ... (Pega aquí el resto de tu lógica para Modificaciones, Observaciones, Imágenes, etc.)
-        });
-    </script>
-</body>
+    </body>
 </html>
