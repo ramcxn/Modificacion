@@ -538,26 +538,27 @@
             document.getElementById('realizadoPor').innerText = decodeURIComponent(getParam('realizado_por'));
             document.getElementById('tipoUnidad').innerText = tipoDeUnidad;
 
-            const fieldsToFill = {
-                'medidas': 'dimensiones', 'ejes': 'ejes', 'cantEjes': 'cantidad_de_ejes', 'distanciaEjes': 'distancia_de_ejes',
-                'suspension': 'suspension', 'cantSuspensiones': 'cantidad_de_suspensiones', 'sistemaInflado': 'sistema_de_inflado_psi',
-                'manivelasPatin': 'manivelas_de_patin', 'ganchoTiron': 'gancho_tiron', 'juegoPatines': 'juego_de_patines',
-                'cantPatines': 'cantidad_de_patines', 'pernoRey': 'perno_rey', 'pisoMadera': 'piso_de_madera', 'cajaHerramientas': 'caja_de_herramientas',
-                'direccionales': 'direccionales', 'retractilEje': 'retractil_eje', 'pisoLaminado': 'piso_laminado', 'plafonesPorLado': 'plafones_por_lado',
-                'personalizacionViga': 'personalizacion_de_viga', 'colorPrimario': 'color', 'colorSecundario': 'color_2', 'loderaDelantera': 'loderas_delantera',
-                'loderaTrasera': 'loderas_trasera', 'frenos': 'frenos', 'rines': 'rines', 'cantRines': 'cantidad_de_rines',
-                'llantas': 'llantas_70', 'cantLlantas': 'cantidad_de_llantas', 'portallantas': 'portallantas', 'tipoArco': 'tipo_de_arco',
-                'sistemaLona': 'sistema_de_lona', 'compAtras': 'comp_atras', 'puertasLaterales': 'puertas_laterales', 'escalera': 'escalera',
-                'compuertaLados': 'compuerta_a_los_lados', 'puertaTrasera': 'puerta_trasera', 'conos': 'conos', 'estructura': 'estructura',
-                'piso': 'piso', 'laminaFrontal': 'lamina_frontal', 'laminaCostados': 'lamina_en_costados', 'laminaPuertasTraseras': 'lamina_en_puertas_traseras',
-                'polveras': 'polveras', 'plafones': 'plafones', 'frente': 'frente', 'paredes': 'paredes', 'piston': 'piston', 'canoas': 'canoas',
-                'escalerasInterior': 'escaleras_interior', 'tipoRedila': 'tipo_de_redila', 'tipoCerrada': 'tipo_cerrada',
-                'ganchosAmarre': 'ganchos_de_amarre', 'cerrojoPuertas': 'cerrojo_de_puertas_traseras',
-                'barroteLateral': 'barrote_lateral', 'camarote': 'camarote', 'canastillaSuperior': 'canastilla_superior',
-                'bastidor': 'bastidor', 'tubosInteriores': 'tubos_interiores', 'compAlPiso': 'comp_al_piso',
-                'caballete': 'caballete', 'faldon': 'faldon', 'winchers': 'eje_unimont', 'lanza': 'lanzas',
-                'quintaRueda': 'quinta_rueda', 'argolla': 'argolla', 'colorSoleraArrimadero': 'color_de_solera_de_arrimadero'
-            };
+const fieldsToFill = {
+    'medidas': 'dimensiones', 'ejes': 'ejes', 'cantEjes': 'cantidad_de_ejes', 'distanciaEjes': 'distancia_de_ejes',
+    'suspension': 'suspension', 'cantSuspensiones': 'cantidad_de_suspensiones', 'sistemaInflado': 'sistema_de_inflado_psi',
+    'manivelasPatin': 'manivelas_de_patin', 'ganchoTiron': 'gancho_tiron', 'juegoPatines': 'juego_de_patines',
+    'cantPatines': 'cantidad_de_patines', 'pernoRey': 'perno_rey', 'pisoMadera': 'piso_de_madera', 'cajaHerramientas': 'caja_de_herramientas',
+    'direccionales': 'direccionales', 'retractilEje': 'retractil_eje', 'pisoLaminado': 'piso_laminado', 'plafonesPorLado': 'plafones_por_lado',
+    'personalizacionViga': 'personalizacion_de_viga', 'colorPrimario': 'color_primario', 'colorSecundario': 'color_secundario', 
+    'loderaDelantera': 'loderas_delantera', 'loderaTrasera': 'loderas_trasera', 'frenos': 'frenos', 'rines': 'rines', 'cantRines': 'cantidad_de_rines',
+    'llantas': 'llantas_70', 'cantLlantas': 'cantidad_de_llantas', 'portallantas': 'portallantas', 'tipoArco': 'tipo_de_arco',
+    'sistemaLona': 'sistema_de_lona', 'compAtras': 'comp_atras', 'puertasLaterales': 'puertas_laterales', 'escalera': 'escalera',
+    'compuertaLados': 'compuerta_a_los_lados', 'puertaTrasera': 'puerta_trasera', 'conos': 'conos', 'estructura': 'estructura',
+    'piso': 'piso', 'laminaFrontal': 'lamina_frontal', 'laminaCostados': 'lamina_en_costados', 'laminaPuertasTraseras': 'lamina_en_puertas_traseras',
+    'polveras': 'polveras', 'plafones': 'plafones', 'frente': 'frente', 'paredes': 'paredes', 'piston': 'piston', 'canoas': 'canoas',
+    'escalerasInterior': 'escaleras_interior', 'tipoRedila': 'tipo_de_redila', 'tipoCerrada': 'tipo_cerrada',
+    'ganchosAmarre': 'ganchos_de_amarre', 'cerrojoPuertas': 'cerrojo_de_puertas_traseras',
+    'barroteLateral': 'barrote_lateral', 'camarote': 'camarote', 'canastillaSuperior': 'canastilla_superior',
+    'bastidor': 'bastidor', 'tubosInteriores': 'tubos_interiores', 'compAlPiso': 'comp_al_piso',
+    'caballete': 'caballete', 'faldon': 'faldon', 'winchers': 'eje_unimont', 'lanza': 'lanzas',
+    'quintaRueda': 'quinta_rueda', 'argolla': 'argolla', 'colorSoleraArrimadero': 'color_de_solera_de_arrimadero',
+    'secciones': 'secciones', 'puertaDelantera': 'puerta_delantera'
+};
 
             for (const id in fieldsToFill) {
                 const element = document.getElementById(id);
