@@ -11,6 +11,7 @@
         .header-subtitle, .order-number-title { font-size: 1.35em; margin: 0; padding: 0; font-weight: normal; }
         .order-number-title { color: #444; margin-top: 4px; }
         @media print { #qrCodeImage[src=""] { display: none; } }
+        /* Añade más estilos si son necesarios */
     </style>
 </head>
 <body>
@@ -506,29 +507,69 @@
         </table>
     </div>
 
+    <div id="modifications-container"></div>
+    <div id="observaciones-section" style="display: none;">
+        <table class="observations-table">
+            <tr><td class="section-header"><strong>Observaciones</strong></td></tr>
+            <tr><td><div id="observaciones-container"></div></td></tr>
+        </table>
+    </div>
+    <div id="reference-section" style="display: none;">
+        <table class="reference-images">
+            <tr><td class="section-header"><strong>Imágenes de referencia</strong></td></tr>
+            <tr><td id="imagenes-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></td></tr>
+        </table>
+    </div>
+    <div id="fecha-section" style="display: none;">
+        <table class="fecha-table">
+            <tr>
+                <td><strong>Mes de Producción:</strong> <span id="fechaMesProduccion"></span></td>
+                <td><strong>Fecha de Finalización:</strong> <span id="fechaFinalizacion"></span></td>
+            </tr>
+        </table>
+    </div>
+    <div id="firma-section" style="display: none;">
+        <div class="firma-container">
+            <div class="field-label">Firma de aprobación:</div>
+            <img id="firmaAprobacionImg" src="" alt="Firma de Aprobación">
+        </div>
+    </div>
+    <button class="save-pdf-button" onclick="window.print()">Guardar como PDF</button>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const appName = "NewApp-1254688";
-            const tableName = "Modificaciones";
+            const appName = "NewApp-1254688"; 
+            const tableName = "Modificaciones"; 
 
             const getParam = (name) => urlParams.get(name) || '';
             const getAppSheetImageUrl = (fileName) => {
                 if (!fileName) return '';
                 const decodedName = decodeURIComponent(fileName);
-                return `https://www.appsheet.com/template/gettablefileurl?appName=${appName}&tableName=${tableName}&fileName=${encodeURIComponent(decodedName)}`;
+                // Asegúrate que tableName sea la tabla correcta si las imágenes vienen de otra tabla
+                return `https://www.appsheet.com/template/gettablefileurl?appName=${appName}&tableName=${tableName}&fileName=${encodeURIComponent(decodedName)}`; 
             };
 
+            // --- LÓGICA PRINCIPAL: Muestra la sección y el título correctos ---
             const tipoDeUnidad = decodeURIComponent(getParam('tipo_de_unidad'));
             if (tipoDeUnidad) {
-                const seccionId = 'seccion-' + tipoDeUnidad.toLowerCase().replace(/ /g, '-').replace(/[í]/g, 'i');
+                // Convierte "Jaula Laminada" a "seccion-jaula-laminada" y maneja acentos como 'í'.
+                const seccionId = 'seccion-' + tipoDeUnidad.toLowerCase()
+                    .replace(/ /g, '-')
+                    .replace(/[í]/g, 'i'); // Normaliza 'í' a 'i' si es necesario
+                
                 const seccionAMostrar = document.getElementById(seccionId);
                 if (seccionAMostrar) {
                     seccionAMostrar.style.display = 'block';
                     document.getElementById('main-title').innerText = 'ORDEN DE TRABAJO - ' + tipoDeUnidad.toUpperCase();
+                } else {
+                    console.error("No se encontró la sección con ID:", seccionId); // Ayuda para depuración
                 }
+            } else {
+                console.error("El parámetro 'tipo_de_unidad' está vacío o no se encontró en la URL.");
             }
             
+            // --- Llenado de Campos Comunes del Encabezado ---
             const ordenNumero = decodeURIComponent(getParam('imprimir'));
             document.getElementById('ordenTrabajo').innerText = ordenNumero;
             document.getElementById('ordenNumeroHeader').innerText = ordenNumero;
@@ -536,43 +577,52 @@
             document.getElementById('niv').innerText = decodeURIComponent(getParam('niv'));
             document.getElementById('cliente').innerText = decodeURIComponent(getParam('cliente'));
             document.getElementById('realizadoPor').innerText = decodeURIComponent(getParam('realizado_por'));
-            document.getElementById('tipoUnidad').innerText = tipoDeUnidad;
+            document.getElementById('tipoUnidad').innerText = tipoDeUnidad; // Ya lo obtuvimos antes
 
-const fieldsToFill = {
-    'medidas': 'dimensiones', 'ejes': 'ejes', 'cantEjes': 'cantidad_de_ejes', 'distanciaEjes': 'distancia_de_ejes',
-    'suspension': 'suspension', 'cantSuspensiones': 'cantidad_de_suspensiones', 'sistemaInflado': 'sistema_de_inflado_psi',
-    'manivelasPatin': 'manivelas_de_patin', 'ganchoTiron': 'gancho_tiron', 'juegoPatines': 'juego_de_patines',
-    'cantPatines': 'cantidad_de_patines', 'pernoRey': 'perno_rey', 'pisoMadera': 'piso_de_madera', 'cajaHerramientas': 'caja_de_herramientas',
-    'direccionales': 'direccionales', 'retractilEje': 'retractil_eje', 'pisoLaminado': 'piso_laminado', 'plafonesPorLado': 'plafones_por_lado',
-    'personalizacionViga': 'personalizacion_de_viga', 'colorPrimario': 'color_primario', 'colorSecundario': 'color_secundario', 
-    'loderaDelantera': 'loderas_delantera', 'loderaTrasera': 'loderas_trasera', 'frenos': 'frenos', 'rines': 'rines', 'cantRines': 'cantidad_de_rines',
-    'llantas': 'llantas_70', 'cantLlantas': 'cantidad_de_llantas', 'portallantas': 'portallantas', 'tipoArco': 'tipo_de_arco',
-    'sistemaLona': 'sistema_de_lona', 'compAtras': 'comp_atras', 'puertasLaterales': 'puertas_laterales', 'escalera': 'escalera',
-    'compuertaLados': 'compuerta_a_los_lados', 'puertaTrasera': 'puerta_trasera', 'conos': 'conos', 'estructura': 'estructura',
-    'piso': 'piso', 'laminaFrontal': 'lamina_frontal', 'laminaCostados': 'lamina_en_costados', 'laminaPuertasTraseras': 'lamina_en_puertas_traseras',
-    'polveras': 'polveras', 'plafones': 'plafones', 'frente': 'frente', 'paredes': 'paredes', 'piston': 'piston', 'canoas': 'canoas',
-    'escalerasInterior': 'escaleras_interior', 'tipoRedila': 'tipo_de_redila', 'tipoCerrada': 'tipo_cerrada',
-    'ganchosAmarre': 'ganchos_de_amarre', 'cerrojoPuertas': 'cerrojo_de_puertas_traseras',
-    'barroteLateral': 'barrote_lateral', 'camarote': 'camarote', 'canastillaSuperior': 'canastilla_superior',
-    'bastidor': 'bastidor', 'tubosInteriores': 'tubos_interiores', 'compAlPiso': 'comp_al_piso',
-    'caballete': 'caballete', 'faldon': 'faldon', 'winchers': 'eje_unimont', 'lanza': 'lanzas',
-    'quintaRueda': 'quinta_rueda', 'argolla': 'argolla', 'colorSoleraArrimadero': 'color_de_solera_de_arrimadero',
-    'secciones': 'secciones', 'puertaDelantera': 'puerta_delantera'
-};
+            // --- MAPA DE TODOS LOS CAMPOS POSIBLES (ID HTML -> Nombre Parámetro URL) ---
+            // Asegúrate que los IDs coincidan EXACTAMENTE con los <span id="..."> en tu HTML
+            // Y que los nombres de parámetro coincidan EXACTAMENTE con los enviados desde AppSheet
+             const fieldsToFill = {
+                'medidas': 'dimensiones', 'ejes': 'ejes', 'cantEjes': 'cantidad_de_ejes', 'distanciaEjes': 'distancia_de_ejes',
+                'suspension': 'suspension', 'cantSuspensiones': 'cantidad_de_suspensiones', 'sistemaInflado': 'sistema_de_inflado_psi',
+                'manivelasPatin': 'manivelas_de_patin', 'ganchoTiron': 'gancho_tiron', 'juegoPatines': 'juego_de_patines',
+                'cantPatines': 'cantidad_de_patines', 'pernoRey': 'perno_rey', 'pisoMadera': 'piso_de_madera', 'cajaHerramientas': 'caja_de_herramientas',
+                'direccionales': 'direccionales', 'retractilEje': 'retractil_eje', 'pisoLaminado': 'piso_laminado', 'plafonesPorLado': 'plafones_por_lado',
+                'personalizacionViga': 'personalizacion_de_viga', 'colorPrimario': 'color_primario', 'colorSecundario': 'color_secundario', 
+                'loderaDelantera': 'loderas_delantera', 'loderaTrasera': 'loderas_trasera', 'frenos': 'frenos', 'rines': 'rines', 'cantRines': 'cantidad_de_rines',
+                'llantas': 'llantas_70', 'cantLlantas': 'cantidad_de_llantas', 'portallantas': 'portallantas', 'tipoArco': 'tipo_de_arco',
+                'sistemaLona': 'sistema_de_lona', 'compAtras': 'comp_atras', 'puertasLaterales': 'puertas_laterales', 'escalera': 'escalera',
+                'compuertaLados': 'compuerta_a_los_lados', 'puertaTrasera': 'puerta_trasera', 'conos': 'conos', 'estructura': 'estructura',
+                'piso': 'piso', 'laminaFrontal': 'lamina_frontal', 'laminaCostados': 'lamina_en_costados', 'laminaPuertasTraseras': 'lamina_en_puertas_traseras',
+                'polveras': 'polveras', 'plafones': 'plafones', 'frente': 'frente', 'paredes': 'paredes', 'piston': 'piston', 'canoas': 'canoas',
+                'escalerasInterior': 'escaleras_interior', 'tipoRedila': 'tipo_de_redila', 'tipoCerrada': 'tipo_cerrada',
+                'ganchosAmarre': 'ganchos_de_amarre', 'cerrojoPuertas': 'cerrojo_de_puertas_traseras', // ID corregido
+                'barroteLateral': 'barrote_lateral', 'camarote': 'camarote', 'canastillaSuperior': 'canastilla_superior',
+                'bastidor': 'bastidor', 'tubosInteriores': 'tubos_interiores', 'compAlPiso': 'comp_al_piso',
+                'caballete': 'caballete', 'faldon': 'faldon', 'winchers': 'eje_unimont', 'lanza': 'lanzas',
+                'quintaRueda': 'quinta_rueda', 'argolla': 'argolla', 'colorSoleraArrimadero': 'color_de_solera_de_arrimadero',
+                'secciones': 'secciones', 'puertaDelantera': 'puerta_delantera'
+             };
 
+
+            // Bucle para rellenar los campos
             for (const id in fieldsToFill) {
                 const element = document.getElementById(id);
                 if (element) {
                     element.innerText = decodeURIComponent(getParam(fieldsToFill[id]));
+                } else {
+                     // console.warn("Elemento no encontrado para ID:", id); // Descomenta para depurar si faltan campos
                 }
             }
             
+            // Luz Placa (Manejo especial booleano)
             const luzPlacaValue = getParam('luz_placa');
             const luzPlacaElement = document.getElementById('luzPlaca');
             if (luzPlacaElement) {
                 luzPlacaElement.innerText = (luzPlacaValue === 'true' || luzPlacaValue === '1') ? 'SI' : 'NO';
             }
 
+            // QR
             const idFab = getParam('id_fab');
             const qrCodeImage = document.getElementById('qrCodeImage');
             if (idFab) {
@@ -580,6 +630,7 @@ const fieldsToFill = {
                 qrCodeImage.style.display = 'block';
             }
             
+            // Modificaciones
             const modificationsContainer = document.getElementById('modifications-container');
             const modificacionesData = getParam('modificaciones_data');
             if (modificacionesData) {
@@ -593,34 +644,38 @@ const fieldsToFill = {
                     for (let i = 0; i < modificaciones.length; i++) {
                         if (modificaciones[i] && modificaciones[i].trim() !== '') {
                             const section = document.createElement('div');
-                            section.className = 'modification-section';
-                            section.innerHTML = `<div><strong>Modificación:</strong> ${modificaciones[i] || ''}</div>
-                                               <div><strong>Motivo:</strong> ${motivos[i] || ''}</div>
-                                               <div><strong>Solicitado por:</strong> ${solicitados[i] || ''} <strong>Status:</strong> ${status[i] || ''}</div>`;
+                            section.className = 'modification-section'; // Asegúrate de tener esta clase en tu CSS
+                            section.innerHTML = `<div><strong>Modificación:</strong> ${modificaciones[i].trim() || ''}</div>
+                                               <div><strong>Motivo:</strong> ${motivos[i] ? motivos[i].trim() : ''}</div>
+                                               <div><strong>Solicitado por:</strong> ${solicitados[i] ? solicitados[i].trim() : ''} <strong>Status:</strong> ${status[i] ? status[i].trim() : ''}</div>`;
                             modificationsContainer.appendChild(section);
                         }
                     }
                 }
             }
 
+            // Observaciones
             const observacionesContainer = document.getElementById('observaciones-container');
             const obsPintura = decodeURIComponent(getParam('observaciones_de_pintura'));
             const obsGenerales = decodeURIComponent(getParam('observaciones'));
             let allObservations = [];
-            if (obsPintura) allObservations.push(...obsPintura.split(','));
-            if (obsGenerales) allObservations.push(...obsGenerales.split(','));
-            const uniqueObservations = [...new Set(allObservations)].filter(obs => obs.trim().length > 0);
+            // Divide por comas solo si la cadena no está vacía
+            if (obsPintura) allObservations.push(...obsPintura.split(',').map(s => s.trim()).filter(s => s.length > 0)); 
+            if (obsGenerales) allObservations.push(...obsGenerales.split(',').map(s => s.trim()).filter(s => s.length > 0));
+            const uniqueObservations = [...new Set(allObservations)]; // Elimina duplicados
             if (uniqueObservations.length > 0) {
                 document.getElementById('observaciones-section').style.display = 'block';
                 const ul = document.createElement('ul');
+                ul.className = 'observations-list'; // Asegúrate de tener esta clase en tu CSS
                 uniqueObservations.forEach(obs => {
                     const li = document.createElement('li');
-                    li.innerText = obs.trim();
+                    li.innerText = obs; // Ya está decodificado y sin espacios extra
                     ul.appendChild(li);
                 });
                 observacionesContainer.appendChild(ul);
             }
             
+            // Imágenes
             const imagenesContainer = document.getElementById('imagenes-container');
             const imagenParams = ['imagen_de_referencia', 'imagen_de_referencia_81', 'imagen_de_referencia_82', 'imagen_de_referencia_83', 'imagen_de_referencia_84', 'imagen_de_referencia_85'];
             let hasImages = false;
@@ -628,8 +683,9 @@ const fieldsToFill = {
                 const fileName = getParam(paramName);
                 if (fileName) {
                     const img = document.createElement('img');
-                    img.src = getAppSheetImageUrl(fileName);
+                    img.src = getAppSheetImageUrl(fileName); // Llama a la función para obtener la URL
                     img.alt = `Imagen de referencia`;
+                    // Podrías añadir estilos o clases aquí si es necesario
                     imagenesContainer.appendChild(img);
                     hasImages = true;
                 }
@@ -638,6 +694,7 @@ const fieldsToFill = {
                 document.getElementById('reference-section').style.display = 'block';
             }
 
+            // Fechas y Firma
             const fechaMesProduccion = getParam('mes_de_produccion_fecha');
             const fechaFinalizacion = getParam('fecha_de_finalizacion');
             if (fechaMesProduccion || fechaFinalizacion) {
@@ -645,7 +702,7 @@ const fieldsToFill = {
                 document.getElementById('fechaMesProduccion').innerText = decodeURIComponent(fechaMesProduccion);
                 document.getElementById('fechaFinalizacion').innerText = decodeURIComponent(fechaFinalizacion);
             }
-            const firmaFileName = getParam('firma_aprobacion');
+            const firmaFileName = getParam('firma_aprobacion'); // Asegúrate que el parámetro se llame así en AppSheet
             if (firmaFileName) {
                 document.getElementById('firma-section').style.display = 'block';
                 document.getElementById('firmaAprobacionImg').src = getAppSheetImageUrl(firmaFileName);
